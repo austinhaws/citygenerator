@@ -1,0 +1,86 @@
+.center {
+	text-align: center;
+}
+.left {
+	text-align: left;
+}
+.right {
+	text-align: right;
+}
+.table_center {
+	margin-left: auto;
+	margin-right: auto;
+}
+.field_title {
+	font-weight: bold;
+	font-size: 1.05em;
+	width: 40%;
+	text-align:right;
+	padding-right: 5px;
+}
+.field_title2 {
+	font-weight: bold;
+	font-size: 1.05em;
+	width: 25%;
+	text-align:right;
+	padding-right: 5px;
+	vertical-align: top;
+}
+.input {
+	width: 60%;
+	text-align: left;
+}
+.italic {
+	font-style: italic;
+}
+.bold {
+	font-weight: bold;
+	font-size: 1.05em;
+}
+.building_name {
+	font-weight: bold;
+}
+.building_num {
+}
+.table_buildings tbody td, .table_professions tbody td, .table_npcs tbody td, .table_guilds tbody td {
+	font-size: .75em;
+	padding-left: 5px;
+	width: 200px;
+}
+.ward_type, .power_center_type {
+	text-align: center;
+	font-weight: bold;
+	font-size: 1.25em;
+}
+.ward_info {
+	text-align: center;
+	font-style: italic;
+}
+.table_data {
+	text-align: center;
+}
+.ogl {
+	font-style: italic;
+	font-size: .7em;
+}
+#power_centers th {
+	text-align: center;
+}
+.div_update {
+	margin-top: 10px;
+	padding-left: 70px;
+}
+
+.update_date {
+	width: 25%;
+	font-weight: bold;
+	font-size: 1.05em;
+	text-align:right;
+	padding-right: 5px;
+	vertical-align: top;
+}
+
+.update_news {
+	width: 75%;
+}
+
