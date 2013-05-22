@@ -1,11 +1,11 @@
 <?php
 	require_once('lib.inc');
-	
+
 	define('kIntegration_Isolated', 'Isolated');
 	define('kIntegration_Mixed', 'Mixed');
 	define('kIntegration_Integrated', 'Integrated');
-	
-	define('kRace_Human', 'Human');	
+
+	define('kRace_Human', 'Human');
 	define('kRace_Halfling', 'Halfling');
 	define('kRace_Elf', 'Elf');
 	define('kRace_Dwarf', 'Dwarf');
@@ -44,11 +44,11 @@
 	define('kPopulationType_SmallCity', 'SmallCity');
 	define('kPopulationType_LargeCity', 'LargeCity');
 	define('kPopulationType_Metropolis', 'Metropolis');
-	
+
 	define('kHas_Military', 'Military');
 	define('kHas_Sea', 'Sea');
 	define('kHas_River', 'River');
-	
+
 	define('kWard_Administration', "Administration");
 	define('kWard_Craftsmen', "Craftsmen");
 	define('kWard_Gate', "Gate");
@@ -63,12 +63,12 @@
 	define('kWard_Slum', "Slum");
 
 	define('kRandom', 'random');
-	
+
 	require_once('tables.inc');
 	require_once('ward_class.inc');
 	require_once('power_center_class.inc');
 	require_once('city_class.inc');
-	
+
 	function is_random($field) {
 		return $field == kRandom;
 	}
@@ -91,7 +91,7 @@
 	function rand_ratio_range($min, $max) {
 		return rand_ratio() * ($max - $min) + $min;
 	}
-	
+
 	function initialize_array_value(&$array, $index, $init_val) {
 		if (!isset($array[$index])) {
 			$array[$index] = $init_val;
@@ -100,12 +100,12 @@
 	function output_integer($int) {
 		return number_format($int, 0, '.', ',');
 	}
-	
+
 	function output_double($dbl) {
 		return number_format($dbl, 2, '.', ',');
 	}
-	
-	
+
+
 	function table_center_begin() {
 		return '<table class="table_center"><thead /><tbody><tr><td>';
 	}
@@ -121,4 +121,3 @@
 			<div style="clear: both; height: 40px;">&nbsp;</div>
 		</div>
 		';
-?>

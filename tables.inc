@@ -1,6 +1,6 @@
 <?php
 	require_once('global.inc');
-	
+
 	function get_table_result_range($table, $index) {
 		foreach ($table as $key => $value) {
 			if ($index <= $key) {
@@ -17,14 +17,14 @@
 		}
 		return $table[$index];
 	}
-	
+
 	function get_table_result_random($table) {
 		do {
 			$result = $table[rand_range(0, count($table) - 1)];
 		} while (!$result);
 		return $result;
 	}
-	
+
 	global $table_buildings;
 	global $table_ward_acres_used;
 	global $table_buildings_subtypes;
@@ -2145,7 +2145,7 @@
 			1000 => "Magic Merchants",
 		),
 	);
-	
+
 	$table_ward_acres_used = array(
 		kPopulationType_Thorp => array(
 			kMin => 1,
@@ -2463,7 +2463,7 @@
 		9999 => "Inventors",
 		10000 => "Magic Merchants",
 	);
-	
+
 	$table_profession_ratio = array(
 		"Beggers" => 7,
 		"Housewives & Househusbands" => 10,
@@ -2631,7 +2631,7 @@
 		"Inventors" => 6000,
 		"Magic Merchants" => 12000,
 	);
-	
+
 	$table_population_size = array(
 		kPopulationType_Thorp => array(
 			kMin => 20,
@@ -2667,7 +2667,7 @@
 		),
 	);
 
-	$table_population_type = array(	
+	$table_population_type = array(
 		10 => kPopulationType_Thorp,
 		30 => kPopulationType_Hamlet,
 		50 => kPopulationType_Village,
@@ -2747,7 +2747,7 @@
 			kMax => 80,
 		),
 	);
-	
+
 	$table_population_num_walls = array(
 		kPopulationType_Thorp => array(
 			kMin => 0,
@@ -2782,7 +2782,7 @@
 			kMax => 9,
 		),
 	);
-	
+
 	// value is X in 100 that the city will have walls (0 means impossible)
 	$table_population_has_walls = array(
 		kPopulationType_Thorp => 0,
@@ -2850,7 +2850,7 @@
 			kPopulationType_Metropolis,
 		),
 	);
-	
+
 	$table_population_military = array(
 		kPopulationType_Thorp => 1,
 		kPopulationType_Hamlet => 1,
@@ -2861,7 +2861,7 @@
 		kPopulationType_LargeCity => 18,
 		kPopulationType_Metropolis => 35,
 	);
-	
+
 	$table_king_income = array(
 		kPopulationType_Thorp => 0.003,
 		kPopulationType_Hamlet => 0.002,
@@ -2872,7 +2872,7 @@
 		kPopulationType_LargeCity => 0.0025,
 		kPopulationType_Metropolis => 0.0005,
 	);
-	
+
 	$table_magic_resources = array(
 		kPopulationType_Thorp => 0,
 		kPopulationType_Hamlet => 0,
@@ -2883,7 +2883,7 @@
 		kPopulationType_LargeCity => 0.1,
 		kPopulationType_Metropolis => 0.1,
 	);
-	
+
 	$table_population_wealth = array(
 		kPopulationType_Thorp => 40,
 		kPopulationType_Hamlet => 100,
@@ -2894,7 +2894,7 @@
 		kPopulationType_LargeCity => 40000,
 		kPopulationType_Metropolis => 160000,
 	);
-	
+
 	$table_population_power_center = array(
 		kPopulationType_Thorp => array(
 			kMin => 0,
@@ -2964,7 +2964,7 @@
 			kMax => 36645,
 		),
 	);
-	
+
 	$table_population_power_center_modifier = array(
 		kPopulationType_Thorp => -1,
 		kPopulationType_Hamlet => 0,
@@ -2975,7 +2975,7 @@
 		kPopulationType_LargeCity => 5,
 		kPopulationType_Metropolis => 6,
 	);
-	
+
 	$table_power_center_type = array(
 		50 => 'Mayor',
 		100 => 'Town Council',
@@ -3043,7 +3043,7 @@
 		998 => 'Freeman',
 		1000 => 'Freewoman',
 	);
-	
+
 	$table_power_center_alignment = array(
 		35 => 'Lawful Good',
 		39 => 'Neutral Good',
@@ -3055,7 +3055,7 @@
 		98 => 'Neutral Evil',
 		100 => 'Chaotic Evil',
 	);
-	
+
 	$table_power_center_unabsorbed = array(
 		kPopulationType_Thorp => 0.05,
 		kPopulationType_Hamlet => 0.05,
@@ -3066,7 +3066,7 @@
 		kPopulationType_LargeCity => 0.30,
 		kPopulationType_Metropolis => 0.30,
 	);
-	
+
 	$table_npc_level_modifiers = array(
 		kPopulationType_Thorp => -10,
 		kPopulationType_Hamlet => -6,
@@ -3077,7 +3077,7 @@
 		kPopulationType_LargeCity => 12,
 		kPopulationType_Metropolis => 18,
 	);
-	
+
 	$table_npc_classes_max_level = array(
 		kClass_Adept => 6,
 		kClass_Aristocrat => 4,
@@ -3097,7 +3097,7 @@
 		kClass_Warrior => 8,
 		kClass_Wizard => 4,
 	);
-	
+
 	$table_class_influence = array(
 		kClass_Adept => 1,
 		kClass_Aristocrat => 1,
@@ -3117,7 +3117,7 @@
 		kClass_Wizard => 1,
 		kClass_Monster => 2,
 	);
-	
+
 	$table_class_random_class = array(
 		57 => kClass_Warrior,
 		115 => kClass_Adept,
@@ -3137,7 +3137,7 @@
 		999 => kClass_Wizard,
 		1000 => kClass_Monster,
 	);
-	
+
 	$table_wards = array(
 		kWard_Administration,
 		kWard_Craftsmen,
@@ -3185,13 +3185,13 @@
 			7 => 0.01,
 		),
 	);
-	
+
 	$table_integration = array(
 		1 => kIntegration_Isolated,
 		2 => kIntegration_Mixed,
 		3 => kIntegration_Integrated,
 	);
-	
+
 	$table_races = array(
 		kRace_Human,
 		kRace_Halfling,
@@ -3202,7 +3202,7 @@
 		kRace_HalfOrc,
 		kRace_Other,
 	);
-	
+
 	$table_races_random = array(
 		52 => kRace_Human,
 		63 => kRace_Halfling,
@@ -3477,7 +3477,7 @@
 			kMax => 7,
 		),
 	);
-	
+
 	$table_commodity_count = array(
 		kPopulationType_Thorp => array(
 			kMin => 0,
@@ -3795,7 +3795,7 @@
 		3699 => 'Zinc',
 		3700 => 'Zircon',
 	);
-	
+
 	$table_famous_occurrence = array(
 		kPopulationType_Thorp => array(
 			kMin => 0,
@@ -4097,7 +4097,7 @@
 		4247 => 'Women',
 		4250 => 'Worms',
 	);
-	
+
 	$table_syllables = array(
 		20 => 'a',
 		21 => 'ab',
@@ -4581,14 +4581,14 @@
 		649 => 'zi',
 		650 => 'zure',
 	);
-	
+
 	$table_name_num_words = array(
 		65 => 1,
 		90 => 2,
 		99 => 3,
 		100 => 4,
 	);
-	
+
 	$table_name_num_syllables = array(
 		5 => 1,
 		16 => 2,
@@ -5748,7 +5748,7 @@
 		'thousand',
 		'thousandth',
 	);
-	
+
 	$table_name_prefixes = array(
 		'anti',
 		'dis',
@@ -5757,7 +5757,7 @@
 		'self',
 		'un',
 	);
-	
+
 	$table_name_suffixes = array(
 		'ist',
 		'er',
@@ -5774,4 +5774,3 @@
 		'ing',
 		'ness',
 	);
-?>

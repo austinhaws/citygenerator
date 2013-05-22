@@ -16,7 +16,7 @@ function adodb_to_assoc($adodb_base_obj, $obj) {
 	}
 	return $obj_array;
 }
- 
+
 function convert_array_to_xmlarray(&$array) {
 // this converst a php array to be ready for simplexml to convert it to cb xml dictionary objects
 	$copy = $array;
@@ -31,7 +31,7 @@ function convert_array_to_xmlarray(&$array) {
 		if ($key != '@attributes' && is_array($value)) {
 			convert_array_to_xmlarray($value);
 		}
-		$array['Object'][$key] = $value; 
+		$array['Object'][$key] = $value;
 	}
 }
 
@@ -46,8 +46,8 @@ function generate_guid() {
 			// 8 bits, the last two of which (positions 6 and 7) are 01, for "clk_seq_hi_res"
 			// (hence, the 2nd hex digit after the 3rd hyphen can only be 1, 5, 9 or d)
 			// 8 bits for "clk_seq_low"
-		mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535) // 48 bits for "node" 
-	); 
+		mt_rand(0, 65535), mt_rand(0, 65535), mt_rand(0, 65535) // 48 bits for "node"
+	);
 }
 
 function pprint_r($var, $title = '', $exit = false) {
@@ -71,8 +71,8 @@ function pprint_r($var, $title = '', $exit = false) {
 
 /**
 * TAKEN FROM: http://snipplr.com/view/3491/convert-php-array-to-xml-or-simple-xml-object-if-you-wish/
-* MODIFIED: for attributes 
-*	
+* MODIFIED: for attributes
+*
 * The main function for converting to an XML document.
 * Pass in a multi dimensional array and this recrusively loops through and builds up an XML document.
 *
@@ -87,11 +87,11 @@ function toXml($data, $rootNodeName = 'data', $xml=null)
 	if (ini_get('zend.ze1_compatibility_mode') == 1) {
 		ini_set ('zend.ze1_compatibility_mode', 0);
 	}
- 
+
 	if ($xml == null) {
 		$xml = simplexml_load_string("<?xml version='1.0' encoding='utf-8'?><$rootNodeName />");
 	}
- 
+
 	// loop through the data passed in.
 	foreach($data as $key => $value) {
 		if ($key !== '@attributes' && substr($key, 0, 1) !== '_') {
@@ -103,7 +103,7 @@ function toXml($data, $rootNodeName = 'data', $xml=null)
 			}
 			// replace anything not alpha numeric
 			//$key = preg_replace('/[^a-z]/i', '', $key);
-	 
+
 			// if there is another array found recrusively call this function
 			if (is_array($value) || is_object($value)) {
 				if (isset($value['value'])) {
@@ -148,5 +148,3 @@ function implode_and($array, $blank = '') {
 	}
 	return $ret_str;
 }
-
-?>

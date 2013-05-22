@@ -5,20 +5,20 @@ class power_center_class {
 	public $wealth = 0;
 	public $npcs = array();
 	public $influence_points;
-	
+
 	public function __construct($type, $influence, $wealth, $num_centers, $city) {
 		$this->type = $type;
 		$this->wealth = $wealth;
 		$this->influence_points = $influence;
-		
+
 		$this->random_alignment();
-		
+
 		$this->random_npcs($num_centers, $city);
 	}
-	
+
 	private function random_alignment() {
 		global $table_power_center_alignment;
-		
+
 		$this->alignment = get_table_result_range($table_power_center_alignment, rand_range(1, 100));
 	}
 
@@ -26,11 +26,11 @@ class power_center_class {
 		/*
 		• do class / level looping/rund own for each power center
 		• each class/level slot only has a 1 in # power centers chance of generating npcs of the given level
-		
-		• this will divide the total number of npcs across the # of power centers and will give each 
+
+		• this will divide the total number of npcs across the # of power centers and will give each
 		power center a differing splatter of npcs yet could allow multiple power centers to have the
 		same spattering
-		
+
 		• it will also make sure that all the possible influence points for the center are used for the center
 		*/
 		global $table_npc_level_modifiers;
@@ -39,7 +39,7 @@ class power_center_class {
 		global $table_class_random_class;
 
 		$modifier = get_table_result_index($table_npc_level_modifiers, $city->population_type);
-		
+
 		$influence_left = $this->influence_points;
 		$not_used_count = 0; // how many times it failed to add (usually because it picked something too expensive)
 
@@ -49,7 +49,7 @@ class power_center_class {
 			// randomly pick level
 			$max_level = get_table_result_index($table_npc_classes_max_level, $class) + $modifier;
 			$max_level = max(0, min(20, $max_level + rand_range(0, 1)));
-			
+
 			$num = 1;
 			$not_used_for = true;
 			for ($level = rand_range(1, $max_level); $level > 0; ) {
@@ -96,11 +96,11 @@ class power_center_class {
 		}
 		return $total;
 	}
-	
+
 	private function show_npcs() {
 		$kColumns = 5;
 		$output = '<table id="power_centers" class="table_npcs table_center">';
-		
+
 		$output .= '<thead>';
 		$output .= '<th />';
 		$output .= '<th>1</th>';
@@ -132,7 +132,7 @@ class power_center_class {
 				$counts[$level] = $amount;
 			}
 			$output .= '<tr><td>' . $class . '</td>';
-			
+
 			for ($i = 1; $i <= 20; ++$i) {
 				$output .= '<td class="table_data">' . (isset($counts[$i]) ? $counts[$i] : '-') . '</td>';
 			}
@@ -140,7 +140,7 @@ class power_center_class {
 		}
 		return $output . '</tr></tbody></table>';
 	}
-	
+
 	public function show(&$div_names, $i) {
 		$div_names[] = 'power_center_' . $i;
 		$output = '';
@@ -160,8 +160,7 @@ class power_center_class {
 		$output .= $this->show_npcs();
 		$output .= '</div>';
 		$output .= table_center_end();
-		
+
 		return $output;
 	}
 }
-?>

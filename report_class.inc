@@ -167,4 +167,3 @@ class report_class {
 		return $output;
 	}
 }
-?>

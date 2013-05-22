@@ -1,13 +1,42 @@
 <?php
 	require_once('global.inc');
-	
+
 	include 'template_top.inc';
 ?>
+
 <link rel="stylesheet" type="text/css" href="city_generator.css" />
+
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/global.js"></script>
+<script src="js/mustache.js"></script>
+<script src="js/jquery.mustache-0.2.7.js"></script>
+
+<script>
+	var globals = {};
+
+	globals.wards = <?=json_encode($table_buildings)?>;
+	globals.wards_list = ['<?=kWard_Administration?>'
+						, '<?=kWard_Craftsmen?>'
+						, '<?=kWard_Gate?>'
+						, '<?=kWard_Market?>'
+						, '<?=kWard_Merchant?>'
+						, '<?=kWard_Military?>'
+						, '<?=kWard_Oderiforous?>'
+						, '<?=kWard_Patriciate?>'
+						, '<?=kWard_River?>'
+						, '<?=kWard_Sea?>'
+						, '<?=kWard_Shanty?>'
+						, '<?=kWard_Slum?>'];
+	globals.wards_mustache = [];
+	globals.templates = new template_loader();
+
+</script>
+
 <div class="center">
 	<br />
 	<form method="POST" action="generate.php">
-		<table class="table_center">
+		<table class="table_center" id="options-table">
 			<thead />
 			<tbody>
 				<tr>
@@ -18,9 +47,9 @@
 					<td class="field_title">Population:</td>
 					<td class="input">
 						<select name="population_type">
-							<option value=<?php echo kRandom; ?>>Random</option>
+							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
 							<option>--------------------</option>
-							<option value="<?php echo kPopulationType_Thorp;?>" CHECKED>Thorp (20-80)</option>
+							<option value="<?php echo kPopulationType_Thorp;?>">Thorp (20-80)</option>
 							<option value="<?php echo kPopulationType_Hamlet;?>">Hamlet (20-80)</option>
 							<option value="<?php echo kPopulationType_Village;?>">Village (401-900)</option>
 							<option value="<?php echo kPopulationType_SmallTown;?>">Small Town (901-2000)</option>
@@ -37,7 +66,7 @@
 					<td class="input">
 						<input type="Radio" name="sea" value="1">Yes</input>
 						<input type="Radio" name="sea" value="0">No</input>
-						<input type="Radio" name="sea" value=<?php echo kRandom; ?> CHECKED>Random</input>
+						<input type="Radio" name="sea" value=<?php echo kRandom; ?> checked="checked">Random</input>
 					</td>
 				</tr>
 				<tr>
@@ -45,7 +74,7 @@
 					<td class="input">
 						<input type="Radio" name="river" value="1">Yes</input>
 						<input type="Radio" name="river" value="0">No</input>
-						<input type="Radio" name="river" value=<?php echo kRandom; ?> CHECKED>Random</input>
+						<input type="Radio" name="river" value=<?php echo kRandom; ?> checked="checked">Random</input>
 					</td>
 				</tr>
 				<tr>
@@ -53,14 +82,14 @@
 					<td class="input">
 						<input type="Radio" name="military" value="1">Yes</input>
 						<input type="Radio" name="military" value="0">No</input>
-						<input type="Radio" name="military" value=<?php echo kRandom; ?> CHECKED>Random</input>
+						<input type="Radio" name="military" value=<?php echo kRandom; ?> checked="checked">Random</input>
 					</td>
 				</tr>
 				<tr>
 					<td class="field_title">Number of Gates</td>
 					<td class="input" valign="top">
 						<select name="gates">
-							<option value=<?php echo kRandom; ?> CHECKED>Random</option>
+							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
 							<option>--------------------</option>
 							<option value="0">0</option>
 							<option value="1">1</option>
@@ -85,18 +114,39 @@
 				</tr>
 				<tr>
 					<td class="field_title">Generate Buildings</td>
-					<td class="input"><input type="checkbox" name="buildings" CHECKED /></td>
+					<td class="input"><input type="checkbox" name="buildings" checked="checked" /></td>
+				</tr>
+				<tr class="wards-defining">
+					<td class="field_title">Add Ward:</td>
+					<td class="input">
+						<select name="ward-list">
+							<option value=<?=kRandom?> selected="selected">Random</option>
+							<option value="">--------------------</option>
+							<option value="<?=kWard_Administration?>"><?=kWard_Administration?></option>
+							<option value="<?=kWard_Craftsmen?>"><?=kWard_Craftsmen?></option>
+							<option value="<?=kWard_Gate?>"><?=kWard_Gate?></option>
+							<option value="<?=kWard_Market?>"><?=kWard_Market?></option>
+							<option value="<?=kWard_Merchant?>"><?=kWard_Merchant?></option>
+							<option value="<?=kWard_Military?>"><?=kWard_Military?></option>
+							<option value="<?=kWard_Oderiforous?>"><?=kWard_Oderiforous?></option>
+							<option value="<?=kWard_Patriciate?>"><?=kWard_Patriciate?></option>
+							<option value="<?=kWard_River?>"><?=kWard_River?></option>
+							<option value="<?=kWard_Sea?>"><?=kWard_Sea?></option>
+							<option value="<?=kWard_Shanty?>"><?=kWard_Shanty?></option>
+							<option value="<?=kWard_Slum?>"><?=kWard_Slum?></option>
+						</select> <input type="button" value="Add Ward" class="sub-button" id="add-ward-button" />
+					</td>
 				</tr>
 				<tr>
 					<td class="field_title">Generate Professions</td>
-					<td class="input"><input type="checkbox" name="professions" CHECKED /></td>
+					<td class="input"><input type="checkbox" name="professions" checked="checked" /></td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>
 					<td class="field_title">Major Race</td>
 					<td class="input">
 						<select name="race">
-							<option value=<?php echo kRandom; ?> CHECKED>Random</option>
+							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
 							<option>--------------------</option>
 							<option value="<?php echo kRace_Human;?>"><?php echo kRace_Human;?></option>
 							<option value="<?php echo kRace_Halfling;?>"><?php echo kRace_Halfling;?></option>
@@ -113,7 +163,7 @@
 					<td class="field_title">Society Type</td>
 					<td class="input">
 						<select name="racial_mix">
-							<option value=<?php echo kRandom; ?> CHECKED>Random</option>
+							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
 							<option>--------------------</option>
 							<option value="<?php echo kIntegration_Isolated;?>"><?php echo kIntegration_Isolated;?></option>
 							<option value="<?php echo kIntegration_Mixed;?>"><?php echo kIntegration_Mixed;?></option>
@@ -170,8 +220,12 @@
 						<td class="explanation">If you don\'t want to know all the buildings in a ward and you find it extremely annoying, you can have them turned off.</td>
 					</tr>
 					<tr>
+						<td class="right field_title2">Add Ward:</td>
+						<td class="explanation">If you are generating buildings you can specify which wards and the randomness weight of the buildings in that ward instead of having them completely randomly generated. Please note that the numbers are the weight that the building will occur. If you put houses at a weight of 5 and the total of all the weights for all the buildings for the ward is 120 then houses have a 5 in 120 chance of being generated. Make the weight 0 to not allow a building to generate in that ward. The size of the city determines how many wards are normally generated. If more wards are specified than the city uses all the wards will be added which may throw off the totals. If there are less wards specified than the city needs then wards will be generated to fill the extra slots.</td>
+					</tr>
+					<tr>
 						<td class="right field_title2">Generate Professions:</td>
-						<td class="explanation">If you don\'t want to know all the professions of each and everyone member of the city and you find it extremely annoying, you can have them turned off. If generate professions is turned off, guilds will also not generate.</td>
+						<td class="explanation">If you don\'t want to know all the professions of each and every member of the city and you find it extremely annoying, you can have them turned off. If generate professions is turned off, guilds will also not generate.</td>
 					</tr>
 					<tr>
 						<td class="right field_title2">Major Race:</td>
@@ -179,7 +233,7 @@
 					</tr>
 					<tr>
 						<td class="right field_title2">Society Type:</td>
-						<td class="explanation">Depending on how remote or popular a city is, effects the types of inhabitants found in it.</td>
+						<td class="explanation">Depending on how remote or popular a city is, this effects the types of inhabitants found in it.</td>
 					</tr>
 				</tbody>
 			</table>
