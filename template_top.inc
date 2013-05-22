@@ -19,17 +19,6 @@ Released   : 20071215
 <link href="style.css" rel="stylesheet" type="text/css" media="screen" />
 </head>
 <body>
-<div id="google_ad" class="center">
-	<script type="text/javascript">
-	<!--
-		google_ad_client = "pub-7318407720144273";
-		google_ad_slot = "4575541871";
-		google_ad_width = 728;
-		google_ad_height = 90;
-	//-->
-	</script>
-	<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script>
-</div>
 <div id="header">
 <div id="logo">
 	<h1>City Generator</h1>

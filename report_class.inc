@@ -9,7 +9,7 @@ class report_class {
                     $output .= '<input type="hidden" name="' . $key . '" value="' . $value . '" />';
                 }
                 $output .= '</from>';
-		
+
                 $output .= '<br />';
 		$output .= '<div class="center italic"><a href="#" onclick="javascript:show_all()">Show All</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="javascript:hide_all()">Hide All</a></div>';
                 $output .= '<br />';
@@ -18,7 +18,7 @@ class report_class {
 		$output .= '<br /><hr />';
 		$output .= '<div class="center"><h1><a href="#" rel="toggle[city_stats]">' . $city->name . '</a></h1></div>';
 		$output .= '<hr /><br />';
-		
+
 		$div_names[] = 'city_stats';
 		$output .= table_center_begin();
 		$output .= '<div id="city_stats"><span class="field_title">Community Size:</span>' . $city->population_type . '<br />';
@@ -27,7 +27,7 @@ class report_class {
 		$output .= '<span class="field_title">Population Density (Adults/Acre):</span>' . output_double($city->population_size / $city->acres) . ' Adults/Acre<br />';
 		$output .= '<span class="field_title">Races:</span>' . $city->output_races() . '<br />';
 		$output .= '<br />';
-		
+
 		$output .= '<span class="field_title">Gold Piece Limit:</span>' . output_double($city->gold_piece_limit()) . '<br />';
 		$output .= '<span class="field_title">Wealth:</span>' . output_double($city->wealth()) . '<br />';
 		$output .= '<span class="field_title">Income for Lord(s)/King(s):</span>' . output_double($city->king_income()) . '<br />';
@@ -39,9 +39,9 @@ class report_class {
                 $output .= '<span class="field_title">Famous:</span>' . implode_and($city->famous['famous'], 'None') . '<br />';
                 $output .= '<span class="field_title">Infamous:</span>' . implode_and($city->famous['infamous'], 'None') . '<br />';
 		$output .= '<br />';
-		
+
 		$output .= '<span class="field_title"># of Wards:</span>' . output_integer(count($city->wards)) . '<br />';
-		
+
 		$total = 0;
 		foreach ($city->wards as $ward) {
 			$total += $ward->get_building_total();
@@ -49,7 +49,7 @@ class report_class {
 		$output .= '<span class="field_title"># of Buildings:</span>' . output_integer($total) . '<br />';
 		$output .= '<span class="field_title"># of Power Centers:</span>' . output_integer(count($city->power_centers)) . '<br />';
 		$output .= '<span class="field_title"># of Guilds:</span>' . output_integer($city->guilds_count()) . '<br />';
-		
+
 		if ($city->gates) {
 			$output .= '<br /><span class="field_title">Has Walls</span><br />';
 			$output .= '<span class="field_title"># of Gates:</span>' . $city->gates . '<br />';
@@ -58,12 +58,12 @@ class report_class {
 		}
 		$output .= '</div>';
 		$output .= table_center_end();
-		
+
 		// wards
 		$output .= '<br /><hr />';
 		$output .= '<div class="center"><h1><a href="#" rel="toggle[wards]");">Wards</a></h1></div>';
 		$output .= '<hr /><br />';
-		
+
 		$div_names[] = 'wards';
 		$output .= table_center_begin();
 		$output .= '<div id="wards">';
@@ -79,7 +79,7 @@ class report_class {
 				$output .= 'Outside Walls';
 			}
 			$output .= '</div>';
-	
+
 			$output .= $ward->show_building_table();
 			$output .= '<br /></div>';
 		}
@@ -93,18 +93,18 @@ class report_class {
 		$output .= '</ul></span></td></tr></tbody></table>';
 		$output .= '<br /><br /></div>';
 		$output .= table_center_end();
-			
+
 		// power centers
 		$output .= '<br /><hr />';
 		$output .= '<div class="center"><h1><a href="#" rel="toggle[professions]">Professions</a></h1></div>';
 		$output .= '<hr /><br />';
 
 		$div_names[] = 'professions';
-		$output .= '<div id="professions">';	
+		$output .= '<div id="professions">';
 		$output .= $city->show_profession_counts();
 		$output .= '</div>';
 
-		if (count($city->power_centers)) {	
+		if (count($city->power_centers)) {
 			$output .= '<br /><hr />';
 			$output .= '<div class="center"><h1><a href="#" rel="toggle[power_centers]">Power Centers</a></h1></div>';
 			$output .= '<hr /><br />';
@@ -121,13 +121,13 @@ class report_class {
 			$div_names[] = 'guilds';
 			$output .= '<div class="center"><h1><a href="#" rel="toggle[guilds]">Guilds</a></h1></div>';
 			$output .= '<hr /><br />';
-			
+
 			$output .= '<div id="guilds">';
 			$output .= $city->show_guilds_table();
 			$output .= '</div>';
 		}
-		
-		$output .= "<br /><br /><br />";		
+
+		$output .= "<br /><br /><br />";
 
 
 		// include the animatedcollapse stuff
@@ -141,13 +141,13 @@ class report_class {
 				***********************************************/
 			</script>
 			<script type="text/javascript">';
-			
+
 		foreach ($div_names as $name) {
 			$output .= 'animatedcollapse.addDiv("' . $name . '", "fade=1' . ($name == 'city_stats' ? '' : ',hide=1') . '");';
 		}
 
 		$output .= 'animatedcollapse.init()';
-		
+
 		$output .= '
 			function show_all() {';
 		foreach ($div_names as $name) {
@@ -163,7 +163,7 @@ class report_class {
 
                 $output .= 'function regenerate() { document.getElementById("form_regenerate").submit(); }';
                 $output .= '</script>';
-			
+
 		return $output;
 	}
 }

@@ -139,36 +139,45 @@ class city_class {
 			2;
 
 		for ($i = 1; $i <= $this->gates; ++$i) {
-			$acres -= $this->add_ward(kWard_Gate, ($temp = $acres / $required_wards), true, $ward_count, $generate_buildings);
+			$temp = $acres / $required_wards;
+			$acres -= $this->add_ward(kWard_Gate, $temp, true, $ward_count, $generate_buildings);
 		}
 
 		if ($this->has[kHas_Sea]) {
-			$acres -= $this->add_ward(kWard_Sea, ($temp = $acres / $required_wards), $this->gates > 0 && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
+			$temp = $acres / $required_wards;
+			$acres -= $this->add_ward(kWard_Sea, $temp, $this->gates > 0 && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
 		}
 
 		if ($this->has[kHas_River]) {
-			$acres -= $this->add_ward(kWard_River, ($temp = $acres / $required_wards), $this->gates > 0 && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
+			$temp = $acres / $required_wards;
+			$acres -= $this->add_ward(kWard_River, $temp, $this->gates > 0 && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
 		}
 
 		if ($this->has[kHas_Military]) {
-			$acres -= $this->add_ward(kWard_Military, ($temp = $acres / $required_wards), $this->gates > 0, $ward_count, $generate_buildings);
+			$temp = $acres / $required_wards;
+			$acres -= $this->add_ward(kWard_Military, $temp, $this->gates > 0, $ward_count, $generate_buildings);
 		}
 
 		if ($this->is_size_atleast(kPopulationType_SmallTown)) {
-			$acres -= $this->add_ward(kWard_Administration, ($temp = $acres / $required_wards), $this->gates > 0, $ward_count, $generate_buildings);
+			$temp = $acres / $required_wards;
+			$acres -= $this->add_ward(kWard_Administration, $temp, $this->gates > 0, $ward_count, $generate_buildings);
 		}
 
 		if ($this->is_size_atleast(kPopulationType_SmallCity)) {
-			$acres -= $this->add_ward(kWard_Craftsmen, ($temp = $acres / $required_wards), $this->gates > 0, $ward_count, $generate_buildings);
+			$temp = $acres / $required_wards;
+			$acres -= $this->add_ward(kWard_Craftsmen, $temp, $this->gates > 0, $ward_count, $generate_buildings);
 		}
 
 		if ($this->is_size_atleast(kPopulationType_Metropolis)) {
-			$acres -= $this->add_ward(kWard_Patriciate, ($temp = $acres / $required_wards), $this->gates > 0, $ward_count, $generate_buildings);
+			$temp = $acres / $required_wards;
+			$acres -= $this->add_ward(kWard_Patriciate, $temp, $this->gates > 0, $ward_count, $generate_buildings);
 		}
 
-		$acres -= $this->add_ward(kWard_Market, ($temp = $acres / $required_wards), $this->gates > 0, $ward_count, $generate_buildings);
+		$temp = $acres / $required_wards;
+		$acres -= $this->add_ward(kWard_Market, $temp, $this->gates > 0, $ward_count, $generate_buildings);
 
-		$acres -= $this->add_ward(kWard_Merchant, ($temp = $acres / $required_wards), $this->gates > 0, $ward_count, $generate_buildings);
+		$temp = $acres / $required_wards;
+		$acres -= $this->add_ward(kWard_Merchant, $temp, $this->gates > 0, $ward_count, $generate_buildings);
 
 		// fill up acres with wards
 		while ($acres > 0) {
@@ -643,7 +652,7 @@ class city_class {
 		$output = '';
 		$i = 0;
 		foreach ($this->power_centers as $power_center) {
-			$output .= $power_center->show(&$div_names, $i++);
+			$output .= $power_center->show($div_names, $i++);
 			$output .= '<br />';
 		}
 		return $output;
