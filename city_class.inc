@@ -154,10 +154,15 @@ class city_class {
 			kWard_Shanty => false,
 			kWard_Slum => false,
 		);
+		$num_gates = $this->gates;
 		foreach ($post['wards-added'] as $ward_added) {
 			switch ($ward_added->ward) {
 				case kWard_Gate:
-					$this->gates--;
+					if ($num_gates > 0) {
+						$num_gates--;
+					} else {
+						$this->gates++; // make sure the count is correct
+					}
 				break;
 				default:
 					$already_done[$ward_added->ward] = true; // don't have to do more of these wards because it's already done
@@ -172,7 +177,7 @@ class city_class {
 		}
 
 		// put in wards
-		for ($i = 1; $i <= $this->gates; ++$i) {
+		for ($i = 1; $i <= $num_gates; ++$i) {
 			$acres -= $this->add_ward(kWard_Gate, $acres_per_ward, true, $ward_count, $generate_buildings);
 		}
 
