@@ -239,7 +239,8 @@
 				</tbody>
 			</table>
         <br /><br />
-        <div id="latest-post" class="post" >
+        <div id="latest-post" class="post"  />
+        <div style="text-align:center; font-weight:bold;margin-top:10px;">Thanks to terrancefarrel for some awesome ideas on custom wards and professions.</div>
         <br />
 	<div style="clear: both; height: 40px;">&nbsp;</div>' . $use_statement . '
 </div>

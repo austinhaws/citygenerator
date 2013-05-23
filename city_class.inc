@@ -129,6 +129,7 @@ class city_class {
 		}
 
 		$acres = $this->acres;
+		$has_gates = $this->gates > 0;
 		$required_wards = $this->gates +
 			($this->has[kHas_Sea] ? 1 : 0) +
 			($this->has[kHas_River] ? 1 : 0) +
@@ -139,52 +140,73 @@ class city_class {
 			2;
 
 		// put in wards the user requested
+		$already_done = array(
+			kWard_Administration => false,
+			kWard_Craftsmen => false,
+			kWard_Gate => false,
+			kWard_Market => false,
+			kWard_Merchant => false,
+			kWard_Military => false,
+			kWard_Oderiforous => false,
+			kWard_Patriciate => false,
+			kWard_River => false,
+			kWard_Sea => false,
+			kWard_Shanty => false,
+			kWard_Slum => false,
+		);
 		foreach ($post['wards-added'] as $ward_added) {
-			$this->add_ward($ward_added->ward, $acres, $this->gates > 0, $ward_count, $generate_buildings, $ward_added->buildings);
+			switch ($ward_added->ward) {
+				case kWard_Gate:
+					$this->gates--;
+				break;
+				default:
+					$already_done[$ward_added->ward] = true; // don't have to do more of these wards because it's already done
+				break;
+				$required_wards = max(0, $required_wards - 1); // this ward consumes a spot
+			}
 		}
+		$acres_per_ward = $acres / ($required_wards + count($post['wards-added']));
 
+		foreach ($post['wards-added'] as $ward_added) {
+			$acres -= $this->add_ward($ward_added->ward, $acres_per_ward, $has_gates, $ward_count, $generate_buildings, $ward_added->buildings);
+		}
 
 		// put in wards
 		for ($i = 1; $i <= $this->gates; ++$i) {
-			$temp = $acres / $required_wards;
-			$acres -= $this->add_ward(kWard_Gate, $temp, true, $ward_count, $generate_buildings);
+			$acres -= $this->add_ward(kWard_Gate, $acres_per_ward, true, $ward_count, $generate_buildings);
 		}
 
-		if ($this->has[kHas_Sea]) {
-			$temp = $acres / $required_wards;
-			$acres -= $this->add_ward(kWard_Sea, $temp, $this->gates > 0 && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
+		if ($this->has[kHas_Sea] && !$already_done[kWard_Sea]) {
+			$acres -= $this->add_ward(kWard_Sea, $acres_per_ward, $has_gates && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
 		}
 
-		if ($this->has[kHas_River]) {
-			$temp = $acres / $required_wards;
-			$acres -= $this->add_ward(kWard_River, $temp, $this->gates > 0 && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
+		if ($this->has[kHas_River] && !$already_done[kWard_River]) {
+			$acres -= $this->add_ward(kWard_River, $acres_per_ward, $has_gates && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
 		}
 
-		if ($this->has[kHas_Military]) {
-			$temp = $acres / $required_wards;
-			$acres -= $this->add_ward(kWard_Military, $temp, $this->gates > 0, $ward_count, $generate_buildings);
+		if ($this->has[kHas_Military] && !$already_done[kWard_Military]) {
+			$acres -= $this->add_ward(kWard_Military, $acres_per_ward, $has_gates, $ward_count, $generate_buildings);
 		}
 
-		if ($this->is_size_atleast(kPopulationType_SmallTown)) {
-			$temp = $acres / $required_wards;
-			$acres -= $this->add_ward(kWard_Administration, $temp, $this->gates > 0, $ward_count, $generate_buildings);
+		if ($this->is_size_atleast(kPopulationType_SmallTown) && !$already_done[kWard_Administration]) {
+			$acres -= $this->add_ward(kWard_Administration, $acres_per_ward, $has_gates, $ward_count, $generate_buildings);
 		}
 
-		if ($this->is_size_atleast(kPopulationType_SmallCity)) {
-			$temp = $acres / $required_wards;
-			$acres -= $this->add_ward(kWard_Craftsmen, $temp, $this->gates > 0, $ward_count, $generate_buildings);
+		if ($this->is_size_atleast(kPopulationType_SmallCity) && !$already_done[kWard_Craftsmen]) {
+			$acres -= $this->add_ward(kWard_Craftsmen, $acres_per_ward, $has_gates, $ward_count, $generate_buildings);
 		}
 
-		if ($this->is_size_atleast(kPopulationType_Metropolis)) {
-			$temp = $acres / $required_wards;
-			$acres -= $this->add_ward(kWard_Patriciate, $temp, $this->gates > 0, $ward_count, $generate_buildings);
+		if ($this->is_size_atleast(kPopulationType_Metropolis) && !$already_done[kWard_Patriciate]) {
+			$acres -= $this->add_ward(kWard_Patriciate, $acres_per_ward, $has_gates, $ward_count, $generate_buildings);
 		}
 
-		$temp = $acres / $required_wards;
-		$acres -= $this->add_ward(kWard_Market, $temp, $this->gates > 0, $ward_count, $generate_buildings);
+		if (!$already_done[kWard_Market]) {
+			$acres -= $this->add_ward(kWard_Market, $acres_per_ward, $has_gates, $ward_count, $generate_buildings);
+		}
 
-		$temp = $acres / $required_wards;
-		$acres -= $this->add_ward(kWard_Merchant, $temp, $this->gates > 0, $ward_count, $generate_buildings);
+		if (!$already_done[kWard_Merchant]) {
+			$acres -= $this->add_ward(kWard_Merchant, $acres_per_ward, $has_gates, $ward_count, $generate_buildings);
+		}
 
 		// fill up acres with wards
 		while ($acres > 0) {
@@ -208,47 +230,47 @@ class city_class {
 				if ($this->is_size_atleast(kPopulationType_SmallCity) && $ward_count[kWard_Patriciate] == 0) {
 					// only one administration ward
 					// always inside the walls
-					$this->add_ward(kWard_Patriciate, $acres, $this->gates > 0, $ward_count, $generate_buildings);
+					$acres -= $this->add_ward(kWard_Patriciate, $acres, $has_gates, $ward_count, $generate_buildings);
 				}
 			} elseif ($rand <= 11) {
 				if ($this->is_size_atleast(kPopulationType_SmallCity) && $ward_count[kWard_Administration] == 0) {
 					//only one administration ward
 					// always inside the walls
-					$this->add_ward(kWard_Administration, $acres, $this->gates > 0, $ward_count, $generate_buildings);
+					$acres -= $this->add_ward(kWard_Administration, $acres, $has_gates, $ward_count, $generate_buildings);
 				}
 
 			} elseif ($rand <= 13) {
 				if ($this->has[kHas_Sea]) {
-					$this->add_ward(kWard_Sea, $acres, $this->gates > 0 && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
+					$acres -= $this->add_ward(kWard_Sea, $acres, $has_gates && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
 				}
 
 			} elseif ($rand <= 16) {
 				if ($this->has[kHas_River]) {
-					$this->add_ward(kWard_River, $acres, $this->gates > 0 && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
+					$acres -= $this->add_ward(kWard_River, $acres, $has_gates && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
 				}
 
 			} elseif ($rand <= 25) {
-				$this->add_ward(kWard_Oderiforous, $acres, $this->gates > 0 && rand_range(1, 100) < 5, $ward_count, $generate_buildings);
+				$acres -= $this->add_ward(kWard_Oderiforous, $acres, $has_gates && rand_range(1, 100) < 5, $ward_count, $generate_buildings);
 
 			} elseif ($rand <= 30) {
 				if ($this->is_size_atleast(kPopulationType_SmallCity)) {
 					// outside the walls
-					$this->add_ward(kWard_Shanty, $acres, false, $ward_count, $generate_buildings);
+					$acres -= $this->add_ward(kWard_Shanty, $acres, false, $ward_count, $generate_buildings);
 				}
 			} elseif ($rand <= 40) {
 				if ($this->is_size_atleast(kPopulationType_SmallCity)) {
 					// outside the walls
-					$this->add_ward(kWard_Slum, $acres, $this->gates > 0, $ward_count, $generate_buildings);
+					$acres -= $this->add_ward(kWard_Slum, $acres, $has_gates, $ward_count, $generate_buildings);
 				}
 			} elseif ($rand <= 55) {
 				//  inside walls
 				// one merchant ward in town unless metropolis
 				if ($this->is_size_atleast(kPopulationType_Metropolis) || $ward_count[kWard_Craftsmen] == 0) {
-					$this->add_ward(kWard_Merchant, $acres, $this->gates > 0, $ward_count, $generate_buildings);
+					$acres -= $this->add_ward(kWard_Merchant, $acres, $has_gates, $ward_count, $generate_buildings);
 				}
 			} elseif ($rand <= 75) {
 				// mostly inside walls
-				$this->add_ward(kWard_Market, $acres, $this->gates > 0 && rand_range(1, 100) < 83, $ward_count, $generate_buildings);
+				$acres -= $this->add_ward(kWard_Market, $acres, $has_gates && rand_range(1, 100) < 83, $ward_count, $generate_buildings);
 
 			} elseif ($rand <= 100) {
 				// most common ward within city walls
@@ -257,10 +279,10 @@ class city_class {
 				if ($this->is_size_atleast(kPopulationType_SmallCity)
 					&& (($this->is_size_atleast(kPopulationType_LargeTown) && $ward_count[kWard_Craftsmen] <= 1)
 						Or $this->is_size_atleast(kPopulationType_Metropolis))) {
-					$this->add_ward(kWard_Craftsmen, $acres, $this->gates > 0 && rand_range(1, 100) < 90, $ward_count, $generate_buildings);
+					$acres -= $this->add_ward(kWard_Craftsmen, $acres, $has_gates && rand_range(1, 100) < 90, $ward_count, $generate_buildings);
 				}
 			} else {
-				pprint_r($rand, "Oops. rand out of range : " + $rand, true);
+				//pprint_r($rand, "Oops. rand out of range : " + $rand, true);
 			}
 		}
 	}
@@ -305,7 +327,8 @@ class city_class {
 					}
 				}
 				if (!$result) {
-					$result = $building_item[array_shift(array_keys($building_item))]; // default to first on list if no match (this shouldn't be possible)
+					$keys = array_keys($buildings_list);
+					$result = $buildings_list[array_shift($keys)]; // default to first on list if no match (this shouldn't be possible)
 				}
 			} else {
 				$result = get_table_result_range($table_buildings[$ward->type], rand_range(1, 100));
@@ -323,7 +346,7 @@ class city_class {
 		}
 	}
 
-	function add_ward($ward_type, &$acres_left, $inside_walls, &$ward_count, $generate_buildings, $building_weights = false) {
+	function add_ward($ward_type, $acres_left, $inside_walls, &$ward_count, $generate_buildings, $building_weights = false) {
 		global $table_ward_acres_used;
 		// based on city type, should allocate bigger/smaller randomness in sizes
 		$value = get_table_result_index($table_ward_acres_used, $this->population_type);
