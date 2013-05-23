@@ -29,6 +29,30 @@ $(function() {
 	});
 
 
+	$('#generate-button').click(function(e) {
+		var wards_added = $('table.ward-added');
+		var info;
+		var wards = [];
+
+		$.each(wards_added, function(idx1, ward_added) {
+			ward_added = $(ward_added);
+			info = {
+				ward: ward_added.find('.ward-title').data('name')
+				, buildings: []
+			};
+			$.each($('.ward-building'), function(idx2, ward_building) {
+				ward_building = $(ward_building);
+				info.buildings.push({
+					type: ward_building.find('.ward-building-name').data('type')
+					, weight: ward_building.find('.ward-building-ratio').val()
+				});
+			});
+			wards.push(info);
+		});
+		$('[name="wards-added"]').val(JSON.stringify(wards));
+		$('#generate-form').submit();
+	});
+
 	$('#add-ward-button').click(function(e) {
 		var ward = $('[name="ward-list"]').val();
 

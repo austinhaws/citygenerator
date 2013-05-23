@@ -2,30 +2,37 @@
     session_start();
 	require_once('global.inc');
 	require_once('report_class.inc');
-	
+
 	include('template_top.inc');
-	
+
 	$city = new city_class();
 
-if (!$_POST) {
+if ($_POST) {
+	$_POST['wards-added'] = json_decode($_POST['wards-added']);
+	if (!$_POST['wards-added']) {
+		$_POST['wards-added'] = array();
+	}
+} else {
 	$_POST = array(
-		'name' => ''
-		, 'population_type' => 'random'
-		, 'sea' => 'random'
-		, 'river' => 'random'
-		, 'military' => 'random'
-		, 'gates' => 'random'
-		, 'buildings' => 'on'
-		, 'professions' => 'on'
-		, 'race' => 'random'
-		, 'racial_mix' => 'random'
+		'name' => '',
+		'population_type' => 'random',
+		'sea' => 'random',
+		'river' => 'random',
+		'military' => 'random',
+		'gates' => 'random',
+		'buildings' => 'on',
+		'professions' => 'on',
+		'race' => 'random',
+		'racial_mix' => 'random',
+		'wards' => array(),
 	);
-}	
+}
+
 	$city->random($_POST);
-	
+
 //	pprint_r($_POST, 'post', true);
 //	pprint_r($city, 'city');
-	
+
 	echo '<link rel="stylesheet" type="text/css" href="city_generator.css" />';
 
 	$report = new report_class();

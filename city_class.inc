@@ -120,7 +120,7 @@ class city_class {
 		}
 	}
 
-	private function random_wards($generate_buildings) {
+	private function random_wards($generate_buildings, $post) {
 		global $table_wards;
 
 		$ward_count = array();
@@ -138,6 +138,13 @@ class city_class {
 			($this->is_size_atleast(kPopulationType_Metropolis) ? 1 : 0) +
 			2;
 
+		// put in wards the user requested
+		foreach ($post['wards-added'] as $ward_added) {
+			$this->add_ward($ward_added->ward, $acres, $this->gates > 0, $ward_count, $generate_buildings, $ward_added->buildings);
+		}
+
+
+		// put in wards
 		for ($i = 1; $i <= $this->gates; ++$i) {
 			$temp = $acres / $required_wards;
 			$acres -= $this->add_ward(kWard_Gate, $temp, true, $ward_count, $generate_buildings);
@@ -264,7 +271,7 @@ class city_class {
 		return (false !== array_search($this->population_type, $goods));
 	}
 
-	private function random_buildings($ward) {
+	private function random_buildings($ward, $building_weights) {
 		global $table_buildings;
 		global $table_buildings_subtypes;
 		global $table_population_ward_density;
@@ -273,7 +280,36 @@ class city_class {
 		$density = max(1, $value * $ward->acres);
 
 		for ($i = 1; $i <= $density; ++$i) {
-			$result = get_table_result_range($table_buildings[$ward->type], rand_range(1, 100));
+			if ($building_weights) {
+				$total_weights = 0;
+				for ($k = count($building_weights) - 1; $k >= 0; $k--) {
+					$total_weights += $building_weights[$k]->weight;
+				}
+
+				$rand = rand_range(1, $total_weights);
+				for ($j = count($building_weights) - 1; $rand > 0 && $j >= 0;) {
+					$rand -= $building_weights[$j]->weight;
+					$j--;
+				}
+				$j++;
+
+//pprint_r($table_buildings[$building_weights[$j]->type], 'table buildings');
+//pprint_r(array($j, $total_weights, $building_weights), 'select from these', true);
+				$buildings_list = $table_buildings[$ward->type];
+				$building_type = $building_weights[$j]->type;
+				$result = false;
+				foreach ($buildings_list as $building_item) {
+					if ($building_item['type'] == $building_type) {
+						$result = $building_item;
+						break;
+					}
+				}
+				if (!$result) {
+					$result = $building_item[array_shift(array_keys($building_item))]; // default to first on list if no match (this shouldn't be possible)
+				}
+			} else {
+				$result = get_table_result_range($table_buildings[$ward->type], rand_range(1, 100));
+			}
 			$type = $result['type'];
 			$quality = rand_range($result[kMin], $result[kMax]);
 
@@ -287,7 +323,7 @@ class city_class {
 		}
 	}
 
-	function add_ward($ward_type, &$acres_left, $inside_walls, &$ward_count, $generate_buildings) {
+	function add_ward($ward_type, &$acres_left, $inside_walls, &$ward_count, $generate_buildings, $building_weights = false) {
 		global $table_ward_acres_used;
 		// based on city type, should allocate bigger/smaller randomness in sizes
 		$value = get_table_result_index($table_ward_acres_used, $this->population_type);
@@ -305,7 +341,7 @@ class city_class {
 		$ward->acres = $acres_used;
 		$ward->inside_walls = $inside_walls;
 		if ($generate_buildings) {
-			$this->random_buildings($ward);
+			$this->random_buildings($ward, $building_weights);
 		}
 
 		$this->wards[] = $ward;
@@ -383,7 +419,7 @@ class city_class {
 		}
 
 		// wards
-		$this->random_wards(isset($post['buildings']));
+		$this->random_wards(isset($post['buildings']), $_POST);
 
 		// professions
 		if (isset($post['professions']) && $post['professions']) {

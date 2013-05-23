@@ -35,7 +35,8 @@
 
 <div class="center">
 	<br />
-	<form method="POST" action="generate.php">
+	<form method="POST" action="generate.php" id="generate-form">
+		<input type="hidden" name="wards-added" />
 		<table class="table_center" id="options-table">
 			<thead />
 			<tbody>
@@ -173,7 +174,7 @@
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>
-					<td class="center" colspan="100"><input type="submit" value="Generate" /></td>
+					<td class="center" colspan="100"><input type="button" id="generate-button" value="Generate" /></td>
 				</tr>
 			</tbody>
 		</table>

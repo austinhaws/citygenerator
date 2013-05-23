@@ -4,16 +4,39 @@ class report_class {
 		$div_names = array();
 		$output = '';
 
-                $output .= '<form id="form_regenerate" action="generate.php" method="post">';
-                foreach ($_POST as $key => $value) {
-                    $output .= '<input type="hidden" name="' . $key . '" value="' . $value . '" />';
-                }
-                $output .= '</from>';
+		// include the animatedcollapse stuff
+		$output .= '
+			<script src="js/jquery-1.9.1.min.js"></script>
+			<script type="text/javascript" src="animatedcollapse.js">
+				/***********************************************
+				* Animated Collapsible DIV v2.4- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
+				* This notice MUST stay intact for legal use
+				* Visit Dynamic Drive at http://www.dynamicdrive.com/ for this script and 100s more
+				***********************************************/
+			</script>';
 
-                $output .= '<br />';
+		$output .= '<form id="form_regenerate" action="generate.php" method="post">';
+		foreach ($_POST as $key => $value) {
+			if ($key == 'wards-added') {
+				// wow, this is a hack!
+				$output .= '<script>
+					$(function() {
+						$(\'[name="wards-added"]\').val(JSON.stringify(' . json_encode($value) . '));
+					});
+				</script>
+				<input type="hidden" name="' . $key . '" value="" />
+				';
+			} else {
+				$output .= '<input type="hidden" name="' . $key . '" value="' . $value . '" />';
+			}
+		}
+		$output .= '</form>';
+
+		$output .= '<br />';
 		$output .= '<div class="center italic"><a href="#" onclick="javascript:show_all()">Show All</a>&nbsp;&nbsp;&nbsp;<a href="#" onclick="javascript:hide_all()">Hide All</a></div>';
-                $output .= '<br />';
-                $output .= '<div class="center italic"><a href="#" onclick="javascript:regenerate()">Regenerate</a>&nbsp;&nbsp;&nbsp<a href="printable.php" target="_blank">Printable</a></div>';
+		$output .= '<br />';
+		$output .= '<div class="center italic"><a href="#" onclick="javascript:regenerate()">Regenerate</a>&nbsp;&nbsp;&nbsp<a href="printable.php" target="_blank">Printable</a></div>';
+
 		// city info
 		$output .= '<br /><hr />';
 		$output .= '<div class="center"><h1><a href="#" rel="toggle[city_stats]">' . $city->name . '</a></h1></div>';
@@ -130,17 +153,7 @@ class report_class {
 		$output .= "<br /><br /><br />";
 
 
-		// include the animatedcollapse stuff
-		$output .= '
-			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-			<script type="text/javascript" src="animatedcollapse.js">
-				/***********************************************
-				* Animated Collapsible DIV v2.4- (c) Dynamic Drive DHTML code library (www.dynamicdrive.com)
-				* This notice MUST stay intact for legal use
-				* Visit Dynamic Drive at http://www.dynamicdrive.com/ for this script and 100s more
-				***********************************************/
-			</script>
-			<script type="text/javascript">';
+		$output .= '<script type="text/javascript">';
 
 		foreach ($div_names as $name) {
 			$output .= 'animatedcollapse.addDiv("' . $name . '", "fade=1' . ($name == 'city_stats' ? '' : ',hide=1') . '");';

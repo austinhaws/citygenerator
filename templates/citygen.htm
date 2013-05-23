@@ -4,14 +4,14 @@
 		<td>
 			<table class="ward-added">
 				<tr>
-					<td colspan="100" class="ward-title">{{name}}:<input type="button" value="Remove" class="ward-remove-button" /></td>
+					<td colspan="100" class="ward-title" data-name="{{name}}">{{name}}:<input type="button" value="Remove" class="ward-remove-button" /></td>
 				</tr>
 				<tr>
 					<td>
 						<div class="options-ward-buildings">
 							{{#buildings}}
 								<div class="ward-building">
-									<div class="ward-building-name">{{type}}:</div>
+									<div class="ward-building-name" data-type="{{type}}">{{type}}:</div>
 									<input class="ward-building-ratio" type="text" data-building="{{type}}" value="{{ratio}}" />
 								</div>
 							{{/buildings}}
