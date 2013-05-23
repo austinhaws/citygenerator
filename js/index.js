@@ -34,22 +34,26 @@ $(function() {
 		var info;
 		var wards = [];
 
-		$.each(wards_added, function(idx1, ward_added) {
-			ward_added = $(ward_added);
-			info = {
-				ward: ward_added.find('.ward-title').data('name')
-				, buildings: []
-			};
-			$.each($('.ward-building'), function(idx2, ward_building) {
-				ward_building = $(ward_building);
-				info.buildings.push({
-					type: ward_building.find('.ward-building-name').data('type')
-					, weight: ward_building.find('.ward-building-ratio').val()
+		if ($('[name="buildings"]').prop('checked')) {
+			$.each(wards_added, function(idx1, ward_added) {
+				ward_added = $(ward_added);
+				info = {
+					ward: ward_added.find('.ward-title').data('name')
+					, buildings: []
+				};
+				$.each($('.ward-building'), function(idx2, ward_building) {
+					ward_building = $(ward_building);
+					info.buildings.push({
+						type: ward_building.find('.ward-building-name').data('type')
+						, weight: ward_building.find('.ward-building-ratio').val()
+					});
 				});
+				wards.push(info);
 			});
-			wards.push(info);
-		});
-		$('[name="wards-added"]').val(JSON.stringify(wards));
+			$('[name="wards-added"]').val(JSON.stringify(wards));
+		} else {
+			$('[name="wards-added"]').val('');
+		}
 		$('#generate-form').submit();
 	});
 
