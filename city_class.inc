@@ -1,5 +1,6 @@
 <?php
 	require_once('global.inc');
+	require_once('generate_layout.inc');
 
 class city_class {
 	public $population_size = 0;
@@ -23,34 +24,37 @@ class city_class {
 	public $commodities = array('export' => array(), 'import' => array());
 	public $famous = array('famous' => array(), 'infamous' => array());
 	public $majority_race;
+	public $layout = false;
 
-	public function __construct() {
+	public function generate_map() {
+		$this->layout = new Layout_CityMapClass();
+		$this->layout->generate($this);
 	}
 
-        private function random_famous_fill($num, $type) {
-            global $table_famous;
-            while ($num > 0) {
-                $result = get_table_result_range($table_famous, rand_range(1, 4250));
+	private function random_famous_fill($num, $type) {
+		global $table_famous;
+		while ($num > 0) {
+			$result = get_table_result_range($table_famous, rand_range(1, 4250));
 
-                if (false === array_search($result, $this->famous[$type])) {
-                    $this->famous[$type][] = $result;
-                    --$num;
-                }
-            }
-        }
+			if (false === array_search($result, $this->famous[$type])) {
+				$this->famous[$type][] = $result;
+				--$num;
+			}
+		}
+	}
 
-        private function random_famous() {
-            global $table_famous_occurrence;
-            $min_max = $table_famous_occurrence[$this->population_type];
+	private function random_famous() {
+		global $table_famous_occurrence;
+		$min_max = $table_famous_occurrence[$this->population_type];
 
-            $num = rand_range($min_max[kMin], $min_max[kMax]);
-            $this->random_famous_fill($num, 'famous');
-            sort($this->famous['famous']);
+		$num = rand_range($min_max[kMin], $min_max[kMax]);
+		$this->random_famous_fill($num, 'famous');
+		sort($this->famous['famous']);
 
-            $num = rand_range($min_max[kMin], $min_max[kMax]);
-            $this->random_famous_fill($num, 'infamous');
-            sort($this->famous['infamous']);
-         }
+		$num = rand_range($min_max[kMin], $min_max[kMax]);
+		$this->random_famous_fill($num, 'infamous');
+		sort($this->famous['infamous']);
+	 }
 
 	private function random_commodities_fill($num, $type) {
 		global $table_commodities;

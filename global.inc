@@ -61,6 +61,7 @@
 	define('kWard_Sea', "Sea");
 	define('kWard_Shanty', "Shanty");
 	define('kWard_Slum', "Slum");
+	define('kWard_Outskirt', 'Outskirt'); // for map generation, this is an empty ward use to define the shape of the outskirts of town
 
 	define('kRandom', 'random');
 

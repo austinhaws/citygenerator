@@ -29,6 +29,7 @@ if ($_POST) {
 }
 
 	$city->random($_POST);
+	$city->generate_map();
 
 //	pprint_r($_POST, 'post', true);
 //	pprint_r($city, 'city');

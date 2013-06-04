@@ -20,8 +20,10 @@ class report_class {
 			if ($key == 'wards-added') {
 				// wow, this is a hack!
 				$output .= '<script>
+					var globals = {};
 					$(function() {
 						$(\'[name="wards-added"]\').val(JSON.stringify(' . json_encode($value) . '));
+						globals.layout = ' . json_encode($city->layout) . ';
 					});
 				</script>
 				<input type="hidden" name="' . $key . '" value="" />
