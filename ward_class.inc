@@ -4,11 +4,8 @@ class ward_class {
 	public $acres = 0;
 	public $inside_walls = false;
 	public $buildings = array();
+	public $building_total = 0;
 
-	public function __construct() {
-	}
-	public function __destruct() {
-	}
 
 
 	private function convert_quality($quality) {
@@ -32,18 +29,19 @@ class ward_class {
 			$key .= " : " . $sub_type;
 		}
 		$key .= " (" . $this->convert_quality($quality) . ")";
-		if (!isset($this->buildings[$key])) {
-			$this->buildings[$key] = 0;
+		$found = false;
+		foreach ($this->buildings as $key_loop => $value) {
+			if ($value['key'] == $key) {
+				$found = &$this->buildings[$key_loop];
+				break;
+			}
 		}
-		$this->buildings[$key]++;
-	}
-
-	public function get_building_total() {
-		$total = 0;
-		foreach ($this->buildings as $sum) {
-			$total += $sum;
+		if (!$found) {
+			$this->buildings[] = array('key' => $key, 'total' => 0);
+			$found = &$this->buildings[count($this->buildings) - 1];
 		}
-		return $total;
+		$found['total']++;
+		$this->building_total++;
 	}
 
 	public function show_building_table() {
@@ -52,11 +50,11 @@ class ward_class {
 		$output = '<table class="table_buildings"><thead /><tbody><tr>';
 
 		$count = 0;
-		ksort($this->buildings);
-		foreach ($this->buildings as $name => $num) {
+		//ksort($this->buildings);
+		foreach ($this->buildings as $building) {
 			++$count;
 
-			$output .= '<td><span class="building_name">' . $name . '</span> : <span class="building_num">' . $num . '</span></td>';
+			$output .= '<td><span class="building_name">' . $building['key'] . '</span> : <span class="building_num">' . $building['total'] . '</span></td>';
 
 			if ($count % $kColumns == 0) {
 				$output .= '</tr><tr>';

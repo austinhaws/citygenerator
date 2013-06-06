@@ -5,6 +5,7 @@ class power_center_class {
 	public $wealth = 0;
 	public $npcs = array();
 	public $influence_points;
+	public $npcs_total = 0;
 
 	public function __construct($type, $influence, $wealth, $num_centers, $city) {
 		$this->type = $type;
@@ -43,6 +44,11 @@ class power_center_class {
 		$influence_left = $this->influence_points;
 		$not_used_count = 0; // how many times it failed to add (usually because it picked something too expensive)
 
+		// represents a row of npc levels all set to 0; each new npc class gets one of these rows
+		$levels_prefilled = array();
+		for ($i = 1; $i <= 20; $i++) {
+			$levels_prefilled[] = array('level' => $i, 'count' => 0);
+		}
 		while ($influence_left && $not_used_count < 5) {
 			// randomly pick a class
 			$class = get_table_result_range($table_class_random_class, rand_range(1, 1000));
@@ -61,13 +67,29 @@ class power_center_class {
 						--$num;
 					} else {
 						$influence_left -= get_table_result_index($table_class_influence, $class) * $level * $num;
-						if (!isset($this->npcs[$class])) {
-							$this->npcs[$class] = array();
+						$found = false;
+						foreach ($this->npcs as $key => $npc) {
+							if ($npc['class'] == $class) {
+								$found = $key;
+								break;
+							}
 						}
-						if (!isset($this->npcs[$class][$level])) {
-							$this->npcs[$class][$level] = 0;
+						if ($found === false) {
+							$this->npcs[] = array(
+								'class' => $class,
+								'levels' => $levels_prefilled,
+							);
+							$found = count($this->npcs) - 1;
 						}
-						$this->npcs[$class][$level] += $num;
+						$found_level = false;
+						foreach ($this->npcs[$found]['levels'] as $key_level_loop => $level_loop) {
+							if ($level_loop['level'] == $level) {
+								$found_level = $key_level_loop;
+								break;
+							}
+						}
+						$this->npcs[$found]['levels'][$found_level]['count'] += $num;
+						$this->npcs_total += $num;
 						$not_used = false;
 						$not_used_for = false;
 					}
@@ -84,21 +106,18 @@ class power_center_class {
 				++$not_used_count;
 			}
 		}
-		ksort($this->npcs);
+
+//pprint_r($this->npcs, 'npcs', true);
+		usort($this->npcs, function($a, $b) {
+			return strcmp($a['class'], $b['class']);
+		});
 	}
 
 	public function number_npcs() {
-		$total = 0;
-		foreach ($this->npcs as $class => $data) {
-			foreach ($data as $level => $number) {
-				$total += $number;
-			}
-		}
-		return $total;
+		return $this->npcs_total;
 	}
 
 	private function show_npcs() {
-		$kColumns = 5;
 		$output = '<table id="power_centers" class="table_npcs table_center">';
 
 		$output .= '<thead>';

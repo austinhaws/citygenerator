@@ -16,7 +16,7 @@ Name: <?php echo $city->name;?>
 	<span class="field_title">Population Density (Adults/Acre): </span><?php echo output_double($city->population_size / $city->acres);?> Adults/Acre<br />
 	<span class="field_title">Races: </span><?php echo $city->output_races();?><br />
 	<br />
-			
+
 	<span class="field_title">Gold Piece Limit: </span><?php echo output_double($city->gold_piece_limit());?><br />
 	<span class="field_title">Wealth: </span><?php echo output_double($city->wealth());?><br />
 	<span class="field_title">Income for Lord(s)/King(s): </span><?php echo output_double($city->king_income());?><br />
@@ -28,13 +28,13 @@ Name: <?php echo $city->name;?>
 	<span class="field_title">Famous: </span><?php echo implode_and($city->famous['famous'], 'None');?><br />
 	<span class="field_title">Infamous: </span><?php echo implode_and($city->famous['infamous'], 'None');?><br />
 	<br />
-			
+
 	<span class="field_title"># of Wards: </span><?php echo output_integer(count($city->wards));?><br />
-			
+
 	<?php
 			$total = 0;
 			foreach ($city->wards as $ward) {
-				$total += $ward->get_building_total();
+				$total += $ward->building_total;
 			}
 	?>
 	<span class="field_title"># of Buildings: </span><?php echo output_integer($total);?><br />
@@ -47,7 +47,7 @@ Name: <?php echo $city->name;?>
 		<br /><span class="field_title">No Walls</span><br />
 <?php } ?>
 </div>
-		
+
 <!-- wards -->
 <br /><br />
 <div id="wards">
@@ -57,7 +57,7 @@ Name: <?php echo $city->name;?>
 ?>
 	<div class="ward_type">Ward - <?php echo $ward->type;?></div>
 	<div id="ward_detail_<?php echo $i;?>">
-	<div class="ward_info"><?php echo output_double($ward->acres);?> Acres; <?php echo output_integer($ward->get_building_total());?> Structures; 
+	<div class="ward_info"><?php echo output_double($ward->acres);?> Acres; <?php echo output_integer($ward->building_total);?> Structures;
 <?php if ($ward->inside_walls) { ?>
 		Inside Walls
 <?php } else { ?>
@@ -66,19 +66,18 @@ Name: <?php echo $city->name;?>
 	</div>
 <?php
 		ksort($ward->buildings);
-		$total = count($ward->buildings);
 		$j = 0;
-		foreach ($ward->buildings as $name => $num) {
+		foreach ($ward->buildings as $building) {
 			if ($j) {
 				echo ', ';
 			}
-			echo '<span class="building_name">' . $name . '</span> : <span class="building_num">' . $num . '</span>';
+			echo '<span class="building_name">' . $building['key'] . '</span> : <span class="building_num">' . $building['total'] . '</span>';
 			++$j;
 		}
 		if ($i < count($city->wards) - 1) {
 			echo '<br /><br />';
 		}
-	} 
+	}
 ?>
 <br /><br />
 Number in parenthesis after building type is the building quality:
@@ -89,7 +88,7 @@ Number in parenthesis after building type is the building quality:
 <li>D is derelict, condemened, rough, or functional</li>
 </ul>
 </div>
-<br />			
+<br />
 <div id="professions">
 Professions<br />
 <?php
@@ -98,8 +97,8 @@ Professions<br />
 			if ($count++) {
 				echo ', ';
 			}
-			
-			echo $key . ' : ' . $value;
+
+			echo $value['profession'] . ' : ' . $value['total'];
 		}
 ?>
 </div>
@@ -131,14 +130,14 @@ Total NPCs (Class Level - Count): <?php echo output_integer($power_center->numbe
 <?php } ?>
 
 <?php if ($city->guilds_count()) { ?>
-	<div id="guilds">Guild<?php echo $city->guilds_count() > 1 ? 's' : '';?> - 
+	<div id="guilds">Guild<?php echo $city->guilds_count() > 1 ? 's' : '';?> -
 <?php		$count = 0;
 		foreach ($city->guilds as $name => $num) {
 			if ($num) {
 				if ($count++) {
 					echo ', ';
 				}
-				
+
 				echo $name . ' : ' . $num;
 			}
 		}

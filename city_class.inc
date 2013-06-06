@@ -26,6 +26,19 @@ class city_class {
 	public $majority_race;
 	public $layout = false;
 
+	// outputs for json (sorry, hacky)
+	public $races_output = false; // the races formatted for output
+	public $gold_piece_limit_output = false;
+	public $wealth_output = false;
+	public $king_income_output = false;
+	public $magic_resources_output = false;
+	public $commodities_export = false;
+	public $commodities_import = false;
+	public $famous_famous = false;
+	public $famous_infamous = false;
+	public $buildings_total = false;
+	public $guilds_count = 0;
+
 	public function generate_map() {
 		$this->layout = new Layout_CityMapClass();
 		$this->layout->generate($this);
@@ -177,7 +190,7 @@ class city_class {
 		$acres_per_ward = $acres / ($required_wards + count($post['wards-added']));
 
 		foreach ($post['wards-added'] as $ward_added) {
-			$acres -= $this->add_ward($ward_added->ward, $acres_per_ward, $has_gates, $ward_count, $generate_buildings, $ward_added->buildings);
+			$acres -= $this->add_ward($ward_added->ward, $acres_per_ward, $has_gates, $ward_count, $generate_buildings);
 		}
 
 		// put in wards
@@ -392,8 +405,18 @@ class city_class {
 
 	private function add_profession($profession, $num) {
 		if ($num > 0) {
-			initialize_array_value($this->professions, $profession, 0);
-			$this->professions[$profession] += $num;
+			$found = false;
+			foreach ($this->professions as $key => $profession_loop) {
+				if ($profession_loop['profession'] == $profession) {
+					$found =& $this->professions[$key];
+					break;
+				}
+			}
+			if ($found) {
+				$found['total'] += $num;
+			} else {
+				$this->professions[] = array('profession' => $profession, 'total' => $num);
+			}
 		}
 	}
 
@@ -412,7 +435,9 @@ class city_class {
 			++$total;
 			$this->random_profession_single();
 		}
-		ksort($this->professions);
+		usort($this->professions, function($a, $b) {
+			return strcmp($a['profession'], $b['profession']);
+		});
 	}
 
 	public function random($post) {
@@ -469,6 +494,21 @@ class city_class {
 		} else {
 			$this->random_name();
 		}
+
+		// for json/mustache put calculated fields in to variables for easy access
+		$this->races_output = $this->output_races();
+		$this->gold_piece_limit_output = $this->gold_piece_limit();
+		$this->wealth_output = $this->wealth();
+		$this->king_income_output = $this->king_income();
+		$this->magic_resources_output = $this->magic_resources();
+		$this->commodities_export = implode_and($this->commodities['export'], 'none');
+		$this->commodities_import = implode_and($this->commodities['import'], 'none');
+		$this->famous_famous = implode_and($this->famous['famous'], 'None');
+		$this->famous_infamous = implode_and($this->famous['infamous'], 'None');
+		$this->buildings_total = 0;
+		foreach ($this->wards as $ward) {
+			$this->buildings_total += $ward->building_total;
+		}
 	}
 
 	private function random_guilds() {
@@ -483,12 +523,23 @@ class city_class {
 			// count up number of $this->professions for each guild profession from table
 			$count = 0;
 			foreach ($professions as $profession) {
-				if (isset($this->professions[$profession])) {
-					$count += $this->professions[$profession];
+				$found = false;
+				foreach ($this->professions as $profession_loop) {
+					if ($profession_loop['profession'] == $profession) {
+						$found = $profession_loop;
+						break;
+					}
+				}
+				if ($found) {
+					$count += $found['total'];
 				}
 				// divide by 50 +/- offset to get # of guilds of this type in this city
 			}
-			$this->guilds[$guild] = floor($count / $modifier);
+			$number = floor($count / $modifier);
+			if ($number) {
+				$this->guilds_count += $number;
+				$this->guilds[] = array('guild' => $guild, 'total' => $number);
+			}
 		}
 	}
 
@@ -543,11 +594,12 @@ class city_class {
 	}
 
 	public function show_profession_counts() {
+	return 'city_class->show_prefssion_counts() does not work anymore';
 		$kColumns = 5;
 		$output = '<table class="table_professions table_center"><thead /><tbody><tr>';
 
 		$count = 0;
-		foreach ($this->professions as $key => $value) {
+		foreach ($this->professions as $key => $value) { // <=== professions are now arrays of objects
 			++$count;
 
 			$output .= '<td>' . $key . ' : ' . $value . '</td>';
@@ -727,12 +779,13 @@ class city_class {
 	}
 
 	public function show_guilds_table() {
+	return 'city->show_guilds_table no longer works';
 		$kColumns = 5;
 
 		$output = '<table class="table_guilds table_center"><thead /><tbody><tr>';
 
 		$count = 0;
-		foreach ($this->guilds as $name => $num) {
+		foreach ($this->guilds as $name => $num) { // <== this is now an array of objects
 			if ($num) {
 				++$count;
 
@@ -750,10 +803,6 @@ class city_class {
 	}
 
 	public function guilds_count() {
-		$total = 0;
-		foreach ($this->guilds as $num) {
-			$total += $num;
-		}
-		return $total;
+		return $this->guilds_count;
 	}
 }

@@ -69,7 +69,7 @@ class report_class {
 
 		$total = 0;
 		foreach ($city->wards as $ward) {
-			$total += $ward->get_building_total();
+			$total += $ward->building_total;
 		}
 		$output .= '<span class="field_title"># of Buildings:</span>' . output_integer($total) . '<br />';
 		$output .= '<span class="field_title"># of Power Centers:</span>' . output_integer(count($city->power_centers)) . '<br />';
@@ -97,7 +97,7 @@ class report_class {
 			$div_names[] = 'ward_detail_' . $i;
 			$output .= '<div class="ward_type"><a href="#" rel="toggle[ward_detail_' . $i . ']">' . $ward->type . '</a></div>';
 			$output .= '<div id="ward_detail_' . $i . '">';
-			$output .= '<div class="ward_info">' . output_double($ward->acres) . ' Acres; ' . output_integer($ward->get_building_total()) . ' Structures; ';
+			$output .= '<div class="ward_info">' . output_double($ward->acres) . ' Acres; ' . output_integer($ward->building_total) . ' Structures; ';
 			if ($ward->inside_walls) {
 				$output .= 'Inside Walls';
 			} else {

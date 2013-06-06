@@ -39,7 +39,8 @@ if ($_POST) {
 	$report = new report_class();
 
 	echo $report->run($city);
-        $_SESSION['CITYGENERATOR'] = array('CITY' => serialize($city));
+
+	$_SESSION['CITYGENERATOR'] = array('CITY' => serialize($city)); // so that printable works (may want to change this to use json/javascript)
 
 
 	function show_report_description() {
@@ -56,7 +57,69 @@ if ($_POST) {
 	$bottom_data = 'show_report_description';
 	include('template_bottom.inc');
 ?>
-<script type="text/javascript">
+<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/jquery.mustache-0.2.7.js"></script>
+<script src="animatedcollapse.js"></script>
+<script src="js/global.js"></script>
+<script src="js/mustache.js"></script>
+<script>
+	var globals = {};
+	$(function(){
+		globals.city = <?=json_encode($city)?>;
+		var output = $.extend(globals.city, {
+			population_size_formatted: number_format_integer(globals.city.population_size)
+			, acres_formatted : number_format_double(globals.city.acres)
+			, population_density : number_format_double(globals.city.population_size / globals.city.acres)
+			, gold_piece_limit_output : number_format_double(globals.city.gold_piece_limit_output)
+			, wealth_output : number_format_double(globals.city.wealth_output)
+			, king_income_output : number_format_double(globals.city.king_income_output)
+			, magic_resources_output : number_format_double(globals.city.magic_resources_output)
+			, wards_count : number_format_integer(globals.city.wards.length)
+			, buildings_total_output : number_format_integer(globals.city.buildings_total)
+			, power_centers_count : number_format_integer(globals.city.power_centers.length)
+			, guilds_count : number_format_integer(globals.city.guilds_count)
+			, gates : +globals.city.gates
+			, power_centers_exists : globals.city.power_centers.length > 0
+		});
+		for (var i = globals.city.wards.length - 1; i >= 0; i--) {
+			globals.city.wards[i].acres_output = number_format_double(globals.city.wards[i].acres);
+			globals.city.wards[i].building_total_output = number_format_integer(globals.city.wards[i].building_total);
+		}
+		for (var i = globals.city.power_centers.length - 1; i >= 0; i--) {
+			globals.city.power_centers[i].wealth_output = number_format_double(globals.city.power_centers[i].wealth);
+			globals.city.power_centers[i].influence_points_output = number_format_integer(globals.city.power_centers[i].influence_points);
+			globals.city.power_centers[i].npcs_total_output = number_format_integer(globals.city.power_centers[i].npcs_total);
+		}
+console.log(output);
+		globals.templates = new template_loader();
+		globals.templates.load_templates('templates/citygen.htm', function() {
+			globals.templates.render($('#report') , 'city-detail', globals.city, 'html');
+		});
+	});
+</script>
+
+<form id="form_regenerate" action="generate.php" method="post">
+<?
+	$output = '';
+	foreach ($_POST as $key => $value) {
+		if ($key == 'wards-added') {
+			$output .= '<script>
+				$(function() {
+					$(\'[name="wards-added"]\').val(JSON.stringify(' . json_encode($value) . '));
+				});
+			</script>
+			<input type="hidden" name="' . $key . '" value="" />
+			';
+		} else {
+			$output .= '<input type="hidden" name="' . $key . '" value="' . $value . '" />';
+		}
+	}
+?>
+</form>
+
+<div id="report"></div>
+
+<script>
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-34431316-1']);
