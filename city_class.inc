@@ -307,6 +307,10 @@ class city_class {
 				//pprint_r($rand, "Oops. rand out of range : " + $rand, true);
 			}
 		}
+
+		foreach ($this->wards as $key => $ward) {
+			$ward->cleanup();
+		}
 	}
 
 	private function is_size_atleast($population_type) {
@@ -593,25 +597,6 @@ class city_class {
 		$this->has[kHas_Military] = rand(1, 100) <= get_table_result_range($table_population_military, $this->population_type);
 	}
 
-	public function show_profession_counts() {
-	return 'city_class->show_prefssion_counts() does not work anymore';
-		$kColumns = 5;
-		$output = '<table class="table_professions table_center"><thead /><tbody><tr>';
-
-		$count = 0;
-		foreach ($this->professions as $key => $value) { // <=== professions are now arrays of objects
-			++$count;
-
-			$output .= '<td>' . $key . ' : ' . $value . '</td>';
-
-			if ($count % $kColumns == 0) {
-				$output .= '</tr><tr>';
-			}
-		}
-
-		return $output . '</tr></tbody></table>';
-	}
-
 	public function wealth() {
 		return (doubleval($this->gold_piece_limit()) * 0.5) * (doubleval($this->population_size) * 0.1);
 	}
@@ -766,40 +751,6 @@ class city_class {
 		}
 
 		$this->name = ucwords($this->name);
-	}
-
-	public function show_power_centers(&$div_names) {
-		$output = '';
-		$i = 0;
-		foreach ($this->power_centers as $power_center) {
-			$output .= $power_center->show($div_names, $i++);
-			$output .= '<br />';
-		}
-		return $output;
-	}
-
-	public function show_guilds_table() {
-	return 'city->show_guilds_table no longer works';
-		$kColumns = 5;
-
-		$output = '<table class="table_guilds table_center"><thead /><tbody><tr>';
-
-		$count = 0;
-		foreach ($this->guilds as $name => $num) { // <== this is now an array of objects
-			if ($num) {
-				++$count;
-
-				$output .= '<td><span class="guild_name">' . $name . '</span> : <span class="guild_num">' . $num . '</span></td>';
-
-				if ($count % $kColumns == 0) {
-					$output .= '</tr><tr>';
-				}
-			}
-		}
-
-		$output .= '</tr></tbody></table>';
-
-		return $output;
 	}
 
 	public function guilds_count() {

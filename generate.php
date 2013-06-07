@@ -1,44 +1,32 @@
 <?php
     session_start();
 	require_once('global.inc');
-	require_once('report_class.inc');
-
-	include('template_top.inc');
 
 	$city = new city_class();
 
-if ($_POST) {
-	$_POST['wards-added'] = json_decode($_POST['wards-added']);
-	if (!$_POST['wards-added']) {
-		$_POST['wards-added'] = array();
+	if ($_POST) {
+		$_POST['wards-added'] = json_decode($_POST['wards-added']);
+		if (!$_POST['wards-added']) {
+			$_POST['wards-added'] = array();
+		}
+	} else {
+		$_POST = array(
+			'name' => '',
+			'population_type' => 'random',
+			'sea' => 'random',
+			'river' => 'random',
+			'military' => 'random',
+			'gates' => 'random',
+			'buildings' => 'on',
+			'professions' => 'on',
+			'race' => 'random',
+			'racial_mix' => 'random',
+			'wards' => array(),
+		);
 	}
-} else {
-	$_POST = array(
-		'name' => '',
-		'population_type' => 'random',
-		'sea' => 'random',
-		'river' => 'random',
-		'military' => 'random',
-		'gates' => 'random',
-		'buildings' => 'on',
-		'professions' => 'on',
-		'race' => 'random',
-		'racial_mix' => 'random',
-		'wards' => array(),
-	);
-}
 
 	$city->random($_POST);
 	$city->generate_map();
-
-//	pprint_r($_POST, 'post', true);
-//	pprint_r($city, 'city');
-
-	echo '<link rel="stylesheet" type="text/css" href="city_generator.css" />';
-
-	$report = new report_class();
-
-	echo $report->run($city);
 
 	$_SESSION['CITYGENERATOR'] = array('CITY' => serialize($city)); // so that printable works (may want to change this to use json/javascript)
 
@@ -55,16 +43,19 @@ if ($_POST) {
 		';
 	}
 	$bottom_data = 'show_report_description';
-	include('template_bottom.inc');
 ?>
+<link rel="stylesheet" type="text/css" href="city_generator.css" />
+
 <script src="js/jquery-1.9.1.min.js"></script>
 <script src="js/jquery.mustache-0.2.7.js"></script>
 <script src="animatedcollapse.js"></script>
 <script src="js/global.js"></script>
 <script src="js/mustache.js"></script>
+<script src="js/jquery.quickfit.js"></script>
 <script>
 	var globals = {};
 	$(function(){
+		// setup city data; have to do some conversions to make it mustache happy
 		globals.city = <?=json_encode($city)?>;
 		var output = $.extend(globals.city, {
 			population_size_formatted: number_format_integer(globals.city.population_size)
@@ -90,11 +81,54 @@ if ($_POST) {
 			globals.city.power_centers[i].influence_points_output = number_format_integer(globals.city.power_centers[i].influence_points);
 			globals.city.power_centers[i].npcs_total_output = number_format_integer(globals.city.power_centers[i].npcs_total);
 		}
-console.log(output);
+
+		// load mustache template and render data
 		globals.templates = new template_loader();
 		globals.templates.load_templates('templates/citygen.htm', function() {
 			globals.templates.render($('#report') , 'city-detail', globals.city, 'html');
+
+			// make it cool
+//			$('.building,.guild').quickfit();
+
+
+			$('.toggleable').click(function(e) {
+				e.stopPropagation();
+				var target = $($(this).data('toggle-target'));
+				$.each(target, function(idx, elem) {
+					var jelem = $(elem);
+					if (jelem.css('display') == 'block') {
+						jelem.hide();
+//						jelem.prop('orig-height', jelem.css('height'));
+//						jelem.animate({height: 0}, function() {
+//							jelem.hide();
+//						});
+					} else {
+						jelem.show();
+//						jelem.animate({height: jelem.prop('orig-height')});
+					}
+				});
+			});
+
+			$('#hide-all').click(function(e) {
+				e.stopPropagation();
+				$.each($('.toggleable'), function(idx, elem) {
+					var target = $($(elem).data('toggle-target'));
+					$.each(target, function(idx, elem) {
+						$(elem).hide();
+					});
+				});
+			});
+			$('#show-all').click(function(e) {
+				e.stopPropagation();
+				$.each($('.toggleable'), function(idx, elem) {
+					var target = $($(elem).data('toggle-target'));
+					$.each(target, function(idx, elem) {
+						$(elem).show();
+					});
+				});
+			});
 		});
+
 	});
 </script>
 
@@ -117,8 +151,10 @@ console.log(output);
 ?>
 </form>
 
-<div id="report"></div>
 
+<?	include('template_top.inc');	?>
+<div id="report"></div>
+<?	include('template_bottom.inc');	?>
 <script>
 
   var _gaq = _gaq || [];

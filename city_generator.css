@@ -1,3 +1,46 @@
+* {
+	font-size: 10pt;
+}
+.line {
+	clear: both;
+}
+.line.margin-top {
+	margin-top: 11px;
+}
+
+.link-div, .toggleable {
+	text-decoration: underline;
+	color: #CC6B47;
+	cursor: pointer;
+}
+.toggled-closed {
+	display: none;
+}
+.group-title {
+	margin-top: 20px;
+}
+.centerer {
+	margin: 0 auto;
+	width: 300px;
+	text-align: center;
+}
+.buttons {
+	padding-top: 15px;
+}
+.centerer span {
+	padding: 5px;
+}
+.link-div:hover, .toggleable:hover {
+	color: blue;
+	text-decoration: none;
+}
+
+h1 a {
+	font-size: 20pt;
+}
+.ward_type a {
+	font-size: 15pt;
+}
 .center {
 	text-align: center;
 }
@@ -14,14 +57,14 @@
 }
 .field_title {
 	font-weight: bold;
-	font-size: 1.05em;
+	font-size: 10pt;
 	width: 40%;
 	text-align:right;
 	padding-right: 5px;
 }
 .field_title2 {
 	font-weight: bold;
-	font-size: 1.05em;
+	font-size: 10pt;
 	width: 25%;
 	text-align:right;
 	padding-right: 5px;
@@ -36,36 +79,97 @@
 }
 .bold {
 	font-weight: bold;
-	font-size: 1.05em;
 }
 .building_name {
-	font-weight: bold;
 }
 .building_num {
 }
 .table_buildings tbody td, .table_professions tbody td, .table_npcs tbody td, .table_guilds tbody td {
-	font-size: .75em;
+	font-size: 9pt;
 	padding-left: 5px;
 	width: 200px;
 }
+#guilds, .ward_buildings {
+	width: 100%;
+}
+#wards .ward {
+	width: 100%;
+	float: left;
+	margin-top: 10px;
+}
+#wards .ward:first-child {
+	margin-top: 0px;
+}
+#guilds .guild {
+	float: left;
+	width: 150px;
+	font-size: 9pt;
+    padding-left: 5px;
+}
+#professions {
+	margin-bottom: 10px;
+}
+#professions .profession {
+	width: 188px;
+	float: left;
+    margin-left: 5px;
+}
+.ward_buildings .building, .guild {
+	width: 188px;
+	float: left;
+    height: 15px;
+    margin-left: 5px;
+    overflow: hidden;
+}
+.guild {
+	width: 184px !important;
+}
+.power-center-detail {
+	width: 700px;
+	margin: 0 auto;
+}
+.clear {
+	clear: both;
+}
 .ward_type, .power_center_type {
 	text-align: center;
-	font-weight: bold;
-	font-size: 1.25em;
+	font-size: 10pt;
 }
 .ward_info {
 	text-align: center;
 	font-style: italic;
+	font-weight: bold;
+	margin: 3px 0;
 }
 .table_data {
 	text-align: center;
 }
 .ogl {
 	font-style: italic;
-	font-size: .7em;
+	font-size: 9pt;
 }
-#power_centers th {
+.power-centers .th {
 	text-align: center;
+	float: left;
+	width: 30px;
+}
+.power-centers .th:first-child, .power-centers .td:first-child {
+	width: 100px;
+}
+.power-center {
+	clear: both;
+	padding-top: 19px;
+}
+.power-center:first-child {
+	padding-top: 0;
+}
+.power-center .power-center-type {
+	text-align: center;
+	font-size: 12pt;
+}
+.power-centers .td {
+	float: left;
+	width: 30px;
 }
 .div_update {
 	margin-top: 10px;
@@ -75,7 +179,7 @@
 .update_date {
 	width: 25%;
 	font-weight: bold;
-	font-size: 1.05em;
+	font-size: 10pt;
 	text-align:right;
 	padding-right: 5px;
 	vertical-align: top;
@@ -86,7 +190,7 @@
 }
 
 .sub-button {
-	font-size: .9em;
+	font-size: 9pt;
 }
 
 .options-ward-buildings {
@@ -114,5 +218,17 @@
 	text-align: left;
 	width: 20px;
 	font-weight: bold;
-	font-size: 1.05em;
+	font-size: 10pt;
+}
+.building-types {
+	margin: 10px 0 0;
+	width: 100%;
+	float: left;
+}
+.building-types-centerer {
+	margin: 0 auto;
+	width: 400px;
+}
+.building-types ul {
+	margin-top: 0;
 }

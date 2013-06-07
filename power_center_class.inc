@@ -1,5 +1,7 @@
 <?php
 class power_center_class {
+	public static $next_id;
+	public $id;
 	public $type = '';
 	public $alignment = '';
 	public $wealth = 0;
@@ -8,6 +10,7 @@ class power_center_class {
 	public $npcs_total = 0;
 
 	public function __construct($type, $influence, $wealth, $num_centers, $city) {
+		$this->id = ++power_center_class::$next_id;
 		$this->type = $type;
 		$this->wealth = $wealth;
 		$this->influence_points = $influence;
@@ -115,71 +118,5 @@ class power_center_class {
 
 	public function number_npcs() {
 		return $this->npcs_total;
-	}
-
-	private function show_npcs() {
-		$output = '<table id="power_centers" class="table_npcs table_center">';
-
-		$output .= '<thead>';
-		$output .= '<th />';
-		$output .= '<th>1</th>';
-		$output .= '<th>2</th>';
-		$output .= '<th>3</th>';
-		$output .= '<th>4</th>';
-		$output .= '<th>5</th>';
-		$output .= '<th>6</th>';
-		$output .= '<th>7</th>';
-		$output .= '<th>8</th>';
-		$output .= '<th>9</th>';
-		$output .= '<th>10</th>';
-		$output .= '<th>11</th>';
-		$output .= '<th>12</th>';
-		$output .= '<th>13</th>';
-		$output .= '<th>14</th>';
-		$output .= '<th>15</th>';
-		$output .= '<th>16</th>';
-		$output .= '<th>17</th>';
-		$output .= '<th>18</th>';
-		$output .= '<th>19</th>';
-		$output .= '<th>20</th>';
-		$output .= '</thead><tbody><tr>';
-
-		$count = 0;
-		foreach ($this->npcs as $class => $data) {
-			$counts = array();
-			foreach ($data as $level => $amount) {
-				$counts[$level] = $amount;
-			}
-			$output .= '<tr><td>' . $class . '</td>';
-
-			for ($i = 1; $i <= 20; ++$i) {
-				$output .= '<td class="table_data">' . (isset($counts[$i]) ? $counts[$i] : '-') . '</td>';
-			}
-			$output .= '</tr>';
-		}
-		return $output . '</tr></tbody></table>';
-	}
-
-	public function show(&$div_names, $i) {
-		$div_names[] = 'power_center_' . $i;
-		$output = '';
-		$output .= table_center_begin();
-		$output .= '<br />';
-		$output .= '<div class="power_center_type"><a href="#" rel="toggle[power_center_' . $i . ']">' . $this->type . '</a></div>';
-		$output .= '<br />';
-//		$output .= '<span class="field_title">Type:</span>' . $this->type . '<br />';
-		$output .= '<div id="power_center_' . $i . '">';
-		$output .= table_center_begin();
-		$output .= '<span class="field_title">Alignment:</span>' . $this->alignment . '<br />';
-		$output .= '<span class="field_title">Wealth:</span>' . output_double($this->wealth) . '<br />';
-		$output .= '<span class="field_title">Influence Points:</span>' . output_integer($this->influence_points) . '<br />';
-		$output .= '<span class="field_title">Total NPCs:</span>' . output_integer($this->number_npcs()) . '<br />';
-		$output .= table_center_end();
-		$output .= '<br />';
-		$output .= $this->show_npcs();
-		$output .= '</div>';
-		$output .= table_center_end();
-
-		return $output;
 	}
 }

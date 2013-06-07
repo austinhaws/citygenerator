@@ -1,12 +1,16 @@
 <?php
 class ward_class {
+	public static $id_next = 0;
 	public $type = '';
 	public $acres = 0;
 	public $inside_walls = false;
 	public $buildings = array();
 	public $building_total = 0;
+	public $id = false;
 
-
+	public function __construct() {
+		$this->id = ++ward_class::$id_next;
+	}
 
 	private function convert_quality($quality) {
 		if (is_numeric($quality)) {
@@ -37,32 +41,16 @@ class ward_class {
 			}
 		}
 		if (!$found) {
-			$this->buildings[] = array('key' => $key, 'total' => 0);
-			$found = &$this->buildings[count($this->buildings) - 1];
+			$this->buildings[] = array('key' => $key, 'total' => 1);
+		} else {
+			$found['total']++;
 		}
-		$found['total']++;
 		$this->building_total++;
 	}
 
-	public function show_building_table() {
-		$kColumns = 5;
-
-		$output = '<table class="table_buildings"><thead /><tbody><tr>';
-
-		$count = 0;
-		//ksort($this->buildings);
-		foreach ($this->buildings as $building) {
-			++$count;
-
-			$output .= '<td><span class="building_name">' . $building['key'] . '</span> : <span class="building_num">' . $building['total'] . '</span></td>';
-
-			if ($count % $kColumns == 0) {
-				$output .= '</tr><tr>';
-			}
-		}
-
-		$output .= '</tr></tbody></table>';
-
-		return $output;
+	public function cleanup() {
+		usort($this->buildings, function($a, $b) {
+			return strcmp($a['key'], $b['key']);
+		});
 	}
 }
