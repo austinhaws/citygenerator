@@ -185,33 +185,4 @@
 	{{/guilds_count}}
 
 	<div class="clear"></div>
-{{!
-		$output .= '<script type="text/javascript">';
-
-		foreach ($div_names as $name) {
-			$output .= 'animatedcollapse.addDiv("' . $name . '", "fade=1' . ($name == 'city_stats' ? '' : ',hide=1') . '");';
-		}
-
-		$output .= 'animatedcollapse.init()';
-
-		$output .= '
-			function show_all() {';
-		foreach ($div_names as $name) {
-			$output .= 'animatedcollapse.show("' . $name . '", "fade=1");';
-		}
-		$output .= '
-			}
-			function hide_all() {';
-		foreach ($div_names as $name) {
-			$output .= 'animatedcollapse.hide("' . $name . '", "fade=1");';
-		}
-		$output .= '}';
-
-				$output .= 'function regenerate() { document.getElementById("form_regenerate").submit(); }';
-				$output .= '</s cript>';
-
-		return $output;
-	}
-
-}}
 </script>

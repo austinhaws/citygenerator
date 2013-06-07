@@ -18,6 +18,8 @@
 }
 .group-title {
 	margin-top: 20px;
+	float: left;
+	width: 100%;
 }
 .centerer {
 	margin: 0 auto;

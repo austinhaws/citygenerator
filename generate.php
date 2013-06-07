@@ -68,7 +68,7 @@
 			, wards_count : number_format_integer(globals.city.wards.length)
 			, buildings_total_output : number_format_integer(globals.city.buildings_total)
 			, power_centers_count : number_format_integer(globals.city.power_centers.length)
-			, guilds_count : number_format_integer(globals.city.guilds_count)
+			, guilds_count : globals.city.guilds_count
 			, gates : +globals.city.gates
 			, power_centers_exists : globals.city.power_centers.length > 0
 		});
@@ -127,25 +127,30 @@
 					});
 				});
 			});
-		});
 
+			$('#regenerate').click(function(e) {
+				$('#form_regenerate').submit();
+			});
+		});
 	});
 </script>
 
 <form id="form_regenerate" action="generate.php" method="post">
 <?
-	$output = '';
 	foreach ($_POST as $key => $value) {
 		if ($key == 'wards-added') {
-			$output .= '<script>
+		?>
+			<script>
 				$(function() {
-					$(\'[name="wards-added"]\').val(JSON.stringify(' . json_encode($value) . '));
+					$('[name="wards-added"]').val(JSON.stringify(<?=json_encode($value)?>));
 				});
 			</script>
-			<input type="hidden" name="' . $key . '" value="" />
-			';
+			<input type="hidden" name="<?=$key?>" value="" />
+		<?
 		} else {
-			$output .= '<input type="hidden" name="' . $key . '" value="' . $value . '" />';
+		?>
+			<input type="hidden" name="<?=$key?>" value="<?=$value?>" />
+		<?
 		}
 	}
 ?>
