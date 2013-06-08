@@ -113,32 +113,33 @@ Wealth: <?php echo output_double($power_center->wealth);?><br />
 Influence Points: <?php echo output_integer($power_center->influence_points);?><br />
 Total NPCs (Class Level - Count): <?php echo output_integer($power_center->number_npcs());?><br />
 <?php
-		foreach ($power_center->npcs as $class => $data) {
-			echo $class . ' ';
+		foreach ($power_center->npcs as $npcs) {
+			echo $npcs['class'] . ' ';
 			$count = 0;
-			foreach ($data as $level => $amount) {
+			foreach ($npcs['levels'] as $level) {
 				if ($count++) {
 					echo ', ';
 				}
-				echo $level . '-' . $amount;
+				echo $level['level'] . '-' . $level['count'];
 			}
 			echo '<br />';
 		}
-			echo '<br />';
+		echo '<br />';
 	}?>
 	</div>
 <?php } ?>
 
 <?php if ($city->guilds_count()) { ?>
 	<div id="guilds">Guild<?php echo $city->guilds_count() > 1 ? 's' : '';?> -
-<?php		$count = 0;
-		foreach ($city->guilds as $name => $num) {
-			if ($num) {
+<?php
+		$count = 0;
+		foreach ($city->guilds as $guild) {
+			if ($guild['total']) {
 				if ($count++) {
 					echo ', ';
 				}
 
-				echo $name . ' : ' . $num;
+				echo $guild['guild'] . ' : ' . $guild['total'];
 			}
 		}
 ?>

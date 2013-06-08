@@ -131,6 +131,9 @@
 			$('#regenerate').click(function(e) {
 				$('#form_regenerate').submit();
 			});
+			$('#printable').click(function(e) {
+				window.open('printable.php', '_blank');
+			});
 		});
 	});
 </script>
