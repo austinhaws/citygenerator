@@ -8,7 +8,7 @@
 	margin-top: 11px;
 }
 
-.link-div, .toggleable {
+.link-div, .toggleable, .ward-letter {
 	text-decoration: underline;
 	color: #CC6B47;
 	cursor: pointer;
@@ -32,7 +32,7 @@
 .centerer span {
 	padding: 5px;
 }
-.link-div:hover, .toggleable:hover {
+.link-div:hover, .toggleable:hover, .ward-letter:hover {
 	color: blue;
 	text-decoration: none;
 }
@@ -233,4 +233,26 @@ h1 a {
 }
 .building-types ul {
 	margin-top: 0;
+}
+
+#city-layout {
+	width: 100%;
+	height: 300px;
+}
+
+#layout-container {
+    font-family: monospace;
+    float: left;
+	cursor: pointer;
+}
+#layout-container-detail {
+	float: left;
+}
+
+.divider {
+	width: 100%;
+	float: left;
+	border-top: 1px dashed black;
+	height: 1px;
+	margin: 20px 0 30px;
 }

@@ -22,14 +22,12 @@
 			'race' => 'random',
 			'racial_mix' => 'random',
 			'wards' => array(),
+			'wards-added' => array(),
 		);
 	}
 
 	$city->random($_POST);
 	$city->generate_map();
-
-	$_SESSION['CITYGENERATOR'] = array('CITY' => serialize($city)); // so that printable works (may want to change this to use json/javascript)
-
 
 	function show_report_description() {
 		global $use_statement;
@@ -52,6 +50,7 @@
 <script src="js/global.js"></script>
 <script src="js/mustache.js"></script>
 <script src="js/jquery.quickfit.js"></script>
+<script src="js/city-layout.js"></script>
 <script>
 	var globals = {};
 	$(function(){
@@ -86,10 +85,6 @@
 		globals.templates = new template_loader();
 		globals.templates.load_templates('templates/citygen.htm', function() {
 			globals.templates.render($('#report') , 'city-detail', globals.city, 'html');
-
-			// make it cool
-//			$('.building,.guild').quickfit();
-
 
 			$('.toggleable').click(function(e) {
 				e.stopPropagation();
@@ -134,14 +129,46 @@
 			$('#printable').click(function(e) {
 				window.open('printable.php', '_blank');
 			});
+			// set up clicking letter in ward title to show ward detail
+			$('.ward-letter').click(function() {
+				show_ward_detail($(this).closest('.ward_type').data('ward-id'));
+			});
+
+			globals.city_layout = new city_layout({container:$('#layout-container'), city: globals.city});
+
+			// set float sizes for the map and detail sections
+			var layout_container = $('#layout-container');
+			var layout_container_width = layout_container.width();
+			var layout_container_detail = $('#layout-container-detail');
+			var latest_post = $('#latest-post');
+			var latest_post_width = latest_post.width();
+			// from css, this is the width of the buildings columns
+			var column_width = $($('.ward_buildings .building')[0]).outerWidth(true);
+			var available_width = latest_post_width - layout_container_width;
+			var column_mod_width = available_width % column_width;
+			var detail_width = available_width - column_mod_width;
+
+			layout_container_detail.width(detail_width);
+			layout_container_detail.css({'margin-left':column_mod_width / 2});
 		});
 	});
+
+	function show_ward_detail(ward_id) {
+		for (var i = 0; i < globals.city.wards.length; i++) {
+			if (globals.city.wards[i].id == ward_id) {
+				globals.templates.render($('#layout-container-detail') , 'city-ward-detail', globals.city.wards[i], 'html');
+//open the details down here and scroll down to it
+//also need to call this function when letters are clicked in the city layout graph
+				break;
+			}
+		}
+	}
 </script>
 
 <form id="form_regenerate" action="generate.php" method="post">
 <?
 	foreach ($_POST as $key => $value) {
-		if ($key == 'wards-added') {
+		if ($key == 'wards-added' || $key == 'wards') {
 		?>
 			<script>
 				$(function() {
@@ -162,6 +189,8 @@
 
 <?	include('template_top.inc');	?>
 <div id="report"></div>
+<div id="layout-container"></div><div id="layout-container-detail"></div>
+<div class="clear"></div>
 <?	include('template_bottom.inc');	?>
 <script>
 

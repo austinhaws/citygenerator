@@ -63,7 +63,7 @@ Name: {{name}}
 <br /><br />
 
 <div id="wards">
-	{{#wards}}
+	{{#wards}}{{#show_ward_list}}
 		<div class="ward_type">Ward - {{type}}</div>
 		<div>
 		<div class="ward_info">
@@ -79,7 +79,7 @@ Name: {{name}}
 			<span class="building_name">{{key}}</span> : <span class="building_num">{{total}}; </span>
 		{{/buildings}}
 		<br /><br />
-	{{/wards}}
+	{{/show_ward_list}}{{/wards}}
 	Number in parenthesis after building type is the building quality:
 	<ul>
 		<li>A is luxurious, royal, or imperial</li>
@@ -125,6 +125,30 @@ Professions<br />
 		{{/guilds}}
 	</div>
 {{/guilds_count}}
+</script>
+
+
+<script id="city-ward-detail" type="text/html">
+	<div class="ward">
+		<div class="ward_type" data-ward-id="{{id}}"><span>{{type}}</span> <span>({{letter}})</span></div>
+		<div class="ward_detail ward-id-{{id}}">
+			<div class="ward_info">
+				{{acres_output}} Acres; {{building_total_output}} Structures;
+				{{#inside_walls}}
+					Inside Walls
+				{{/inside_walls}}
+				{{^inside_walls}}
+					Outside Walls
+				{{/inside_walls}}
+			</div>
+
+			<div class="ward_buildings">
+				{{#buildings}}
+					<div class="building">{{key}} : {{total}}</div>
+				{{/buildings}}
+			</div>
+		</div>
+	</div>
 </script>
 
 <script id="city-detail" type="text/html">
@@ -181,26 +205,28 @@ Professions<br />
 	<div class="content-container wards-container toggled-closed">
 		<div id="wards">
 			{{#wards}}
-			<div class="ward">
-				<div class="ward_type toggleable" data-toggle-target=".ward-id-{{id}}">{{type}}</div>
-				<div class="ward_detail ward-id-{{id}} toggled-closed">
-					<div class="ward_info">
-						{{acres_output}} Acres; {{building_total_output}} Structures;
-						{{#inside_walls}}
-							Inside Walls
-						{{/inside_walls}}
-						{{^inside_walls}}
-							Outside Walls
-						{{/inside_walls}}
-					</div>
+				{{#show_ward_list}}
+				<div class="ward">
+					<div class="ward_type" data-ward-id="{{id}}"><span class="toggleable" data-toggle-target=".ward-id-{{id}}">{{type}}</span> <span class="ward-letter">({{letter}})</span></div>
+					<div class="ward_detail ward-id-{{id}} toggled-closed">
+						<div class="ward_info">
+							{{acres_output}} Acres; {{building_total_output}} Structures;
+							{{#inside_walls}}
+								Inside Walls
+							{{/inside_walls}}
+							{{^inside_walls}}
+								Outside Walls
+							{{/inside_walls}}
+						</div>
 
-					<div class="ward_buildings">
-						{{#buildings}}
-							<div class="building">{{key}} : {{total}}</div>
-						{{/buildings}}
+						<div class="ward_buildings">
+							{{#buildings}}
+								<div class="building">{{key}} : {{total}}</div>
+							{{/buildings}}
+						</div>
 					</div>
 				</div>
-			</div>
+				{{/show_ward_list}}
 			{{/wards}}
 			<div class="building-types">
 				<div class="building-types-centerer">
@@ -288,5 +314,6 @@ Professions<br />
 		</div>
 	{{/guilds_count}}
 
+	<div class="divider"></div>
 	<div class="clear"></div>
 </script>
