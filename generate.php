@@ -55,6 +55,7 @@
 	var globals = {};
 	$(function(){
 		// setup city data; have to do some conversions to make it mustache happy
+		globals.last_show_layout_ward_id = false; // the last shown ward detail from the layout
 		globals.city = <?=json_encode($city)?>;
 		var output = $.extend(globals.city, {
 			population_size_formatted: number_format_integer(globals.city.population_size)
@@ -131,38 +132,13 @@
 			});
 			// set up clicking letter in ward title to show ward detail
 			$('.ward-letter').click(function() {
-				show_ward_detail($(this).closest('.ward_type').data('ward-id'));
+				show_layout_ward($(this).closest('.ward_type').data('ward-id'), true);
 			});
 
 			globals.city_layout = new city_layout({container:$('#layout-container'), city: globals.city});
-
-			// set float sizes for the map and detail sections
-			var layout_container = $('#layout-container');
-			var layout_container_width = layout_container.width();
-			var layout_container_detail = $('#layout-container-detail');
-			var latest_post = $('#latest-post');
-			var latest_post_width = latest_post.width();
-			// from css, this is the width of the buildings columns
-			var column_width = $($('.ward_buildings .building')[0]).outerWidth(true);
-			var available_width = latest_post_width - layout_container_width;
-			var column_mod_width = available_width % column_width;
-			var detail_width = available_width - column_mod_width;
-
-			layout_container_detail.width(detail_width);
-			layout_container_detail.css({'margin-left':column_mod_width / 2});
 		});
 	});
 
-	function show_ward_detail(ward_id) {
-		for (var i = 0; i < globals.city.wards.length; i++) {
-			if (globals.city.wards[i].id == ward_id) {
-				globals.templates.render($('#layout-container-detail') , 'city-ward-detail', globals.city.wards[i], 'html');
-//open the details down here and scroll down to it
-//also need to call this function when letters are clicked in the city layout graph
-				break;
-			}
-		}
-	}
 </script>
 
 <form id="form_regenerate" action="generate.php" method="post">

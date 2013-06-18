@@ -6,10 +6,10 @@ function city_layout(options) {
 			, width: 100 // width of the canvas
 			, city : false // the city rendered
 			, cells : [] // the raphael cells of the city
-			, ward_lookup : {} // key = ward_id, value = ward
 		}
 		, options
 	);
+	globals.ward_lookup = {}; // key = ward_id, value = ward // made global so external functions can use it (HACK!!!)
 
 	if (data.container) {
 		// show the cells
@@ -20,15 +20,16 @@ function city_layout(options) {
 
 		// give wards a letter and set up a ward_id_index for easier lookup
 		$.each(data.city.wards, function(idx, ward) {
-			data.ward_lookup[ward.id] = ward;
+			globals.ward_lookup[ward.id] = ward;
 		});
 		// add a letter for the outskirt wards
-		data.ward_lookup[-1] = {letter:'-'};
+		globals.ward_lookup[-1] = {letter:'-'};
 		// add non-wards letters
 		for (var i = 0; i < layout_size; i++) {
 			ward_id = data.city.layout.cells[i].ward_id;
-			if (!data.ward_lookup[ward_id]) {
-				data.ward_lookup[ward_id] = {
+			if (!globals.ward_lookup[ward_id]) {
+console.log('non ward id: ' + ward_id);
+				globals.ward_lookup[ward_id] = {
 					letter:'•'
 					, id:ward_id
 				}; // add the letter for the ward for later use
@@ -39,10 +40,10 @@ function city_layout(options) {
 		var location;
 		var ratio;
 		// count wards and give each ward an idx/location for the ratio
-		$.each(data.ward_lookup, function(ward_id, ward) {
+		$.each(globals.ward_lookup, function(ward_id, ward) {
 			ward.location = ward_lookup_count++;
 		});
-		$.each(data.ward_lookup, function(ward_id, ward) {
+		$.each(globals.ward_lookup, function(ward_id, ward) {
 			location = ward.location;
 			// get the ratio of hue
 			ratio = location / ward_lookup_count; // ratio of 360
@@ -63,7 +64,7 @@ function city_layout(options) {
 			if (ward_id === false) {
 				ward_id = -1;
 			}
-			ward_lookup = data.ward_lookup[ward_id];
+			ward_lookup = globals.ward_lookup[ward_id];
 			output += '<span class="cell" data-letter="' + ward_lookup.letter + '" data-ward-id="' + ward_id + '" style="color:' + ward_lookup.color + '" data-color="' + ward_lookup.color + '">' + ward_lookup.letter + '</span>';
 		}
 		// show the layout
@@ -71,16 +72,49 @@ function city_layout(options) {
 
 		// set up hover for the wards
 		data.container.find('.cell').hover(function() {
-			var elem = $(this);
-			var ward_id = $(this).data('ward-id');
-			var ward_lookup = data.ward_lookup[ward_id];
-			$('[data-letter="' + ward_lookup.letter + '"]').css({color:'black'});
+			show_layout_ward($(this).data('ward-id'));
 		}, function() {
-			var elem = $(this);
-			var ward_id = $(this).data('ward-id');
-			var ward_lookup = data.ward_lookup[ward_id];
-			var color = elem.data('color');
-			$('[data-letter="' + ward_lookup.letter + '"]').css({color:color});
 		});
+	}
+}
+
+// ward_id: the ward_id with which to interact
+// hovered: (bool) true = show in black being hovered; false = show in original color not being hovered
+function show_layout_ward(ward_id) {
+	// hide previous if there is one
+	if (globals.last_show_layout_ward_id) {
+		var last_ward_lookup = globals.ward_lookup[globals.last_show_layout_ward_id];
+		$('[data-letter="' + last_ward_lookup.letter + '"]').css({color:last_ward_lookup.color});
+	}
+	globals.last_show_layout_ward_id = ward_id;
+
+	// show the new ward
+	var ward_lookup = globals.ward_lookup[ward_id];
+	$('#layout-container-container').show();
+	$('[data-letter="' + ward_lookup.letter + '"]').css({color:'black'});
+	show_ward_detail(ward_id);
+}
+
+function show_ward_detail(ward_id) {
+	for (var i = 0; i < globals.city.wards.length; i++) {
+		if (globals.city.wards[i].id == ward_id) {
+			globals.templates.render($('#layout-container-detail') , 'city-ward-detail', globals.city.wards[i], 'html');
+
+			// set float sizes for the map and detail sections
+			var layout_container = $('#layout-container');
+			var layout_container_width = layout_container.width();
+			var layout_container_detail = $('#layout-container-detail');
+			var latest_post = $('#latest-post');
+			var latest_post_width = latest_post.width();
+			// from css, this is the width of the buildings columns
+			var column_width = $($('.ward_buildings .building')[0]).outerWidth(true);
+			var available_width = latest_post_width - layout_container_width;
+			var column_mod_width = available_width % column_width;
+			var detail_width = available_width - column_mod_width;
+
+			layout_container_detail.width(detail_width);
+			layout_container_detail.css({'margin-left':column_mod_width / 2});
+			break;
+		}
 	}
 }
