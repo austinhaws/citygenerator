@@ -189,8 +189,6 @@
 
 <?	include('template_top.inc');	?>
 <div id="report"></div>
-<div id="layout-container"></div><div id="layout-container-detail"></div>
-<div class="clear"></div>
 <?	include('template_bottom.inc');	?>
 <script>
 
