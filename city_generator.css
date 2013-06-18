@@ -244,6 +244,9 @@ h1 a {
     font-family: monospace;
     float: left;
 	cursor: pointer;
+	border-radius: 15px;
+	background-color: #eed;
+	padding: 5px;
 }
 #layout-container-detail {
 	float: left;
