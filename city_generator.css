@@ -248,6 +248,15 @@ h1 a {
 	background-color: #eed;
 	padding: 5px;
 }
+#layout-container .cell {
+	padding: 1px;
+}
+
 #layout-container-detail {
 	float: left;
+}
+
+#layout-container-detail .ward_type span {
+	font-size: 15pt;
+	font-weight: bold;
 }

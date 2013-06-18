@@ -28,9 +28,8 @@ function city_layout(options) {
 		for (var i = 0; i < layout_size; i++) {
 			ward_id = data.city.layout.cells[i].ward_id;
 			if (!globals.ward_lookup[ward_id]) {
-console.log('non ward id: ' + ward_id);
 				globals.ward_lookup[ward_id] = {
-					letter:'•'
+					letter:'&nbsp;'
 					, id:ward_id
 				}; // add the letter for the ward for later use
 			}
@@ -65,7 +64,11 @@ console.log('non ward id: ' + ward_id);
 				ward_id = -1;
 			}
 			ward_lookup = globals.ward_lookup[ward_id];
-			output += '<span class="cell" data-letter="' + ward_lookup.letter + '" data-ward-id="' + ward_id + '" style="color:' + ward_lookup.color + '" data-color="' + ward_lookup.color + '">' + ward_lookup.letter + '</span>';
+			var letter = ward_lookup.letter;
+			if (!ward_lookup.show_ward_list) {
+				letter = '&nbsp;';
+			}
+			output += '<span class="cell" data-letter="' + ward_lookup.letter + '" data-ward-id="' + ward_id + '" style="color:' + ward_lookup.color + '" data-color="' + ward_lookup.color + '">' + letter + '</span>';
 		}
 		// show the layout
 		data.container.html(output);
@@ -86,34 +89,38 @@ function show_layout_ward(ward_id) {
 		var last_ward_lookup = globals.ward_lookup[globals.last_show_layout_ward_id];
 		$('[data-letter="' + last_ward_lookup.letter + '"]').css({color:last_ward_lookup.color});
 	}
-	globals.last_show_layout_ward_id = ward_id;
 
 	// show the new ward
 	var ward_lookup = globals.ward_lookup[ward_id];
-	$('#layout-container-container').show();
-	$('[data-letter="' + ward_lookup.letter + '"]').css({color:'black'});
-	show_ward_detail(ward_id);
+	if (ward_lookup.show_ward_list) {
+		globals.last_show_layout_ward_id = ward_id;
+		$('#layout-container-container').show();
+		$('[data-letter="' + ward_lookup.letter + '"]').css({color:'black'});
+		show_ward_detail(ward_id);
+	}
 }
 
 function show_ward_detail(ward_id) {
 	for (var i = 0; i < globals.city.wards.length; i++) {
 		if (globals.city.wards[i].id == ward_id) {
-			globals.templates.render($('#layout-container-detail') , 'city-ward-detail', globals.city.wards[i], 'html');
+			if (globals.city.wards[i].show_ward_list) {
+				globals.templates.render($('#layout-container-detail') , 'city-ward-detail', globals.city.wards[i], 'html');
 
-			// set float sizes for the map and detail sections
-			var layout_container = $('#layout-container');
-			var layout_container_width = layout_container.width();
-			var layout_container_detail = $('#layout-container-detail');
-			var latest_post = $('#latest-post');
-			var latest_post_width = latest_post.width();
-			// from css, this is the width of the buildings columns
-			var column_width = $($('.ward_buildings .building')[0]).outerWidth(true);
-			var available_width = latest_post_width - layout_container_width;
-			var column_mod_width = available_width % column_width;
-			var detail_width = available_width - column_mod_width;
+				// set float sizes for the map and detail sections
+				var layout_container = $('#layout-container');
+				var layout_container_width = layout_container.outerWidth();
+				var layout_container_detail = $('#layout-container-detail');
+				var latest_post = $('#latest-post');
+				var latest_post_width = latest_post.width();
+				// from css, this is the width of the buildings columns
+				var column_width = $($('.ward_buildings .building')[0]).outerWidth(true);
+				var available_width = latest_post_width - layout_container_width;
+				var column_mod_width = available_width % column_width;
+				var detail_width = available_width - column_mod_width;
 
-			layout_container_detail.width(detail_width);
-			layout_container_detail.css({'margin-left':column_mod_width / 2});
+				layout_container_detail.width(detail_width);
+				layout_container_detail.css({'margin-left':column_mod_width / 2});
+			}
 			break;
 		}
 	}

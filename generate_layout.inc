@@ -55,12 +55,28 @@
 //pprint_r($unclaimed_cells, 'unclaimed cells', true);
 
 			// treat inside_walls as true/false doing false state first
-			for ($inside_walls = 0; $inside_walls < 2; $inside_walls++) {
+			// 0 (first) : outside; 1 (second) : gates; 2 (third) : everything else
+			for ($current_ward_type = 0; $current_ward_type < 3; $current_ward_type++) {
 				for ($i = count($this->city->wards) - 1; $i >= 0; $i--) {
 					$ward =& $this->city->wards[$i];
 					// do wards outside of walls first and start them on the edge of the city
-					if ($ward->inside_walls == $inside_walls) {
-						if (!$inside_walls && $unclaimed_cells_edges) {
+					$matches = false;
+					switch ($current_ward_type) {
+						case 0: // outside walls
+							$matches = !$ward->inside_walls;
+						break;
+						case 1: // gates
+							$matches = $ward->type == Layout_Enum_Wards::kWard_Gate;
+						break;
+						case 2: // inside walls
+							$matches = ($ward->type != Layout_Enum_Wards::kWard_Gate) && $ward->inside_walls;
+						break;
+						default:
+							pprint_r($current_ward_type, 'Unknown current ward type', true);
+						break;
+					}
+					if ($matches) {
+						if ((!$ward->inside_walls || $ward->type == Layout_Enum_Wards::kWard_Gate) && $unclaimed_cells_edges) {
 							$use_array =& $unclaimed_cells_edges;
 						} else {
 							// adding cell inside walls or there are no more wall spaces available
@@ -111,7 +127,7 @@
 					);
 				}
 			}
-
+return; // skip claiming
 			// claim all the unclaimeds
 			// - get all outskirt wards so that they can't be grown
 			$outskirt_wards = array();
@@ -205,7 +221,7 @@
 					$ward = new ward_class();
 					$ward->type = Layout_Enum_Wards::kWard_Outskirt;
 					$ward->show_ward_list = false;
-					$this->city->wards[] = &$ward;
+					$this->city->wards[] = $ward;
 
 					$this->layout_ward($state, $ward);
 				}
