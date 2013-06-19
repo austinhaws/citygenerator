@@ -357,7 +357,7 @@
 				$num_cells += $ward->number_cells;
 			}
 
-			$num_cells *= 1.25; // add some bloat for the edges and inconsistencies and ward holes
+			$num_cells *= 1.05; // add some bloat for the edges and inconsistencies and ward holes
 
 			// get random ratio (weighted towards .5) for determining height vs width
 			// this determines the root to use when dividing cells

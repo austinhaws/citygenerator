@@ -65,7 +65,7 @@
 		public function add_building($type, $sub_type, $quality) {
 			$key = $type;
 			if ($sub_type) {
-				$key .= " : " . $sub_type;
+				$key .= ":" . $sub_type;
 			}
 			$key .= " (" . $this->convert_quality($quality) . ")";
 			$found = false;

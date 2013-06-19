@@ -279,3 +279,12 @@ h1 a {
 	font-size: 15pt;
 	font-weight: bold;
 }
+
+#layout-container-detail .ward_buildings {
+	height: 300px;
+	overflow: auto;
+}
+
+#layout-container-detail .ward_buildings .building {
+	font-size: 7pt;
+}

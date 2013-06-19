@@ -93,18 +93,21 @@ function city_layout(options) {
 // hovered: (bool) true = show in black being hovered; false = show in original color not being hovered
 function show_layout_ward(ward_id) {
 	// hide previous if there is one
-	if (globals.last_show_layout_ward_id) {
-		var last_ward_lookup = globals.ward_lookup[globals.last_show_layout_ward_id];
-		$('[data-letter="' + last_ward_lookup.letter + '"]').css({color:last_ward_lookup.color});
-	}
+	var ward = globals.ward_lookup[ward_id];
+	if (ward.show_ward_list) {
+		if (globals.last_show_layout_ward_id) {
+			var last_ward_lookup = globals.ward_lookup[globals.last_show_layout_ward_id];
+			$('[data-letter="' + last_ward_lookup.letter + '"]').css({color:last_ward_lookup.color});
+		}
 
-	// show the new ward
-	var ward_lookup = globals.ward_lookup[ward_id];
-	if (ward_lookup.show_ward_list) {
-		globals.last_show_layout_ward_id = ward_id;
-		$('#layout-container-container').show();
-		$('[data-letter="' + ward_lookup.letter + '"]').css({color:'black'});
-		show_ward_detail(ward_id);
+		// show the new ward
+		var ward_lookup = globals.ward_lookup[ward_id];
+		if (ward_lookup.show_ward_list) {
+			globals.last_show_layout_ward_id = ward_id;
+			$('#layout-container-container').show();
+			$('[data-letter="' + ward_lookup.letter + '"]').css({color:'black'});
+			show_ward_detail(ward_id);
+		}
 	}
 }
 
@@ -121,13 +124,14 @@ function show_ward_detail(ward_id) {
 				var latest_post = $('#latest-post');
 				var latest_post_width = latest_post.width();
 				// from css, this is the width of the buildings columns
-				var column_width = $($('.ward_buildings .building')[0]).outerWidth(true);
+				var column_width = $($('.ward_buildings .building')[0]).outerWidth(true) + 5; // +5 for scroll bar
 				var available_width = latest_post_width - layout_container_width;
 				var column_mod_width = available_width % column_width;
 				var detail_width = available_width - column_mod_width;
 
 				layout_container_detail.width(detail_width);
 				layout_container_detail.css({'margin-left':column_mod_width / 2});
+				$('#layout-container-detail')[0].scrollIntoView();
 			}
 			break;
 		}
