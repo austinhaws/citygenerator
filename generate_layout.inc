@@ -6,6 +6,8 @@
 
 	class Layout_CellClass {
 		public $ward_id = false; // pointer to the ward that is claiming this space
+		public $walls = array('left' => false, 'right' => false, 'top' => false, 'bottom' => false,);
+		public $touches_outside = false; // if true, then this cell can be connected to outside the city and is not an island in the wards
 
 		public function wardId() {
 			return $this->ward_id;
@@ -36,6 +38,112 @@
 
 			// place the wards in the city
 			$this->add_wards();
+
+			// determine which cells have walls on which sides
+			$this->add_walls();
+		}
+
+		private function add_walls() {
+			$directions = array( // the directions to test for neighbors
+				'left' => array('x' => -1), // left
+				'right' => array('x' => 1), // right
+				'top' => array('y' => -1), // up
+				'bottom' => array('y' => 1), // down
+			);
+			$ward_lookups = array();
+			foreach ($this->city->wards as $ward) {
+				$ward_lookups[$ward->id] = $ward;
+			}
+
+			// for all unused cells, find if they an island in wards or if they touch the outside
+			do {
+				$found = false;
+				// loop through all cells and if the cell is next to a cell that touches the outside or is on the outside, set outside flag
+				for ($i = 0; $i < $this->array_size; $i++) {
+					// if already claimed or already determined, skip it
+					if (($this->cells[$i]->ward_id === false || $ward_lookups[$this->cells[$i]->ward_id]->type == Layout_Enum_Wards::kWard_Outskirt) && !$this->cells[$i]->touches_outside) {
+						$position = $this->idx_to_position($i);
+						if ($position['x'] == 0 || $position['y'] == 0 || $position['x'] == $this->width - 1 || $position['y'] == $this->height - 1) {
+							$this->cells[$i]->touches_outside = true;
+							$found = true;
+						} else {
+							$offset_position = $position;
+							foreach ($directions as $which_side => $direction) {
+								foreach ($direction as $axis => $delta) {
+									// check neighbors
+									$offset_position[$axis] += $delta;
+								}
+
+								$idx = $this->coord_to_array_pos($offset_position);
+								if ($idx >= 0) {
+									// if any neighbor touches_outside then this cell touches outside
+									$test_cell = $this->cells[$idx];
+									if ($test_cell->touches_outside || ($test_cell->ward_id && !$ward_lookups[$test_cell->ward_id]->inside_walls)) {
+										$this->cells[$i]->touches_outside = true;
+										$found = true; // mark that one was found
+									}
+								}
+
+								$offset_position = $position; // reset offset position
+							}
+						}
+					}
+				}
+				// keep looping until no more found
+			} while ($found);
+			// at this point, all cells that are unclaimed and don't have "touches outside" marked are "islands" and should not have walls on them
+
+
+			// for each cell, determine which sides have walls
+			// to have a wall, the current cell must be inside_walls and the cell adjacent to it on the side being tested must be outside walls
+			// for now, not claimed cells count as neither inside nor outside so that no walls are placed by them
+
+			$ward_lookup = array(); // key = ward_id, value = ward
+			foreach ($this->city->wards as $ward) {
+				$ward_lookup[$ward->id] = $ward;
+			}
+
+			$position = array('x' => 0, 'y' => 0);// the starting position
+			// loop until all cells have been visited
+			while ($position['x'] < $this->width && $position['y'] < $this->height) {
+				$myidx = $this->coord_to_array_pos($position);
+				$my_cell = $this->cell($position);
+				if ($my_cell->ward_id !== false) {
+					$my_ward = $ward_lookup[$my_cell->ward_id];
+
+					if ($my_ward->inside_walls) {
+						$offset_position = $position;
+						// offset the cell position to check neighbors
+						foreach ($directions as $which_side => $direction) {
+							foreach ($direction as $axis => $delta) {
+								$offset_position[$axis] += $delta;
+							}
+
+							// test offset
+							$idx = $this->coord_to_array_pos($offset_position);
+							$needs_wall = false;
+							if ($idx >= 0) {
+								$cell = $this->cells[$idx];
+								if ($cell->ward_id === false) {
+									$needs_wall = $cell->touches_outside;
+								} else {
+									$offset_ward = $ward_lookup[$cell->ward_id];
+									$needs_wall = $offset_ward->inside_walls != $my_ward->inside_walls;
+								}
+							} else if ($my_ward->inside_walls) {
+								$needs_wall = true;
+							}
+							$this->cells[$myidx]->walls[$which_side] = $needs_wall;
+
+							$offset_position = $position; // reset position
+						}
+					}
+				}
+				if (++$position['x'] >= $this->width) {
+					$position['y']++;
+					$position['x'] = 0;
+				}
+			}
 		}
 
 		private function add_wards() {
@@ -127,8 +235,8 @@
 					);
 				}
 			}
-return; // skip claiming
-			// claim all the unclaimeds
+// skip claiming
+/*			// claim all the unclaimeds
 			// - get all outskirt wards so that they can't be grown
 			$outskirt_wards = array();
 			foreach ($this->city->wards as $ward) {
@@ -191,6 +299,7 @@ return; // skip claiming
 					}
 				}
 			}
+*/
 		}
 
 		private function add_edging() {
@@ -304,7 +413,7 @@ return; // skip claiming
 		// input : position array
 		// output : idx
 		public function coord_to_array_pos($position) {
-			if ($position['x'] < 0 || $position['y'] < 0) {
+			if ($position['x'] < 0 || $position['y'] < 0 || $position['x'] >= $this->width || $position['y'] >= $this->height) {
 				$retval = -1;
 			} else {
 				$retval = $position['y'] * $this->width + $position['x'];

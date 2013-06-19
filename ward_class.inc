@@ -1,6 +1,5 @@
 <?
 	interface Layout_Enum_Wards {
-		const kWard_Outskirt = kWard_Outskirt;
 		const kWard_Administration = kWard_Administration;
 		const kWard_Craftsmen = kWard_Craftsmen;
 		const kWard_Gate = kWard_Gate;
@@ -8,6 +7,7 @@
 		const kWard_Merchant = kWard_Merchant;
 		const kWard_Military = kWard_Military;
 		const kWard_Oderiforous = kWard_Oderiforous;
+		const kWard_Outskirt = kWard_Outskirt;
 		const kWard_Patriciate = kWard_Patriciate;
 		const kWard_River = kWard_River;
 		const kWard_Sea = kWard_Sea;

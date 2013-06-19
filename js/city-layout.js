@@ -53,13 +53,15 @@ function city_layout(options) {
 
 
 		// output ascii for the wards
+		var cell;
 		for (var i = 0; i < layout_size; i++) {
+			cell = data.city.layout.cells[i];
 			// add new line after width
 			if (i && i % data.city.layout.width == 0) {
 				output += '<br />';
 			}
 			// show letters for wards
-			ward_id = data.city.layout.cells[i].ward_id;
+			ward_id = cell.ward_id;
 			if (ward_id === false) {
 				ward_id = -1;
 			}
@@ -68,7 +70,13 @@ function city_layout(options) {
 			if (!ward_lookup.show_ward_list) {
 				letter = '&nbsp;';
 			}
-			output += '<span class="cell" data-letter="' + ward_lookup.letter + '" data-ward-id="' + ward_id + '" style="color:' + ward_lookup.color + '" data-color="' + ward_lookup.color + '">' + letter + '</span>';
+			output += '<span class="cell'
+				+ (cell.touches_outside ? ' touches-outside ' : '')
+				+ (cell.walls.bottom ? ' wall-bottom ' : '')
+				+ (cell.walls.top ? ' wall-top ' : '')
+				+ (cell.walls.left ? ' wall-left ' : '')
+				+ (cell.walls.right ? ' wall-right ' : '')
+				+ '" data-letter="' + ward_lookup.letter + '" data-ward-id="' + ward_id + '" style="color:' + ward_lookup.color + '" data-color="' + ward_lookup.color + '">' + letter + '</span>';
 		}
 		// show the layout
 		data.container.html(output);
