@@ -184,7 +184,8 @@
 						break;
 					}
 					if ($matches) {
-						if ((!$ward->inside_walls || $ward->type == Layout_Enum_Wards::kWard_Gate) && $unclaimed_cells_edges) {
+						// if don't have gates, then start wards anywhere so that there's not empty nothing in the middle
+						if ($this->city->gates > 0 && (!$ward->inside_walls || $ward->type == Layout_Enum_Wards::kWard_Gate) && $unclaimed_cells_edges) {
 							$use_array =& $unclaimed_cells_edges;
 						} else {
 							// adding cell inside walls or there are no more wall spaces available
