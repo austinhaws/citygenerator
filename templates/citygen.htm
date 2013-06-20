@@ -64,7 +64,7 @@ Name: {{name}}
 
 <div id="wards">
 	{{#wards}}{{#show_ward_list}}
-		<div class="ward_type">Ward - {{type}}</div>
+		<div class="ward_type">Ward - {{type}} ({{letter}})</div>
 		<div>
 		<div class="ward_info">
 			{{acres_output}} Acres; {{building_total_output}} Structures;
@@ -125,6 +125,11 @@ Professions<br />
 		{{/guilds}}
 	</div>
 {{/guilds_count}}
+
+<br />
+<br />
+<div>Layout</div>
+	<div id="layout"></div>
 </script>
 
 
