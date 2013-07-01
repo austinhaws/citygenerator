@@ -19,6 +19,8 @@
 	}
 
 	class Layout_CityMapClass {
+		const WARD_BLOAT_FACTOR = 5.0; // this determines how much larger wards are than just 1:1
+
 		public $array_size = 0; // how many cells so that you don't have to do count($this->cells) all the time
 		public $width = false; // how many map cells in width
 		public $height = false; // how many map cells in height
@@ -61,7 +63,7 @@
 				// loop through all cells and if the cell is next to a cell that touches the outside or is on the outside, set outside flag
 				for ($i = 0; $i < $this->array_size; $i++) {
 					// if already claimed or already determined, skip it
-					if (($this->cells[$i]->ward_id === false || $ward_lookups[$this->cells[$i]->ward_id]->type == Layout_Enum_Wards::kWard_Outskirt) && !$this->cells[$i]->touches_outside) {
+					if (($this->cells[$i]->ward_id === false || $ward_lookups[$this->cells[$i]->ward_id]->type() == Layout_Enum_Wards::kWard_Outskirt) && !$this->cells[$i]->touches_outside) {
 						$position = $this->idx_to_position($i);
 						if ($position['x'] == 0 || $position['y'] == 0 || $position['x'] == $this->width - 1 || $position['y'] == $this->height - 1) {
 							$this->cells[$i]->touches_outside = true;
@@ -174,10 +176,10 @@
 							$matches = !$ward->inside_walls;
 						break;
 						case 1: // gates
-							$matches = $ward->type == Layout_Enum_Wards::kWard_Gate;
+							$matches = $ward->type() == Layout_Enum_Wards::kWard_Gate;
 						break;
 						case 2: // inside walls
-							$matches = ($ward->type != Layout_Enum_Wards::kWard_Gate) && $ward->inside_walls;
+							$matches = ($ward->type() != Layout_Enum_Wards::kWard_Gate) && $ward->inside_walls;
 						break;
 						default:
 							pprint_r($current_ward_type, 'Unknown current ward type', true);
@@ -185,7 +187,7 @@
 					}
 					if ($matches) {
 						// if don't have gates, then start wards anywhere so that there's not empty nothing in the middle
-						if ($this->city->gates > 0 && (!$ward->inside_walls || $ward->type == Layout_Enum_Wards::kWard_Gate) && $unclaimed_cells_edges) {
+						if ($this->city->gates > 0 && (!$ward->inside_walls || $ward->type() == Layout_Enum_Wards::kWard_Gate) && $unclaimed_cells_edges) {
 							$use_array =& $unclaimed_cells_edges;
 						} else {
 							// adding cell inside walls or there are no more wall spaces available
@@ -329,7 +331,7 @@
 					);
 
 					$ward = new ward_class();
-					$ward->type = Layout_Enum_Wards::kWard_Outskirt;
+					$ward->setType(Layout_Enum_Wards::kWard_Outskirt);
 					$ward->show_ward_list = false;
 					$this->city->wards[] = $ward;
 
@@ -354,7 +356,7 @@
 			// get the total buildings for all the wards
 			$num_cells = 0;
 			foreach ($this->city->wards as $ward) {
-				$ward->number_cells = max(1, intval($ward->building_total / $this->average_density));
+				$ward->number_cells = intval(max(1, intval($ward->building_total / $this->average_density)) * Layout_CityMapClass::WARD_BLOAT_FACTOR);
 				$num_cells += $ward->number_cells;
 			}
 

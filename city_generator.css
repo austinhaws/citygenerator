@@ -274,6 +274,7 @@ h1 a {
 
 #layout-container-detail {
 	float: left;
+	clear: both;
 }
 
 #layout-container-detail .ward_type span {

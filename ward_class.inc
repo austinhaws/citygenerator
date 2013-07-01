@@ -17,7 +17,8 @@
 
 	class ward_class {
 		public static $id_next = 0;
-		public $type = '';
+		private $type = '';
+		public $type_public = ''; // for json
 		public $acres = 0;
 		public $inside_walls = false;
 		public $buildings = array();
@@ -25,13 +26,14 @@
 		public $id = false;
 		public $number_cells = 0; // how many cells this ward consumes (set by layout class)
 		public $layout = false;
-		public $letter = false;
+		public $id_letter = false; // unique letter given to each ward
+		public $letter = false; // letter based on ward type(may be a dup)
 		private static $next_letter = 'a'; // similar to index, give each ward its own letter
 		public $show_ward_list = true; // this is a natural ward that should be shown in the ward list; outskirt wards are not in this category
 
 		public function __construct() {
 			$this->id = ++ward_class::$id_next;
-			$this->letter = self::$next_letter;
+			$this->id_letter = self::$next_letter;
 
 			// go to the next letter
 			if (self::$next_letter == 'z') {
@@ -45,6 +47,59 @@
 			} else {
 				self::$next_letter++;
 			}
+		}
+
+		public function setType($type) {
+			$this->type = $type;
+
+			switch ($this->type) {
+				case Layout_Enum_Wards::kWard_Administration:
+					$this->letter = 'A';
+				break;
+				case Layout_Enum_Wards::kWard_Craftsmen:
+					$this->letter = 'C';
+				break;
+				case Layout_Enum_Wards::kWard_Gate:
+					$this->letter = 'G';
+				break;
+				case Layout_Enum_Wards::kWard_Market:
+					$this->letter = 'M';
+				break;
+				case Layout_Enum_Wards::kWard_Merchant:
+					$this->letter = '$';
+				break;
+				case Layout_Enum_Wards::kWard_Military:
+					$this->letter = 'Y';
+				break;
+				case Layout_Enum_Wards::kWard_Oderiforous:
+					$this->letter = 'O';
+				break;
+				case Layout_Enum_Wards::kWard_Outskirt:
+					$this->letter = ' ';
+				break;
+				case Layout_Enum_Wards::kWard_Patriciate:
+					$this->letter = 'P';
+				break;
+				case Layout_Enum_Wards::kWard_River:
+					$this->letter = 'R';
+				break;
+				case Layout_Enum_Wards::kWard_Sea:
+					$this->letter = 'W'; //water
+				break;
+				case Layout_Enum_Wards::kWard_Shanty:
+					$this->letter = 'S';
+				break;
+				case Layout_Enum_Wards::kWard_Slum:
+					$this->letter = 'L';
+				break;
+				default:
+				exit('unknown type: ' . $this->type);
+			}
+			$this->type_public = $this->type;
+		}
+
+		public function type() {
+			return $this->type;
 		}
 
 		private function convert_quality($quality) {

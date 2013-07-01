@@ -323,7 +323,7 @@ class city_class {
 		global $table_buildings;
 		global $table_buildings_subtypes;
 		global $table_population_ward_density;
-		$value = get_table_result_index($table_population_ward_density[$this->population_type], $ward->type);
+		$value = get_table_result_index($table_population_ward_density[$this->population_type], $ward->type());
 
 		$density = max(1, $value * $ward->acres);
 
@@ -343,7 +343,7 @@ class city_class {
 
 //pprint_r($table_buildings[$building_weights[$j]->type], 'table buildings');
 //pprint_r(array($j, $total_weights, $building_weights), 'select from these', true);
-				$buildings_list = $table_buildings[$ward->type];
+				$buildings_list = $table_buildings[$ward->type()];
 				$building_type = $building_weights[$j]->type;
 				$result = false;
 				foreach ($buildings_list as $building_item) {
@@ -357,7 +357,7 @@ class city_class {
 					$result = $buildings_list[array_shift($keys)]; // default to first on list if no match (this shouldn't be possible)
 				}
 			} else {
-				$result = get_table_result_range($table_buildings[$ward->type], rand_range(1, 100));
+				$result = get_table_result_range($table_buildings[$ward->type()], rand_range(1, 100));
 			}
 			$type = $result['type'];
 			$quality = rand_range($result[kMin], $result[kMax]);
@@ -386,7 +386,7 @@ class city_class {
 		}
 
 		$ward = new ward_class();
-		$ward->type = $ward_type;
+		$ward->setType($ward_type);
 		$ward->acres = $acres_used;
 		$ward->inside_walls = $inside_walls;
 		if ($generate_buildings) {
@@ -394,8 +394,8 @@ class city_class {
 		}
 
 		$this->wards[] = $ward;
-		initialize_array_value($ward_count, $ward->type, 0);
-		$ward_count[$ward->type]++;
+		initialize_array_value($ward_count, $ward->type(), 0);
+		$ward_count[$ward->type()]++;
 
 		return $acres_used;
 	}
