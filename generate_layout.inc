@@ -19,7 +19,8 @@
 	}
 
 	class Layout_CityMapClass {
-		const WARD_BLOAT_FACTOR = 5.0; // this determines how much larger wards are than just 1:1
+		// when bloat changes, make sure to test against "$ratio > .55 || $ratio < .45"
+		const WARD_BLOAT_FACTOR = 8.0; // this determines how much larger wards are than just 1:1; don't ever have this less than 1
 
 		public $array_size = 0; // how many cells so that you don't have to do count($this->cells) all the time
 		public $width = false; // how many map cells in width
@@ -166,19 +167,22 @@
 
 			// treat inside_walls as true/false doing false state first
 			// 0 (first) : outside; 1 (second) : gates; 2 (third) : everything else
-			for ($current_ward_type = 0; $current_ward_type < 3; $current_ward_type++) {
+			for ($current_ward_type = 0; $current_ward_type < 4; $current_ward_type++) {
 				for ($i = count($this->city->wards) - 1; $i >= 0; $i--) {
 					$ward =& $this->city->wards[$i];
 					// do wards outside of walls first and start them on the edge of the city
 					$matches = false;
 					switch ($current_ward_type) {
-						case 0: // outside walls
+						case 0: // rivers first
+							$matches = $ward->type() == Layout_Enum_Wards::kWard_River;
+						break;
+						case 1: // outside walls
 							$matches = !$ward->inside_walls;
 						break;
-						case 1: // gates
+						case 2: // gates
 							$matches = $ward->type() == Layout_Enum_Wards::kWard_Gate;
 						break;
-						case 2: // inside walls
+						case 3: // inside walls
 							$matches = ($ward->type() != Layout_Enum_Wards::kWard_Gate) && $ward->inside_walls;
 						break;
 						default:
@@ -187,7 +191,7 @@
 					}
 					if ($matches) {
 						// if don't have gates, then start wards anywhere so that there's not empty nothing in the middle
-						if ($this->city->gates > 0 && (!$ward->inside_walls || $ward->type() == Layout_Enum_Wards::kWard_Gate) && $unclaimed_cells_edges) {
+						if ($this->city->gates > 0 && (!$ward->inside_walls || false != array_search($ward->type(), array(Layout_Enum_Wards::kWard_Gate, Layout_Enum_Wards::kWard_River, ))) && $unclaimed_cells_edges) {
 							$use_array =& $unclaimed_cells_edges;
 						} else {
 							// adding cell inside walls or there are no more wall spaces available
@@ -368,7 +372,7 @@
 			do {
 				// loop until the ratio isn't impossibly bad
 				$ratio = rand_ratio();
-			} while ($ratio > .55 || $ratio < .45);
+			} while ($ratio > .55 || $ratio < .45); // if this changes, make sure to test against Layout_CityMapClass::WARD_BLOAT_FACTOR
 
 			// get height/width to be a rectangle
 			$this->height = max(1, intval(pow($num_cells, $ratio)));
@@ -450,15 +454,45 @@
 			return array('x' => $x, 'y' => $y);
 		}
 
-		public function load_possibles($position, &$possibles, &$total_weights) {
-//pprint_r(array($position, $possibles), 'starting position');
+		public function load_possibles($position, &$possibles, &$total_weights, $ward_type) {
 			// load up directions to go arrays (this allows for diaganols easily later on)
-			$directions = array(
-				array('x' => -1), // left
-				array('x' => 1), // right
-				array('y' => -1), // up
-				array('y' => 1), // down
-			);
+			switch ($ward_type) {
+				case Layout_Enum_Wards::kWard_River:
+					$directions = array();
+					position is the starting position and not hte current position
+					if ($position['x'] > 0) {
+						$directions[] = array('x' => -1); // started on right, can go left
+					} else {
+						$directions[] = array('x' => 1); // started on left, can go right
+					}
+					if ($position['y'] > 0) {
+						$directions[] = array('y' => -1);
+					} else {
+						$directions[] = array('y' => 1);
+					}
+				break;
+				case Layout_Enum_Wards::kWard_Administration:
+				case Layout_Enum_Wards::kWard_Craftsmen:
+				case Layout_Enum_Wards::kWard_Gate:
+				case Layout_Enum_Wards::kWard_Market:
+				case Layout_Enum_Wards::kWard_Merchant:
+				case Layout_Enum_Wards::kWard_Military:
+				case Layout_Enum_Wards::kWard_Oderiforous:
+				case Layout_Enum_Wards::kWard_Outskirt:
+				case Layout_Enum_Wards::kWard_Patriciate:
+				case Layout_Enum_Wards::kWard_Sea:
+				case Layout_Enum_Wards::kWard_Shanty:
+				case Layout_Enum_Wards::kWard_Slum:
+					$directions = array(
+						array('x' => -1), // left
+						array('x' => 1), // right
+						array('y' => -1), // up
+						array('y' => 1), // down
+					);
+				break;
+				default:
+					exit('Unknown ward type: load_possibles: ' + $ward_type);
+			}
 			// check all four directions from this point
 			foreach ($directions as $direction) {
 				// just use the same position object to keep from creating a bunch of overhead
@@ -504,7 +538,7 @@
 			$cell = $this->cell($state['positions'][0]);
 			if ($cell && !$cell->wardId()) {
 				$cell->setWard($ward);
-				$this->load_possibles($state['positions'][0], $possibles, $total_weights);
+				$this->load_possibles($state['positions'][0], $possibles, $total_weights, $ward->type());
 				$state['current_size']++;
 			}
 
@@ -545,7 +579,7 @@
 				unset($possibles[$found]);
 
 				// add a count for claimed cell's unclaimed neighbors to the list
-				$this->load_possibles($position, $possibles, $total_weights);
+				$this->load_possibles($position, $possibles, $total_weights, $ward->type());
 
 				// eventually, will want to limit max x/y movement by passed in parameters for these values to make different shapes
 			}

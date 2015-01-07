@@ -242,8 +242,13 @@ h1 a {
 }
 
 #layout-container {
+	float:left;
+/*
+	width: auto;
+    clear: both;
+    margin: 0 auto;
+*/
     font-family: monospace;
-    float: left;
 	cursor: pointer;
 	border-radius: 15px;
 	background-color: #eed;

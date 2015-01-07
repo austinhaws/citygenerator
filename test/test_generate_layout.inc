@@ -94,4 +94,4 @@
 		}
 	}
 
-	(new Layout_CityMapClass_Test())->test(); // run the tests
+//	(new Layout_CityMapClass_Test())->test(); // run the tests

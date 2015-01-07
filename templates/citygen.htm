@@ -64,7 +64,7 @@ Name: {{name}}
 
 <div id="wards">
 	{{#wards}}{{#show_ward_list}}
-		<div class="ward_type">Ward - {{type}} ({{letter}})</div>
+		<div class="ward_type">Ward - {{type_public}}</div>
 		<div>
 		<div class="ward_info">
 			{{acres_output}} Acres; {{building_total_output}} Structures;
@@ -212,7 +212,7 @@ Professions<br />
 			{{#wards}}
 				{{#show_ward_list}}
 				<div class="ward">
-					<div class="ward_type" data-ward-id="{{id}}"><span class="toggleable" data-toggle-target=".ward-id-{{id}}">{{type}}</span> <span class="ward-letter">({{letter}})</span></div>
+					<div class="ward_type" data-ward-id="{{id}}"><span class="toggleable" data-toggle-target=".ward-id-{{id}}">{{type_public}}</span></div>
 					<div class="ward_detail ward-id-{{id}} toggled-closed">
 						<div class="ward_info">
 							{{acres_output}} Acres; {{building_total_output}} Structures;
