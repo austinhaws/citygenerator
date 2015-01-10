@@ -56,33 +56,48 @@ function city_layout(options) {
 		var cell;
 		for (var i = 0; i < layout_size; i++) {
 			cell = data.city.layout.cells[i];
-			// add new line after width
+			// start a row
 			if (i && i % data.city.layout.width == 0) {
-				output += '<br />';
+				output += '<div class="layout-row">';
 			}
 			// show letters for wards
 			ward_id = cell.ward_id;
 			if (ward_id === false) {
 				ward_id = -1;
 			}
-			ward_lookup = globals.ward_lookup[ward_id];
+			var ward_lookup = globals.ward_lookup[ward_id];
 			var letter = ward_lookup.letter;
 			if (!ward_lookup.show_ward_list) {
 				letter = '&nbsp;';
 			}
-			output += '<span class="cell'
-				+ (cell.touches_outside ? ' touches-outside ' : '')
-				+ (cell.walls.bottom ? ' wall-bottom ' : '')
-				+ (cell.walls.top ? ' wall-top ' : '')
-				+ (cell.walls.left ? ' wall-left ' : '')
-				+ (cell.walls.right ? ' wall-right ' : '')
-				+ '" data-letter="' + ward_lookup.letter + '" data-ward-id="' + ward_id + '" style="color:' + ward_lookup.color + '" data-color="' + ward_lookup.color + '">' + letter + '</span>';
+			var walls_id = 0;
+			if (cell.walls.top) {
+				walls_id += 1;
+			}
+			if (cell.walls.bottom) {
+				walls_id += 2;
+			}
+			if (cell.walls.right) {
+				walls_id += 4;
+			}
+			if (cell.walls.left) {
+				walls_id += 8;
+			}
+			output += '<div class="layout-cell" data-letter="' + ward_lookup.letter + '" data-ward-id="' + ward_id + '" style="color:' + ward_lookup.color + '" data-color="' + ward_lookup.color + '">' +
+				'<img src="images/walls.png" class="cell-' + walls_id + '" />' +
+				letter +
+				'</div>';
+
+			// close the row
+			if ((i + 1) % data.city.layout.width == 0) {
+				output += '</div>';
+			}
 		}
 		// show the layout
 		data.container.html(output);
 
 		// set up hover for the wards
-		data.container.find('.cell').hover(function() {
+		data.container.find('.layout-cell').hover(function() {
 			show_layout_ward($(this).data('ward-id'));
 		}, function() {
 		});

@@ -25,11 +25,14 @@
 		public $building_total = 0;
 		public $id = false;
 		public $number_cells = 0; // how many cells this ward consumes (set by layout class)
-		public $layout = false;
 		public $id_letter = false; // unique letter given to each ward
 		public $letter = false; // letter based on ward type(may be a dup)
 		private static $next_letter = 'a'; // similar to index, give each ward its own letter
 		public $show_ward_list = true; // this is a natural ward that should be shown in the ward list; outskirt wards are not in this category
+
+		private $map_positions = array(); // a list of the integer position of taken cells on the map for this ward
+		// what positions are adjacent to already existing squares for this ward
+		private $map_positions_possible = array();
 
 		public function __construct() {
 			$this->id = ++ward_class::$id_next;
@@ -46,6 +49,73 @@
 				// exit('too many wards...');
 			} else {
 				self::$next_letter++;
+			}
+		}
+
+		public function map_positions() {
+			return $this->map_positions;
+		}
+
+		/**
+		 * add a map square to the ward (called direclty only for starting position, everything else should use add_layout_square()
+		 * @param $point
+		 * @param $layout
+		 */
+		public function add_map_position($point, $layout) {
+			$this->map_positions[] = $point;
+			$this->add_possible_positions($point, $layout);
+		}
+
+		/**
+		 * randomly add a map square to the ward from the list of possible locations adjacent to the ward
+		 *
+		 * @param $layout the layout object for information about height/width
+		 * @return bool|mixed true if a point was added, false if there is no more room to grow or has reached max size
+		 */
+		public function add_layout_square($layout) {
+			$point = false;
+
+			// don't add more points if already reached limit
+			if (count($this->map_positions) < $this->number_cells && count($this->map_positions_possible)) {
+				do {
+					// get random position from possible positions
+					shuffle($this->map_positions_possible);
+					$point = array_shift($this->map_positions_possible);
+
+					// make sure position is in unused positions
+					$idx = array_search($point, $layout->unused_squares);
+					if ($idx === false) {
+						// point must have been grabbed by another ward, go find another one
+						$point = false;
+					} else {
+						// good to go! remove from unused_squares
+						unset($layout->unused_squares[$idx]);
+						// add to ward, including finding possible neighbor squares in which to spread
+						$this->add_map_position($point, $layout);
+					}
+				} while ($point === false && count($this->map_positions_possible));
+			}
+
+			return $point;
+		}
+
+		/**
+		 * find available cells around the added point (these may not be available when it comes time to add a new cell,
+		 * but adding them now instead of every time through point finding seems more efficient
+		 * @param $point the point around which to find possibles
+		 * @param $layout the layout containing height/width/unusedcells information
+		 */
+		private function add_possible_positions($point, $layout) {
+			$possible_points = $layout->neighbor_squares($point);
+
+			foreach ($possible_points as $possible_point) {
+				// make sure the point is unclaimed
+				if (array_search($possible_point, $layout->unused_squares) !== false) {
+					// don't put duplicates in $this->map_positions_possible
+					if (array_search($possible_point, $this->map_positions_possible) === false) {
+						$this->map_positions_possible[] = $possible_point;
+					}
+				}
 			}
 		}
 

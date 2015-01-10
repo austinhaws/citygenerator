@@ -1,4 +1,6 @@
 <?php
+	date_default_timezone_set('UTC');
+
 	require_once('lib.inc');
 
 	define('kIntegration_Isolated', 'Isolated');

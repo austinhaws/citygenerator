@@ -295,3 +295,99 @@ h1 a {
 #layout-container-detail .ward_buildings .building {
 	font-size: 7pt;
 }
+
+#layout {
+
+}
+.layout-cell {
+	float: left;
+	width: 10px;
+	height: 10px;
+	position: relative;
+	overflow: hidden;
+	font-size: 10px;
+	text-align: center;
+}
+.layout-cell-title {
+	float: left;
+	width: 100%;
+}
+.layout-cell img {
+	/*content: url(images/walls.png);*/
+	width: 40px;
+	height: 40px;
+	position: absolute;
+}
+/*
+cell positions
+t X  X  X  X  X  X  X  X  0  0  0  0  0  0  0  0 x1 1
+b X  X  X  X  0  0  0  0  X  X  X  X  0  0  0  0 x10 2
+r X  X  0  0  X  X  0  0  X  X  0  0  X  X  0  0 x100 4
+l X  0  X  0  X  0  X  0  X  0  X  0  X  0  X  0 x1000 8
+  15 7  11 3  13 5  9  1  14 6  10 2  12 4  8  0
+*/
+
+.layout-cell img.cell-0 {
+	top: 0;
+	left: 0;
+}
+.layout-cell img.cell-1 {
+	top: 0;
+	left: -10px;
+}
+.layout-cell img.cell-2 {
+	top: 0;
+	left: -20px;
+}
+.layout-cell img.cell-3 {
+	top: 0;
+	left: -30px;
+}
+.layout-cell img.cell-4 {
+	top: -10px;
+	left: 0px;
+}
+.layout-cell img.cell-5 {
+	top: -10px;
+	left: -10px;
+}
+.layout-cell img.cell-6 {
+	top: -10px;
+	left: -20px;
+}
+.layout-cell img.cell-7 {
+	top: -10px;
+	left: -30px;
+}
+.layout-cell img.cell-8 {
+	top: -20px;
+	left: 0px;
+}
+.layout-cell img.cell-9 {
+	top: -20px;
+	left: -10px;
+}
+.layout-cell img.cell-10 {
+	top: -20px;
+	left: -20px;
+}
+.layout-cell img.cell-11 {
+	top: -20px;
+	left: -30px;
+}
+.layout-cell img.cell-12 {
+	top: -30px;
+	left: 0px;
+}
+.layout-cell img.cell-13 {
+	top: -30px;
+	left: -10px;
+}
+.layout-cell img.cell-14 {
+	top: -30px;
+	left: -20px;
+}
+.layout-cell img.cell-15 {
+	top: -30px;
+	left: -30px;
+}

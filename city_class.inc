@@ -263,7 +263,16 @@ class city_class {
 
 			} elseif ($rand <= 13) {
 				if ($this->has[kHas_Sea]) {
-					$acres -= $this->add_ward(kWard_Sea, $acres, $has_gates && rand_range(1, 100) < 50, $ward_count, $generate_buildings);
+					$sea_count = 0;
+					foreach ($this->wards as $ward) {
+						if ($ward->type() == kWard_Sea) {
+							$sea_count++;
+						}
+					}
+					// seas start in corners of city so don't allow more than 4
+					if ($sea_count < 4) {
+						$acres -= $this->add_ward(kWard_Sea, $acres, false, $ward_count, $generate_buildings);
+					}
 				}
 
 			} elseif ($rand <= 16) {
@@ -755,5 +764,15 @@ class city_class {
 
 	public function guilds_count() {
 		return $this->guilds_count;
+	}
+
+	public function wards_count($ward_type) {
+		$count = 0;
+		foreach ($this->wards as $ward) {
+			if ($ward->type() == $ward_type) {
+				$count++;
+			}
+		}
+		return $count;
 	}
 }

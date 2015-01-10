@@ -59,7 +59,7 @@ function pprint_r($var, $title = '', $exit = false) {
 	if (!$var && $var !== 0) {
 		echo 'pprint_r => blank';
 	} elseif (is_array($var) || is_object($var) || ($var === 0)) {
-		print_r($var);
+		var_dump($var);
 	} else {
 		echo($var);
 	}
