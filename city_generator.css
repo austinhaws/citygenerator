@@ -391,3 +391,15 @@ l X  0  X  0  X  0  X  0  X  0  X  0  X  0  X  0 x1000 8
 	top: -30px;
 	left: -30px;
 }
+
+.thanks {
+	text-align:center;
+	margin-top:10px;
+}
+.thanks.contact {
+	font-weight: bold;
+}
+
+.select2 {
+	min-width: 500px;
+}

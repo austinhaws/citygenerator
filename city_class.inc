@@ -3,8 +3,8 @@
 	require_once('generate_layout.inc');
 
 class city_class {
-	public $population_size = 0;
-	public $population_type = '';
+	public $population_size = false;
+	public $population_type = false;
 	public $name = '';
 	public $num_structures = 0;
 	public $population_density = 0.0;
@@ -121,8 +121,11 @@ class city_class {
 
 	private function random_population_size() {
 		global $table_population_size;
-		$value = get_table_result_index($table_population_size, $this->population_type);
-		$this->population_size = rand_range($value[kMin], $value[kMax]);
+		// check if it was hand entered so already set
+		if ($this->population_size === false) {
+			$value = get_table_result_index($table_population_size, $this->population_type);
+			$this->population_size = rand_range($value[kMin], $value[kMax]);
+		}
 	}
 
 	private function random_gates() {
@@ -458,7 +461,36 @@ class city_class {
 		if (is_random($post['population_type'])) {
 			$this->random_population_type();
 		} else {
-			$this->population_type = $post['population_type'];
+			switch ($post['population_type']) {
+				case kPopulationType_Thorp:
+				case kPopulationType_Hamlet:
+				case kPopulationType_Village:
+				case kPopulationType_SmallTown:
+				case kPopulationType_LargeTown:
+				case kPopulationType_SmallCity:
+				case kPopulationType_LargeCity:
+				case kPopulationType_Metropolis:
+					$this->population_type = $post['population_type'];
+					break;
+				default:
+					global $table_population_size;
+					// they hand entered a value
+					$entered_value = intval($post['population_type'], 10);
+					// check for bounds
+					$this->population_type = false;
+					if ($entered_value <= 0) {
+						$entered_value = $table_population_size[kPopulationType_Thorp][kMin];
+					} else if ($entered_value > $table_population_size[kPopulationType_Metropolis][kMax]) {
+						// hand entered a very large value, so make it a metropolis
+						$this->population_type = kPopulationType_Metropolis;
+					}
+					// if population type not yet set, determine what it should be
+					if (!$this->population_type) {
+						$this->population_type = get_table_key_from_range_value($table_population_size, $entered_value);
+					}
+					$this->population_size = $entered_value;
+					break;
+			}
 		}
 
 		// population size

@@ -25,6 +25,24 @@
 		return $result;
 	}
 
+	/**
+	 * given a value, find which key has that value in range, see $table_population_size for an example table
+	 *
+	 * @param array $table a data table that is shaped as {key:{min:1, max: 5}, key:{min:6, max:10}}
+	 * @param int $value the value to find in a min/max range
+	 * @return string/boolean the key for which $value is valid, false if value isn't in a range
+	 */
+	function get_table_key_from_range_value($table, $value) {
+		$result = false;
+		foreach ($table as $key => $range) {
+			if ($range[kMin] <= $value && $range[kMax] >= $value) {
+				$result = $key;
+				break;
+			}
+		}
+		return $result;
+	}
+
 	global $table_buildings;
 	global $table_ward_acres_used;
 	global $table_buildings_subtypes;

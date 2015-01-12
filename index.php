@@ -4,14 +4,16 @@
 	include 'template_top.inc';
 ?>
 
-<link rel="stylesheet" type="text/css" href="city_generator.css" />
 
 <script src="js/jquery-1.9.1.min.js"></script>
 <script src="js/index.js"></script>
 <script src="js/global.js"></script>
 <script src="js/mustache.js"></script>
 <script src="js/jquery.mustache-0.2.7.js"></script>
+<script src="js/vendor/select2-3.5.2/select2.min.js"></script>
+<link href="js/vendor/select2-3.5.2/select2.css" rel="stylesheet" type="text/css" />
 
+<link rel="stylesheet" type="text/css" href="city_generator.css" />
 <script>
 	var globals = {};
 
@@ -31,6 +33,37 @@
 	globals.wards_mustache = [];
 	globals.templates = new template_loader();
 
+	$(function(){
+		var select2s = $('.select2');
+		select2s.filter('.hand-entered').select2({
+			tags: true
+			, maximumSelectionSize: 1
+			//Allow manually entered text in drop down.
+			, createSearchChoice: function (term, data) {
+				if ($(data).filter(function () {
+						return this.text.localeCompare(term) === 0;
+					}).length === 0) {
+					return {id: term, text: term};
+				}
+			}
+			, data: [
+				{id: '<?php echo kRandom; ?>', text:'Random'}
+				, {id: '<?php echo kPopulationType_Thorp; ?>', text:'Thorp (20-80)'}
+				, {id: '<?php echo kPopulationType_Hamlet; ?>', text:'Hamlet (20-80)'}
+				, {id: '<?php echo kPopulationType_Village; ?>', text:'Village (401-900)'}
+				, {id: '<?php echo kPopulationType_SmallTown; ?>', text:'Small Town (901-2000)'}
+				, {id: '<?php echo kPopulationType_LargeTown; ?>', text:'Large Town (2001-5000)'}
+				, {id: '<?php echo kPopulationType_SmallCity; ?>', text:'Small City (5001-12000)'}
+				, {id: '<?php echo kPopulationType_LargeCity; ?>', text:'Large City (12001-25000)'}
+				, {id: '<?php echo kPopulationType_Metropolis; ?>', text:'Metropolis (25001+)'}
+			]
+		});
+
+		select2s.not('.hand-entered').select2({
+			minimumResultsForSearch: -1
+		});
+	});
+
 </script>
 
 <div class="center">
@@ -47,19 +80,12 @@
 				<tr>
 					<td class="field_title">Population:</td>
 					<td class="input">
-						<select name="population_type">
-							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
-							<option>--------------------</option>
-							<option value="<?php echo kPopulationType_Thorp;?>">Thorp (20-80)</option>
-							<option value="<?php echo kPopulationType_Hamlet;?>">Hamlet (20-80)</option>
-							<option value="<?php echo kPopulationType_Village;?>">Village (401-900)</option>
-							<option value="<?php echo kPopulationType_SmallTown;?>">Small Town (901-2000)</option>
-							<option value="<?php echo kPopulationType_LargeTown;?>">Large Town (2001-5000)</option>
-							<option value="<?php echo kPopulationType_SmallCity;?>">Small City (5001-12000)</option>
-							<option value="<?php echo kPopulationType_LargeCity;?>">Large City (12001-25000)</option>
-							<option value="<?php echo kPopulationType_Metropolis;?>">Metropolis (25001+)</option>
-						</select>
+						<input name="population_type" class="select2 hand-entered" />
 					</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="center italic">(You can enter any population size you want. The generator was designed for a maximum population of 90000. The higher above this you go the slower it will be.)</td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>
@@ -89,7 +115,7 @@
 				<tr>
 					<td class="field_title">Number of Gates</td>
 					<td class="input" valign="top">
-						<select name="gates">
+						<select name="gates" class="select2">
 							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
 							<option>--------------------</option>
 							<option value="0">0</option>
@@ -107,7 +133,8 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="100" class="center italic">(At least one gate means city has walls)</td>
+					<td></td>
+					<td class="center italic">(At least one gate means city has walls)</td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>
@@ -120,7 +147,7 @@
 				<tr class="wards-defining">
 					<td class="field_title">Add Ward:</td>
 					<td class="input">
-						<select name="ward-list">
+						<select name="ward-list" class="select2">
 							<option value=<?=kRandom?> selected="selected">Random</option>
 							<option value="">--------------------</option>
 							<option value="<?=kWard_Administration?>"><?=kWard_Administration?></option>
@@ -146,7 +173,7 @@
 				<tr>
 					<td class="field_title">Major Race</td>
 					<td class="input">
-						<select name="race">
+						<select name="race" class="select2">
 							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
 							<option>--------------------</option>
 							<option value="<?php echo kRace_Human;?>"><?php echo kRace_Human;?></option>
@@ -163,7 +190,7 @@
 				<tr>
 					<td class="field_title">Society Type</td>
 					<td class="input">
-						<select name="racial_mix">
+						<select name="racial_mix" class="select2">
 							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
 							<option>--------------------</option>
 							<option value="<?php echo kIntegration_Isolated;?>"><?php echo kIntegration_Isolated;?></option>
@@ -198,7 +225,7 @@
 					</tr>
 					<tr>
 						<td class="right field_title2">Population:</td>
-						<td class="explanation">The number of people in the city. This is the base determiner for most all the stats, so choose wisely. Right now it is randomly chosen from a given range, but if requested, this can be changed to allow an entered value.</td>
+						<td class="explanation">The number of people in the city. This is the base determiner for most all the stats, so choose wisely.</td>
 					</tr>
 					<tr>
 						<td class="right field_title2">By the Sea:</td>
@@ -240,7 +267,9 @@
 			</table>
         <br /><br />
         <div id="latest-post" class="post"  />
-        <div style="text-align:center; font-weight:bold;margin-top:10px;">Thanks to terrancefarrel for some awesome ideas on custom wards and professions.</div>
+        <div class="thanks">Thanks to terrancefarrel for awesome ideas on custom wards and professions.</div>
+        <div class="thanks">Thanks to karraker_chris for hand entered populations and compelling releasing layouts.</div>
+        <div class="thanks contact">Please <a href="mailto:support@crystalballsoft.com">Contact Us</a> if you have a feature you would like to see added.</div>
         <br />
 	<div style="clear: both; height: 40px;">&nbsp;</div>' . $use_statement . '
 </div>

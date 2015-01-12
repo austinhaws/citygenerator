@@ -54,6 +54,9 @@ $(function() {
 		} else {
 			$('[name="wards-added"]').val('');
 		}
+		if (!$('[name="population_type"]').val()) {
+			$('[name="population_type"]').val('random');
+		}
 		$('#generate-form').submit();
 	});
 
