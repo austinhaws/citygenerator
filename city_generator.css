@@ -251,8 +251,9 @@ h1 a {
     font-family: monospace;
 	cursor: pointer;
 	border-radius: 15px;
-	background-color: #eed;
+	background-color: #999;
 	padding: 5px;
+	margin: 0 auto;
 }
 #layout-container .cell {
 	padding: 1px;
@@ -402,4 +403,60 @@ l X  0  X  0  X  0  X  0  X  0  X  0  X  0  X  0 x1000 8
 
 .select2 {
 	min-width: 500px;
+}
+
+/* Administration */
+[data-letter="A"] {
+	color: #4effad;
+}
+/* Craftsmen */
+[data-letter="C"] {
+	color: #c46482;
+}
+/* Gate */
+[data-letter="G"] {
+	color: #26d800;
+}
+/* Market */
+[data-letter="M"] {
+	color: #f6ff88;
+}
+/* Merchant */
+[data-letter="$"] {
+	color: #ffe86c;
+}
+/* Military */
+[data-letter="Y"] {
+	color: #d30e08;
+}
+/* Odiferous */
+[data-letter="O"] {
+	color: #a6d646;
+}
+/* Outskirt */
+[data-letter=" "] {
+	color: inherit;
+}
+/* Patriciate */
+[data-letter="P"] {
+	color: #ff84e4;
+}
+/* River */
+[data-letter="R"] {
+	color: #0000A6;
+}
+/* Sea */
+[data-letter="W"] {
+	color: #70b9ff;
+}
+/* Shanty */
+[data-letter="S"] {
+	color: #8b7541;
+}
+/* Slum */
+[data-letter="L"] {
+	color: #ff9811;
+}
+[data-letter].selected, [data-letter].hover {
+	color: white;
 }

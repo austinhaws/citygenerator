@@ -38,8 +38,6 @@
 			location = ward.location;
 			// get the ratio of hue
 			ratio = location / ward_lookup_count; // ratio of 360
-			// create the color
-			ward.color = 'hsla(' + (ratio * 360.0) + ',' + (90 + Math.random() * 10) +'%,' + (50 + Math.random() * 10) + '%, 1)';
 		});
 
 
@@ -71,7 +69,7 @@
 				+ '" data-letter="' + ward_lookup.letter + '" data-ward-id="' + ward_id + '" style="color:' + ward_lookup.color + '" data-color="' + ward_lookup.color + '">' + letter + '</span>';
 		}
 		// show the layout
-console.log([$('#layout'), output]);
+//console.log([$('#layout'), output]);
 		$('#layout').html(output);
 
 	});
