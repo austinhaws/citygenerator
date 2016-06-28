@@ -111,7 +111,6 @@ function show_layout_ward(ward_id) {
 	var ward = globals.ward_lookup[ward_id];
 
 	if (globals.last_show_layout_ward_id) {
-		var last_ward_lookup = globals.ward_lookup[globals.last_show_layout_ward_id];
 		$('[data-ward-id]').removeClass('hover');
 		$('#layout-container-detail').hide();
 	}

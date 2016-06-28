@@ -57,7 +57,7 @@
 		// setup city data; have to do some conversions to make it mustache happy
 		globals.last_show_layout_ward_id = false; // the last shown ward detail from the layout
 		globals.city = <?=json_encode($city)?>;
-		var output = $.extend(globals.city, {
+		$.extend(globals.city, {
 			population_size_formatted: number_format_integer(globals.city.population_size)
 			, acres_formatted : number_format_double(globals.city.acres)
 			, population_density : number_format_double(globals.city.population_size / globals.city.acres)
@@ -87,9 +87,12 @@
 		globals.templates.load_templates('templates/citygen.htm', function() {
 			globals.templates.render($('#report') , 'city-detail', globals.city, 'html');
 
-			$('.toggleable').click(function(e) {
-				e.stopPropagation();
+			$('.toggleable').click(handle_event(function(e) {
 				var target = $($(this).data('toggle-target'));
+				if (!$(this).is('.toggleable')) {
+					target = $($(this).closest('.toggleable').data('toggle-target'));
+				}
+				console.log(target);
 				$.each(target, function(idx, elem) {
 					var jelem = $(elem);
 					if (jelem.css('display') == 'block') {
@@ -103,32 +106,30 @@
 //						jelem.animate({height: jelem.prop('orig-height')});
 					}
 				});
-			});
+			}));
 
-			$('#hide-all').click(function(e) {
-				e.stopPropagation();
+			$('#hide-all').click(handle_event(function(e) {
 				$.each($('.toggleable'), function(idx, elem) {
 					var target = $($(elem).data('toggle-target'));
 					$.each(target, function(idx, elem) {
 						$(elem).hide();
 					});
 				});
-			});
-			$('#show-all').click(function(e) {
-				e.stopPropagation();
+			}));
+			$('#show-all').click(handle_event(function(e) {
 				$.each($('.toggleable'), function(idx, elem) {
 					var target = $($(elem).data('toggle-target'));
 					$.each(target, function(idx, elem) {
 						$(elem).show();
 					});
 				});
-			});
+			}));
 
 			$('#regenerate').click(function(e) {
 				$('#form_regenerate').submit();
 			});
 			$('#printable').click(function(e) {
-				window.open('printable.php', '_blank');
+				window.print();
 			});
 			// set up clicking letter in ward title to show ward detail
 			$('.ward-letter').click(function() {

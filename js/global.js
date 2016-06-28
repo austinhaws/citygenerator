@@ -161,3 +161,14 @@ function number_format_integer(integer) {
 function number_format_double(d) {
 	return number_format(d, 2, '.', ',');
 }
+
+// protect your a!
+function handle_event(run_function) {
+	return function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		// call sets "this" of the called function
+		// the called function behaves as if jquery had called it by giving it the triggering element
+		run_function.call(e.target, e);
+	};
+}

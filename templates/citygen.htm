@@ -212,7 +212,7 @@ Professions<br />
 			{{#wards}}
 				{{#show_ward_list}}
 				<div class="ward">
-					<div class="ward_type" data-ward-id="{{id}}"><span class="toggleable" data-toggle-target=".ward-id-{{id}}">{{type_public}}</span></div>
+					<div class="ward_type" data-ward-id="{{id}}"><span class="toggleable" data-toggle-target=".ward-id-{{id}}">{{type_public}}</span> <span class="ward-layout-key">(city layout: {{id_letter}})</span></div>
 					<div class="ward_detail ward-id-{{id}} toggled-closed">
 						<div class="ward_info">
 							{{acres_output}} Acres; {{building_total_output}} Structures;
@@ -272,32 +272,33 @@ Professions<br />
 
 					<div class="power-centers">
 						<div class="line">
-							<div class="th">1</div>
-							<div class="th">2</div>
-							<div class="th">3</div>
-							<div class="th">4</div>
-							<div class="th">5</div>
-							<div class="th">6</div>
-							<div class="th">7</div>
-							<div class="th">8</div>
-							<div class="th">9</div>
-							<div class="th">10</div>
-							<div class="th">11</div>
-							<div class="th">12</div>
-							<div class="th">13</div>
-							<div class="th">14</div>
-							<div class="th">15</div>
-							<div class="th">16</div>
-							<div class="th">17</div>
-							<div class="th">18</div>
-							<div class="th">19</div>
-							<div class="th">20</div>
+							<div class="th npc-class">&darr; NPC : Level &rarr;</div>
+							<div class="th npc-number">1</div>
+							<div class="th npc-number">2</div>
+							<div class="th npc-number">3</div>
+							<div class="th npc-number">4</div>
+							<div class="th npc-number">5</div>
+							<div class="th npc-number">6</div>
+							<div class="th npc-number">7</div>
+							<div class="th npc-number">8</div>
+							<div class="th npc-number">9</div>
+							<div class="th npc-number">10</div>
+							<div class="th npc-number">11</div>
+							<div class="th npc-number">12</div>
+							<div class="th npc-number">13</div>
+							<div class="th npc-number">14</div>
+							<div class="th npc-number">15</div>
+							<div class="th npc-number">16</div>
+							<div class="th npc-number">17</div>
+							<div class="th npc-number">18</div>
+							<div class="th npc-number">19</div>
+							<div class="th npc-number">20</div>
 						</div>
 					{{#npcs}}
 						<div class="line">
-							<div class="td">{{class}}</div>
+							<div class="td npc-class">{{class}}</div>
 						{{#levels}}
-							<div class="td table_data">{{#count}}{{count}}{{/count}}{{^count}}-{{/count}}</div>
+							<div class="td table_data npc-number">{{#count}}{{count}}{{/count}}{{^count}}-{{/count}}</div>
 						{{/levels}}
 						</div>
 					{{/npcs}}
