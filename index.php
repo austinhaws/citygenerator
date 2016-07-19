@@ -86,7 +86,7 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td class="center italic">(You can enter any population size you want. The generator was designed for a maximum population of 90000. The higher above this you go the slower it will be. make sure to press enter after typing the number for it to stick.)</td>
+					<td class="center italic">(You can enter any population size you want. The generator was designed for a maximum population of 90000. The higher above this you go the slower it will be. Make sure to press enter after typing the number for it to stick.)</td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>
