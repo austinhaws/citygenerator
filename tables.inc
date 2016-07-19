@@ -2699,7 +2699,7 @@
 	$table_population_acres = array(
 		kPopulationType_Thorp => array(
 			kMin => 1,
-			kMax => 80,
+			kMax => 9,
 		),
 		kPopulationType_Hamlet => array(
 			kMin => 10,

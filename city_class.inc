@@ -299,7 +299,7 @@ class city_class {
 			} elseif ($rand <= 55) {
 				//  inside walls
 				// one merchant ward in town unless metropolis
-				if ($this->is_size_atleast(kPopulationType_Metropolis) || $ward_count[kWard_Craftsmen] == 0) {
+				if ($this->is_size_atleast(kPopulationType_Metropolis) || $ward_count[kWard_Merchant] == 0) {
 					$acres -= $this->add_ward(kWard_Merchant, $acres, $has_gates, $ward_count, $generate_buildings);
 				}
 			} elseif ($rand <= 75) {
@@ -312,7 +312,7 @@ class city_class {
 				// mostly inside city walls
 				if ($this->is_size_atleast(kPopulationType_SmallCity)
 					&& (($this->is_size_atleast(kPopulationType_LargeTown) && $ward_count[kWard_Craftsmen] <= 1)
-						Or $this->is_size_atleast(kPopulationType_Metropolis))) {
+						|| $this->is_size_atleast(kPopulationType_Metropolis))) {
 					$acres -= $this->add_ward(kWard_Craftsmen, $acres, $has_gates && rand_range(1, 100) < 90, $ward_count, $generate_buildings);
 				}
 			} else {
@@ -478,7 +478,7 @@ class city_class {
 					$entered_value = intval($post['population_type'], 10);
 					// check for bounds
 					$this->population_type = false;
-					if ($entered_value <= 0) {
+					if ($entered_value < $table_population_size[kPopulationType_Thorp][kMin]) {
 						$entered_value = $table_population_size[kPopulationType_Thorp][kMin];
 					} else if ($entered_value > $table_population_size[kPopulationType_Metropolis][kMax]) {
 						// hand entered a very large value, so make it a metropolis

@@ -81,15 +81,10 @@
 	  return (float) $sec + ((float) $usec * 100000);
 	}
 	function rand_range($min, $max) {
-		global $seeded;
-		if (!$seeded) {
-			$seeded = true;
-			srand(make_seed());
-		}
-		return rand($min, $max);
+		return mt_rand($min, $max);
 	}
 	function rand_ratio() {
-	   return (float)rand() / (float)getrandmax();
+	   return (float)mt_rand() / (float)getrandmax();
 	}
 	function rand_ratio_range($min, $max) {
 		return rand_ratio() * ($max - $min) + $min;

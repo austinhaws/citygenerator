@@ -474,22 +474,10 @@ l X  0  X  0  X  0  X  0  X  0  X  0  X  0  X  0 x1000 8
 	body {
 		background-color: white;
 	}
-	#menu-wrap, hr, .buttons, #recent-posts, #footer {
+	#menu-wrap, hr, .buttons, #recent-posts, #footer, #logo {
 		display: none;
 	}
 
-	#logo h1, #logo h2 {
-		text-align: center;
-	}
-	#logo h1 {
-		font-size: 30px;
-	}
-	#logo h2 {
-		margin-left: 10px;
-	}
-	#logo {
-		margin: 0 auto;
-	}
 	/* city title */
 	.toggleable:nth-child(3) h1 {
 		font-size: 30px;

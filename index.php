@@ -15,6 +15,7 @@
 
 <link rel="stylesheet" type="text/css" href="city_generator.css" />
 <script>
+
 	var globals = {};
 
 	globals.wards = <?=json_encode($table_buildings)?>;
@@ -49,13 +50,13 @@
 			, data: [
 				{id: '<?php echo kRandom; ?>', text:'Random'}
 				, {id: '<?php echo kPopulationType_Thorp; ?>', text:'Thorp (20-80)'}
-				, {id: '<?php echo kPopulationType_Hamlet; ?>', text:'Hamlet (20-80)'}
+				, {id: '<?php echo kPopulationType_Hamlet; ?>', text:'Hamlet (81-400)'}
 				, {id: '<?php echo kPopulationType_Village; ?>', text:'Village (401-900)'}
 				, {id: '<?php echo kPopulationType_SmallTown; ?>', text:'Small Town (901-2000)'}
 				, {id: '<?php echo kPopulationType_LargeTown; ?>', text:'Large Town (2001-5000)'}
 				, {id: '<?php echo kPopulationType_SmallCity; ?>', text:'Small City (5001-12000)'}
-				, {id: '<?php echo kPopulationType_LargeCity; ?>', text:'Large City (12001-25000)'}
-				, {id: '<?php echo kPopulationType_Metropolis; ?>', text:'Metropolis (25001+)'}
+				, {id: '<?php echo kPopulationType_LargeCity; ?>', text:'Large City (12001-32000)'}
+				, {id: '<?php echo kPopulationType_Metropolis; ?>', text:'Metropolis (32001+)'}
 			]
 		});
 
@@ -85,7 +86,7 @@
 				</tr>
 				<tr>
 					<td></td>
-					<td class="center italic">(You can enter any population size you want. The generator was designed for a maximum population of 90000. The higher above this you go the slower it will be.)</td>
+					<td class="center italic">(You can enter any population size you want. The generator was designed for a maximum population of 90000. The higher above this you go the slower it will be. make sure to press enter after typing the number for it to stick.)</td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>
