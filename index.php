@@ -268,8 +268,10 @@
 			</table>
         <br /><br />
         <div id="latest-post" class="post"  />
+        <div class="thanks">Thanks to bruno71 for ward bug spotting and ideas on ward frequency.</div>
         <div class="thanks">Thanks to terrancefarrel for awesome ideas on custom wards and professions.</div>
-        <div class="thanks">Thanks to karraker_chris for hand entered populations and compelling releasing layouts.</div>
+        <div class="thanks">Thanks to karrakerchris for compelling releasing layouts.</div>
+        <div class="thanks">Thanks to jmöller, owbrogers, and karrakerchris for suggesting custom entering population size.</div>
         <div class="thanks contact">Please <a href="mailto:support@crystalballsoft.com">Contact Us</a> if you have a feature you would like to see added.</div>
         <br />
 	<div style="clear: both; height: 40px;">&nbsp;</div>' . $use_statement . '

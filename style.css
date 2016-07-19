@@ -130,11 +130,23 @@ Released for free under a Creative Commons Attribution 2.5 License
 	}
 
 	/* Menu */
-	#menu-wrap {
+	#character-link .link a {
+		font-size: 20px;
+	}
+	#character-link .link
+	{
+		margin-bottom: -5px;
+		text-align: center;
+	}
+	#character-link .link a {
+		text-decoration: none;
+	}
+
+	#menu-wrap, #character-link {
 		background: #2E2E2E;
 	}
 
-	#menu {
+	#menu, #character-link .link {
 		width: 778px;
 		height: 50px;
 		margin: 0 auto;
