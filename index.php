@@ -272,7 +272,7 @@
         <div class="thanks">Thanks to terrancefarrel for awesome ideas on custom wards and professions.</div>
         <div class="thanks">Thanks to karrakerchris for compelling releasing layouts.</div>
         <div class="thanks">Thanks to jmöller, owbrogers, and karrakerchris for suggesting custom entering population size.</div>
-        <div class="thanks contact">Please <a href="mailto:support@crystalballsoft.com">Contact Us</a> if you have a feature you would like to see added.</div>
+        <div class="thanks contact">Please <a href="mailto:strategerygames@gmail.com">Contact Us</a> if you have a feature you would like to see added.</div>
         <br />
 	<div style="clear: both; height: 40px;">&nbsp;</div>' . $use_statement . '
 </div>
