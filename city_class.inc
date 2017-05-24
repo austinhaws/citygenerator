@@ -785,7 +785,7 @@ class city_class {
 					$this->name .= implode('', $parts);
 			}
 			if ($dictionary) {
-				$content = file_get_contents("http://www.crystalballsoft.com/dictionary/remote.php?dictionary=" . urlencode($dictionary) . '&shuffle=0&text=' . urlencode($this->name));
+				$content = file_get_contents("http://strategerygames.com/dictionary/remote.php?dictionary=" . urlencode($dictionary) . '&shuffle=0&text=' . urlencode($this->name));
 				$content = mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
 				$this->name =  $content;
 			}
