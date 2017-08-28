@@ -294,7 +294,7 @@ h1 a {
 }
 
 #layout-container-detail .ward_buildings {
-	height: 300px;
+	/*no height because the list is only shown when hovering and so to go to list have to stop hovering so the list would disappear and could never scroll the list*/
 	overflow: auto;
 }
 
