@@ -94,12 +94,18 @@ function city_layout(options) {
 		data.container.html(output);
 
 		// set up hover for the wards
-		data.container.find('.layout-cell').hover(function() {
-			show_layout_ward($(this).data('ward-id'));
-		}, function() {
-			// on out hover, remove all selecteds
-			show_layout_ward(false);
-		});
+		data.container.find('.layout-cell')
+			.hover(function() {
+				show_layout_ward($(this).data('ward-id'));
+			}, function () {
+				// on out hover, remove all selecteds
+				show_layout_ward(false);
+			})
+			.click(function() {
+				var ward_id = $(this).data('ward-id');
+				globals.sticky_layout_ward_id = ward_id;
+				show_layout_ward(ward_id);
+			});
 
 	}
 }
@@ -110,7 +116,7 @@ function show_layout_ward(ward_id) {
 	// hide previous if there is one
 	var ward = globals.ward_lookup[ward_id];
 
-	if (globals.last_show_layout_ward_id) {
+	if (globals.last_show_layout_ward_id || globals.sticky_layout_ward_id) {
 		$('[data-ward-id]').removeClass('hover');
 		$('#layout-container-detail').hide();
 	}
@@ -123,6 +129,13 @@ function show_layout_ward(ward_id) {
 			$('#layout-container-container').show();
 			$('[data-ward-id="' + ward_id + '"]').addClass('hover');
 			show_ward_detail(ward_id);
+		}
+	} else {
+		var ward_lookup = globals.ward_lookup[globals.sticky_layout_ward_id];
+		if (ward_lookup.show_ward_list) {
+			$('#layout-container-container').show();
+			$('[data-ward-id="' + ward_lookup.id + '"]').addClass('hover');
+			show_ward_detail(ward_lookup.id);
 		}
 	}
 }

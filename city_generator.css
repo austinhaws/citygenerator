@@ -248,15 +248,10 @@ h1 a {
 
 #layout-container {
 	float:left;
-/*
-	width: auto;
-    clear: both;
-    margin: 0 auto;
-*/
     font-family: monospace;
 	cursor: pointer;
-	border-radius: 15px;
-	background-color: #5c5c5c;
+	border-radius: 6px;
+	background-color: black;
 	padding: 5px;
 	margin: 0 auto;
 }
@@ -264,19 +259,19 @@ h1 a {
 	padding: 1px;
 }
 #layout-container .cell.wall-bottom {
-	border-bottom: 1px solid black;
+	border-bottom: 1px solid white;
 	padding-bottom: 0;
 }
 #layout-container .cell.wall-top {
-	border-top: 1px solid black;
+	border-top: 1px solid white;
 	padding-top: 0;
 }
 #layout-container .cell.wall-left {
-	border-left: 1px solid black;
+	border-left: 1px solid white;
 	padding-left: 0;
 }
 #layout-container .cell.wall-right {
-	border-right: 1px solid black;
+	border-right: 1px solid white;
 	padding-right: 0;
 }
 .touches-outside {

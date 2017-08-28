@@ -56,6 +56,7 @@
 	$(function(){
 		// setup city data; have to do some conversions to make it mustache happy
 		globals.last_show_layout_ward_id = false; // the last shown ward detail from the layout
+		globals.sticky_layout_ward_id = false; // if no ward is hovered, show this ward
 		globals.city = <?=json_encode($city)?>;
 		$.extend(globals.city, {
 			population_size_formatted: number_format_integer(globals.city.population_size)
