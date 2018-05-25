@@ -102,6 +102,7 @@ $(function() {
 	$('.Halfling.slider').slider({change: function (_, ui) {raceRatioSliderChange('Halfling', ui.value);}});
 	$('.Elf.slider').slider({change: function (_, ui) {raceRatioSliderChange('Elf', ui.value);}});
 	$('.Dwarf.slider').slider({change: function (_, ui) {raceRatioSliderChange('Dwarf', ui.value);}});
+	$('.Gnome.slider').slider({change: function (_, ui) {raceRatioSliderChange('Gnome', ui.value);}});
 	$('.Half.Elf.slider').slider({change: function (_, ui) {raceRatioSliderChange('Half Elf', ui.value);}});
 	$('.Half.Orc.slider').slider({change: function (_, ui) {raceRatioSliderChange('Half Orc', ui.value);}});
 	$('.Other.slider').slider({change: function (_, ui) {raceRatioSliderChange('Other', ui.value);}});
