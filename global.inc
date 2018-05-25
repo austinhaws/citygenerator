@@ -6,6 +6,7 @@
 	define('kIntegration_Isolated', 'Isolated');
 	define('kIntegration_Mixed', 'Mixed');
 	define('kIntegration_Integrated', 'Integrated');
+	define('kIntegration_Custom', 'Custom');
 
 	define('kRace_Human', 'Human');
 	define('kRace_Halfling', 'Halfling');

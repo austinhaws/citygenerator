@@ -34,7 +34,7 @@ Released   : 20071215
 	</ul>
 </div>
 </div>
-<div id="character-link">
+<div id="character-link" class="no-print">
 	<div class="link">
 		<a target="_blank" href="http://strategerygames.com/centralcasting/">Also Available: Character Generator</a>
 	</div>

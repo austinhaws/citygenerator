@@ -44,7 +44,7 @@
 ?>
 <link rel="stylesheet" type="text/css" href="city_generator.css" />
 
-<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
 <script src="js/jquery.mustache-0.2.7.js"></script>
 <script src="animatedcollapse.js"></script>
 <script src="js/global.js"></script>

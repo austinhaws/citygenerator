@@ -86,4 +86,50 @@ $(function() {
 	$('[name="buildings"]').change(function(e) {
 		$('.wards-defining')[$(this).prop('checked') ? 'show' : 'hide']();
 	});
+
+	$('[name="racial_mix"]').change(function(e) {
+		if (e.target.value == 'Custom') {
+			$('#race-row').hide();
+			$('#race-ratio-row').show();
+		} else {
+			$('#race-row').show();
+			$('#race-ratio-row').hide();
+		}
+	});
+
+	// setup race ratio sliders
+	$('.Human.slider').slider({change: function (_, ui) {raceRatioSliderChange('Human', ui.value);}});
+	$('.Halfling.slider').slider({change: function (_, ui) {raceRatioSliderChange('Halfling', ui.value);}});
+	$('.Elf.slider').slider({change: function (_, ui) {raceRatioSliderChange('Elf', ui.value);}});
+	$('.Dwarf.slider').slider({change: function (_, ui) {raceRatioSliderChange('Dwarf', ui.value);}});
+	$('.Half.Elf.slider').slider({change: function (_, ui) {raceRatioSliderChange('Half Elf', ui.value);}});
+	$('.Half.Orc.slider').slider({change: function (_, ui) {raceRatioSliderChange('Half Orc', ui.value);}});
+	$('.Other.slider').slider({change: function (_, ui) {raceRatioSliderChange('Other', ui.value);}});
 });
+
+function raceRatioSliderChange(race, value) {
+	var raceRatioInput = $("[name='raceRatio']");
+	// pull out ratios from json of 'raceRatio'
+	var currentValue = raceRatioInput.val();
+	var ratios;
+	if (currentValue) {
+		ratios = JSON.parse(currentValue);
+	} else {
+		// give defaults if doesn't have anything
+		ratios = {
+			Human: 0,
+			Halfling: 0,
+			Elf: 0,
+			Dwarf: 0,
+			'Half Elf': 0,
+			'Half Orc': 0,
+			Other: 0
+		};
+	}
+
+	// set new value for race
+	ratios[race] = value;
+
+	// put back in to hidden input
+	raceRatioInput.val(JSON.stringify(ratios));
+}

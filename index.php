@@ -5,13 +5,15 @@
 ?>
 
 
-<script src="js/jquery-1.9.1.min.js"></script>
+<script src="js/jquery-3.3.1.min.js"></script>
+<script src="js/vendor/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script src="js/index.js"></script>
 <script src="js/global.js"></script>
 <script src="js/mustache.js"></script>
 <script src="js/jquery.mustache-0.2.7.js"></script>
 <script src="js/vendor/select2-3.5.2/select2.min.js"></script>
 <link href="js/vendor/select2-3.5.2/select2.css" rel="stylesheet" type="text/css" />
+<link href="js/vendor/jquery-ui-1.12.1/jquery-ui.min.css" rel="stylesheet" type="text/css" />
 
 <link rel="stylesheet" type="text/css" href="city_generator.css" />
 <script>
@@ -172,6 +174,19 @@
 				</tr>
 				<tr><td>&nbsp;</td></tr>
 				<tr>
+					<td class="field_title">Society Type</td>
+					<td class="input">
+						<select name="racial_mix" class="select2">
+							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
+							<option>--------------------</option>
+							<option value="<?php echo kIntegration_Isolated;?>"><?php echo kIntegration_Isolated;?></option>
+							<option value="<?php echo kIntegration_Mixed;?>"><?php echo kIntegration_Mixed;?></option>
+							<option value="<?php echo kIntegration_Integrated;?>"><?php echo kIntegration_Integrated;?></option>
+							<option value="<?php echo kIntegration_Custom;?>"><?php echo kIntegration_Custom;?></option>
+						</select>
+					</td>
+				</tr>
+				<tr id="race-row">
 					<td class="field_title">Major Race</td>
 					<td class="input">
 						<select name="race" class="select2">
@@ -188,16 +203,20 @@
 						</select>
 					</td>
 				</tr>
-				<tr>
-					<td class="field_title">Society Type</td>
+				<tr id="race-ratio-row">
+					<td class="field_title">Race Proportions</td>
 					<td class="input">
-						<select name="racial_mix" class="select2">
-							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
-							<option>--------------------</option>
-							<option value="<?php echo kIntegration_Isolated;?>"><?php echo kIntegration_Isolated;?></option>
-							<option value="<?php echo kIntegration_Mixed;?>"><?php echo kIntegration_Mixed;?></option>
-							<option value="<?php echo kIntegration_Integrated;?>"><?php echo kIntegration_Integrated;?></option>
-						</select>
+						<ul>
+							<li><?php echo kRace_Human?> <div class="<?php echo kRace_Human?> slider"></div></li>
+							<li><?php echo kRace_Halfling?> <div class="<?php echo kRace_Halfling?> slider"></div></li>
+							<li><?php echo kRace_Elf?> <div class="<?php echo kRace_Elf?> slider"></div></li>
+							<li><?php echo kRace_Dwarf?> <div class="<?php echo kRace_Dwarf?> slider"></div></li>
+							<li><?php echo kRace_Gnome?> <div class="<?php echo kRace_Gnome?> slider"></div></li>
+							<li><?php echo kRace_HalfElf?> <div class="<?php echo kRace_HalfElf?> slider"></div></li>
+							<li><?php echo kRace_HalfOrc?> <div class="<?php echo kRace_HalfOrc?> slider"></div></li>
+							<li><?php echo kRace_Other?> <div class="<?php echo kRace_Other?> slider"></div></li>
+						</ul>
+						<input type="hidden" name="raceRatio" value=""/>
 					</td>
 				</tr>
 				<tr><td>&nbsp;</td></tr>

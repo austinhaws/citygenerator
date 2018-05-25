@@ -469,7 +469,7 @@ l X  0  X  0  X  0  X  0  X  0  X  0  X  0  X  0 x1000 8
 	body {
 		background-color: white;
 	}
-	#menu-wrap, hr, .buttons, #recent-posts, #footer, #logo {
+	#menu-wrap, hr, .buttons, #recent-posts, #footer, #logo, .no-print {
 		display: none;
 	}
 
@@ -494,4 +494,10 @@ l X  0  X  0  X  0  X  0  X  0  X  0  X  0  X  0 x1000 8
 }
 .npc-number {
 	width: 50px;
+}
+#race-ratio-row {
+	display: none;
+}
+#race-ratio-row li {
+	list-style-type: none;
 }
