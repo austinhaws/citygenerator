@@ -15,7 +15,17 @@ export function getDefaultState(path) {
 }
 
 const defaultState = {
+	citygen: {
+		form: {
+			name: '',
+			populationType: 'random',
+		},
+		lists: {
+			populationTypes: undefined,
+		},
+	},
 	app: {
+		ajaxSpinnerCount: 0,
 	},
 };
 

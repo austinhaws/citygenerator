@@ -2,7 +2,7 @@ import '@babel/polyfill';
 import React from 'react';
 import {render} from 'react-dom';
 import {connect, Provider} from 'react-redux';
-import reduxStore from './ReduxStore';
+import reduxStore from '../util/ReduxStore';
 import {BrowserRouter, withRouter} from 'react-router-dom';
 import AppRoutes from './AppRoutes';
 import CssBaseline from '@material-ui/core/CssBaseline';
