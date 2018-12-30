@@ -5,7 +5,7 @@ class AppRoutes extends React.Component {
 	render() {
 		return (
 			<Switch>
-				<Route path="/" render={() => <div>'Hello World!'</div>}/>
+				<Route path="/" render={() => <div>Base Route triggered</div>}/>
 			</Switch>
 		);
 	}
