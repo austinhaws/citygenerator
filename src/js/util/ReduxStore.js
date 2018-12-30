@@ -18,7 +18,10 @@ const defaultState = {
 	citygen: {
 		form: {
 			name: '',
-			populationType: 'random',
+			population_type: 'random',
+			sea: 'random',
+			river: 'random',
+			military: 'random',
 		},
 		lists: {
 			populationTypes: undefined,

@@ -100,6 +100,7 @@ class CityGenForm extends React.Component {
 		return (
 			<React.Fragment>
 				<div className={classes.root}>
+					{/* Name */}
 					<FormControl className={classes.formControl}>
 						<TextField
 							label="Name"
@@ -110,17 +111,63 @@ class CityGenForm extends React.Component {
 						/>
 					</FormControl>
 
+					{/* Population Type */}
 					<FormControl className={classes.formControl}>
-						<InputLabel shrink htmlFor="age-label-placeholder">Population Type</InputLabel>
+						<InputLabel shrink htmlFor="populationType">Population Type</InputLabel>
 						<Select
-							value={this.props.citygen.form.populationType}
-							onChange={dispatchFieldCurry('citygen.form.populationType')}
-							inputProps={{
-								name: 'age',
-								id: 'age-simple',
-							}}
+							value={this.props.citygen.form.population_type}
+							onChange={dispatchFieldCurry('citygen.form.population_type')}
+							inputProps={{ id: 'populationType' }}
 						>
+							<MenuItem key="random" value="random">Random</MenuItem>
 							{(this.props.citygen.lists.populationTypes || []).map(populationType => <MenuItem key={populationType.id} value={populationType.id}>{populationType.label}</MenuItem>)}
+							<MenuItem key="gi" value="45000">Gargantuan I (45,000)</MenuItem>
+							<MenuItem key="gii" value="55000">Gargantuan II (55,000)</MenuItem>
+							<MenuItem key="giii" value="65000">Gargantuan III (65,000)</MenuItem>
+							<MenuItem key="giv" value="75000">Gargantuan IV (75,000)</MenuItem>
+							<MenuItem key="gv" value="85000">Gargantuan V (85,000)</MenuItem>
+						</Select>
+					</FormControl>
+
+					{/* By the Sea */}
+					<FormControl className={classes.formControl}>
+						<InputLabel shrink htmlFor="byTheSea">By the Sea</InputLabel>
+						<Select
+							value={this.props.citygen.form.sea}
+							onChange={dispatchFieldCurry('citygen.form.sea')}
+							inputProps={{ id: 'byTheSea' }}
+						>
+							<MenuItem key="random" value="random">Random</MenuItem>
+							<MenuItem key="yes" value="1">Yes</MenuItem>
+							<MenuItem key="no" value="0">No</MenuItem>
+						</Select>
+					</FormControl>
+
+					{/* By the River */}
+					<FormControl className={classes.formControl}>
+						<InputLabel shrink htmlFor="byTheRiver">By the River</InputLabel>
+						<Select
+							value={this.props.citygen.form.river}
+							onChange={dispatchFieldCurry('citygen.form.river')}
+							inputProps={{ id: 'byTheRiver' }}
+						>
+							<MenuItem key="random" value="random">Random</MenuItem>
+							<MenuItem key="yes" value="1">Yes</MenuItem>
+							<MenuItem key="no" value="0">No</MenuItem>
+						</Select>
+					</FormControl>
+
+					{/* Has Military */}
+					<FormControl className={classes.formControl}>
+						<InputLabel shrink htmlFor="military">Has Military</InputLabel>
+						<Select
+							value={this.props.citygen.form.military}
+							onChange={dispatchFieldCurry('citygen.form.military')}
+							inputProps={{ id: 'military' }}
+						>
+							<MenuItem key="random" value="random">Random</MenuItem>
+							<MenuItem key="yes" value="1">Yes</MenuItem>
+							<MenuItem key="no" value="0">No</MenuItem>
 						</Select>
 					</FormControl>
 				</div>
@@ -132,41 +179,6 @@ class CityGenForm extends React.Component {
 		<table class="table_center" id="options-table">
 			<thead />
 			<tbody>
-				<tr>
-					<td class="field_title">Population:</td>
-					<td class="input">
-						<input name="population_type" class="select2 hand-entered" />
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td class="center italic">(You can enter any population size you want. The generator was designed for a maximum population of 90000. The higher above this you go the slower it will be. Make sure to press enter after typing the number for it to stick.)</td>
-				</tr>
-				<tr><td>&nbsp;</td></tr>
-				<tr>
-					<td class="field_title">By the Sea:</td>
-					<td class="input">
-						<input type="Radio" name="sea" value="1">Yes</input>
-						<input type="Radio" name="sea" value="0">No</input>
-						<input type="Radio" name="sea" value=<?php echo kRandom; ?> checked="checked">Random</input>
-					</td>
-				</tr>
-				<tr>
-					<td class="field_title">By a River:</td>
-					<td class="input">
-						<input type="Radio" name="river" value="1">Yes</input>
-						<input type="Radio" name="river" value="0">No</input>
-						<input type="Radio" name="river" value=<?php echo kRandom; ?> checked="checked">Random</input>
-					</td>
-				</tr>
-				<tr>
-					<td class="field_title">Has Military:</td>
-					<td class="input">
-						<input type="Radio" name="military" value="1">Yes</input>
-						<input type="Radio" name="military" value="0">No</input>
-						<input type="Radio" name="military" value=<?php echo kRandom; ?> checked="checked">Random</input>
-					</td>
-				</tr>
 				<tr>
 					<td class="field_title">Number of Gates</td>
 					<td class="input" valign="top">
