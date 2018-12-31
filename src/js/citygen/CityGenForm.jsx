@@ -6,12 +6,14 @@ import {TextField, withStyles} from "@material-ui/core";
 import {dispatchFieldCurry} from "../util/Dispatch";
 import * as PropTypes from "prop-types";
 import Select from "@material-ui/core/Select";
-import webservice from "../util/Webservice";
+import webservice, {ajaxStatus} from "../util/Webservice";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/es/FormHelperText/FormHelperText";
 import Button from "@material-ui/core/Button";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import green from '@material-ui/core/colors/green';
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -34,6 +36,14 @@ const styles = theme => ({
 	},
 	selectEmpty: {
 		marginTop: theme.spacing.unit * 2,
+	},
+	buttonProgress: {
+		color: green[500],
+		position: 'absolute',
+		top: '50%',
+		left: '50%',
+		marginTop: -12,
+		marginLeft: -12,
 	},
 });
 
@@ -104,6 +114,8 @@ class CityGenForm extends React.Component {
 	 */
 	render() {
 		const { classes } = this.props;
+		const ajaxing = ajaxStatus.isAjaxing();
+
 		return (
 			<React.Fragment>
 				<div className={classes.root}>
@@ -115,6 +127,7 @@ class CityGenForm extends React.Component {
 							onChange={dispatchFieldCurry('citygen.form.name')}
 							placeholder="Random"
 							value={this.props.citygen.form.name}
+							disabled={ajaxing}
 						/>
 					</FormControl>
 
@@ -125,6 +138,7 @@ class CityGenForm extends React.Component {
 							value={this.props.citygen.form.population_type}
 							onChange={dispatchFieldCurry('citygen.form.population_type')}
 							inputProps={{ id: 'populationType' }}
+							disabled={ajaxing}
 						>
 							{this.menuItemsFromList(this.props.citygen.lists.populationTypes)}
 							<MenuItem key="gi" value="45000">Gargantuan I (45,000)</MenuItem>
@@ -142,6 +156,7 @@ class CityGenForm extends React.Component {
 							value={this.props.citygen.form.sea}
 							onChange={dispatchFieldCurry('citygen.form.sea')}
 							inputProps={{ id: 'byTheSea' }}
+							disabled={ajaxing}
 						>
 							<MenuItem key="random" value="random">Random</MenuItem>
 							<MenuItem key="yes" value="1">Yes</MenuItem>
@@ -156,6 +171,7 @@ class CityGenForm extends React.Component {
 							value={this.props.citygen.form.river}
 							onChange={dispatchFieldCurry('citygen.form.river')}
 							inputProps={{ id: 'byTheRiver' }}
+							disabled={ajaxing}
 						>
 							<MenuItem key="random" value="random">Random</MenuItem>
 							<MenuItem key="yes" value="1">Yes</MenuItem>
@@ -170,6 +186,7 @@ class CityGenForm extends React.Component {
 							value={this.props.citygen.form.military}
 							onChange={dispatchFieldCurry('citygen.form.military')}
 							inputProps={{ id: 'military' }}
+							disabled={ajaxing}
 						>
 							<MenuItem key="random" value="random">Random</MenuItem>
 							<MenuItem key="yes" value="1">Yes</MenuItem>
@@ -184,6 +201,7 @@ class CityGenForm extends React.Component {
 							value={this.props.citygen.form.gates}
 							onChange={dispatchFieldCurry('citygen.form.gates')}
 							inputProps={{ id: 'gates' }}
+							disabled={ajaxing}
 						>
 							<MenuItem key="random" value="random">Random</MenuItem>
 							{Array(11).fill(false).map((_, i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
@@ -198,6 +216,7 @@ class CityGenForm extends React.Component {
 							value={this.props.citygen.form.professions}
 							onChange={dispatchFieldCurry('citygen.form.professions')}
 							inputProps={{ id: 'professions' }}
+							disabled={ajaxing}
 						>
 							<MenuItem key="on" value="on">Yes</MenuItem>
 							<MenuItem key="off" value="off">No</MenuItem>
@@ -211,6 +230,7 @@ class CityGenForm extends React.Component {
 							value={this.props.citygen.form.buildings}
 							onChange={dispatchFieldCurry('citygen.form.buildings')}
 							inputProps={{ id: 'buildings' }}
+							disabled={ajaxing}
 						>
 							<MenuItem key="on" value="on">Yes</MenuItem>
 							<MenuItem key="off" value="off">No</MenuItem>
@@ -225,6 +245,7 @@ class CityGenForm extends React.Component {
 							value={this.props.citygen.form.racial_mix}
 							onChange={dispatchFieldCurry('citygen.form.racial_mix')}
 							inputProps={{ id: 'racial_mix' }}
+							disabled={ajaxing}
 						>
 							{this.menuItemsFromList(this.props.citygen.lists.integration)}
 						</Select>
@@ -237,6 +258,7 @@ class CityGenForm extends React.Component {
 							value={this.props.citygen.form.race}
 							onChange={dispatchFieldCurry('citygen.form.race')}
 							inputProps={{ id: 'race' }}
+							disabled={ajaxing}
 						>
 							{this.menuItemsFromList(this.props.citygen.lists.integration)}
 						</Select>
@@ -248,9 +270,11 @@ class CityGenForm extends React.Component {
 							variant="contained"
 							color="primary"
 							onClick={() => console.log('got here')}
+							disabled={ajaxing}
 						>
 							Generate
 						</Button>
+						{ajaxing && <CircularProgress size={24} className={classes.buttonProgress} />}
 					</FormControl>
 				</div>
 			</React.Fragment>
