@@ -2,8 +2,8 @@ import {AjaxStatusCore, WebserviceCore} from "dts-react-common";
 import store from "./ReduxStore";
 import {dispatchField} from "./Dispatch";
 
-export const ajaxStatusCore = new AjaxStatusCore();
-ajaxStatusCore.registerChangedCallback(
+export const ajaxStatus = new AjaxStatusCore();
+ajaxStatus.registerChangedCallback(
 	(ajaxId, isAjaxingStarting) => dispatchField('app.ajaxSpinnerCount', store.getState().app.ajaxSpinnerCount + (isAjaxingStarting ? 1 : -1))
 );
 
@@ -22,7 +22,7 @@ const rawPromiseCallback = promise => promise
 const webserviceCityGen = new WebserviceCore({
 	// mocked url that just returns some content
 	baseUrl: 'http://localhost/citygenerator/api/public/citygenerator/',
-	ajaxStatusCore: ajaxStatusCore,
+	ajaxStatusCore: ajaxStatus,
 	rawPromiseCallback: rawPromiseCallback,
 });
 
@@ -42,7 +42,7 @@ export const axiosErrorHandler = (error, displayError) => {
 export default {
 	citygen: {
 		lists: () => webserviceCityGen.get(`lists`).then(lists => {
-			dispatchField('citygen.lists.populationTypes', lists.populationTypes);
+			Object.keys(lists).forEach(key => dispatchField(`citygen.lists.${key}`, lists[key]));
 			return lists;
 		}),
 	},

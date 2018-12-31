@@ -22,9 +22,15 @@ const defaultState = {
 			sea: 'random',
 			river: 'random',
 			military: 'random',
+			gates: 'random',
+			buildings: 'on',
+			professions: 'on',
+			racial_mix: 'random',
+			race: 'random',
 		},
 		lists: {
 			populationTypes: undefined,
+			integration: undefined,
 		},
 	},
 	app: {

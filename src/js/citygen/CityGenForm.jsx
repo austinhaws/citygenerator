@@ -10,6 +10,8 @@ import webservice from "../util/Webservice";
 import MenuItem from "@material-ui/core/MenuItem";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import FormHelperText from "@material-ui/core/es/FormHelperText/FormHelperText";
+import Button from "@material-ui/core/Button";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -39,6 +41,11 @@ class CityGenForm extends React.Component {
 	componentDidMount() {
 		webservice.citygen.lists();
 	}
+
+	menuItemsFromList = list => {
+		return [<MenuItem key="random" value="random">Random</MenuItem>]
+			.concat((list || []).map(item => <MenuItem key={item.id} value={item.id}>{item.label}</MenuItem>));
+	};
 
 	/*
 <script>
@@ -119,8 +126,7 @@ class CityGenForm extends React.Component {
 							onChange={dispatchFieldCurry('citygen.form.population_type')}
 							inputProps={{ id: 'populationType' }}
 						>
-							<MenuItem key="random" value="random">Random</MenuItem>
-							{(this.props.citygen.lists.populationTypes || []).map(populationType => <MenuItem key={populationType.id} value={populationType.id}>{populationType.label}</MenuItem>)}
+							{this.menuItemsFromList(this.props.citygen.lists.populationTypes)}
 							<MenuItem key="gi" value="45000">Gargantuan I (45,000)</MenuItem>
 							<MenuItem key="gii" value="55000">Gargantuan II (55,000)</MenuItem>
 							<MenuItem key="giii" value="65000">Gargantuan III (65,000)</MenuItem>
@@ -170,6 +176,82 @@ class CityGenForm extends React.Component {
 							<MenuItem key="no" value="0">No</MenuItem>
 						</Select>
 					</FormControl>
+
+					{/* # Gates */}
+					<FormControl className={classes.formControl}>
+						<InputLabel shrink htmlFor="gates">Number of Gates</InputLabel>
+						<Select
+							value={this.props.citygen.form.gates}
+							onChange={dispatchFieldCurry('citygen.form.gates')}
+							inputProps={{ id: 'gates' }}
+						>
+							<MenuItem key="random" value="random">Random</MenuItem>
+							{Array(11).fill(false).map((_, i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
+						</Select>
+						<FormHelperText>At least one gate means city has walls</FormHelperText>
+					</FormControl>
+
+					{/* # Professions */}
+					<FormControl className={classes.formControl}>
+						<InputLabel shrink htmlFor="professions">Generate Professions</InputLabel>
+						<Select
+							value={this.props.citygen.form.professions}
+							onChange={dispatchFieldCurry('citygen.form.professions')}
+							inputProps={{ id: 'professions' }}
+						>
+							<MenuItem key="on" value="on">Yes</MenuItem>
+							<MenuItem key="off" value="off">No</MenuItem>
+						</Select>
+					</FormControl>
+
+					{/* # Buildings */}
+					<FormControl className={classes.formControl}>
+						<InputLabel shrink htmlFor="buildings">Generate Buildings</InputLabel>
+						<Select
+							value={this.props.citygen.form.buildings}
+							onChange={dispatchFieldCurry('citygen.form.buildings')}
+							inputProps={{ id: 'buildings' }}
+						>
+							<MenuItem key="on" value="on">Yes</MenuItem>
+							<MenuItem key="off" value="off">No</MenuItem>
+						</Select>
+					</FormControl>
+
+
+					{/* Society Racial Type */}
+					<FormControl className={classes.formControl}>
+						<InputLabel shrink htmlFor="racial_mix">Society Type</InputLabel>
+						<Select
+							value={this.props.citygen.form.racial_mix}
+							onChange={dispatchFieldCurry('citygen.form.racial_mix')}
+							inputProps={{ id: 'racial_mix' }}
+						>
+							{this.menuItemsFromList(this.props.citygen.lists.integration)}
+						</Select>
+					</FormControl>
+
+					{/* Major Race */}
+					<FormControl className={classes.formControl}>
+						<InputLabel shrink htmlFor="race">Major Race</InputLabel>
+						<Select
+							value={this.props.citygen.form.race}
+							onChange={dispatchFieldCurry('citygen.form.race')}
+							inputProps={{ id: 'race' }}
+						>
+							{this.menuItemsFromList(this.props.citygen.lists.integration)}
+						</Select>
+					</FormControl>
+
+					{/* Generate Button */}
+					<FormControl className={classes.formControl}>
+						<Button
+							variant="contained"
+							color="primary"
+							onClick={() => console.log('got here')}
+						>
+							Generate
+						</Button>
+					</FormControl>
 				</div>
 			</React.Fragment>
 /*<div class="center">
@@ -179,38 +261,6 @@ class CityGenForm extends React.Component {
 		<table class="table_center" id="options-table">
 			<thead />
 			<tbody>
-				<tr>
-					<td class="field_title">Number of Gates</td>
-					<td class="input" valign="top">
-						<select name="gates" class="select2">
-							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
-							<option>--------------------</option>
-							<option value="0">0</option>
-							<option value="1">1</option>
-							<option value="2">2</option>
-							<option value="3">3</option>
-							<option value="4">4</option>
-							<option value="5">5</option>
-							<option value="6">6</option>
-							<option value="7">7</option>
-							<option value="8">8</option>
-							<option value="9">9</option>
-							<option value="10">10</option>
-						</select>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td class="center italic">(At least one gate means city has walls)</td>
-				</tr>
-				<tr><td>&nbsp;</td></tr>
-				<tr>
-					<td
-				</tr>
-				<tr>
-					<td class="field_title">Generate Buildings</td>
-					<td class="input"><input type="checkbox" name="buildings" checked="checked" /></td>
-				</tr>
 				<tr class="wards-defining">
 					<td class="field_title">Add Ward:</td>
 					<td class="input">
@@ -232,41 +282,7 @@ class CityGenForm extends React.Component {
 						</select> <input type="button" value="Add Ward" class="sub-button" id="add-ward-button" />
 					</td>
 				</tr>
-				<tr>
-					<td class="field_title">Generate Professions</td>
-					<td class="input"><input type="checkbox" name="professions" checked="checked" /></td>
-				</tr>
-				<tr><td>&nbsp;</td></tr>
-				<tr>
-					<td class="field_title">Society Type</td>
-					<td class="input">
-						<select name="racial_mix" class="select2">
-							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
-							<option>--------------------</option>
-							<option value="<?php echo kIntegration_Isolated;?>"><?php echo kIntegration_Isolated;?></option>
-							<option value="<?php echo kIntegration_Mixed;?>"><?php echo kIntegration_Mixed;?></option>
-							<option value="<?php echo kIntegration_Integrated;?>"><?php echo kIntegration_Integrated;?></option>
-							<option value="<?php echo kIntegration_Custom;?>"><?php echo kIntegration_Custom;?></option>
-						</select>
-					</td>
-				</tr>
-				<tr id="race-row">
-					<td class="field_title">Major Race</td>
-					<td class="input">
-						<select name="race" class="select2">
-							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
-							<option>--------------------</option>
-							<option value="<?php echo kRace_Human;?>"><?php echo kRace_Human;?></option>
-							<option value="<?php echo kRace_Halfling;?>"><?php echo kRace_Halfling;?></option>
-							<option value="<?php echo kRace_Elf;?>"><?php echo kRace_Elf;?></option>
-							<option value="<?php echo kRace_Dwarf;?>"><?php echo kRace_Dwarf;?></option>
-							<option value="<?php echo kRace_Gnome;?>"><?php echo kRace_Gnome;?></option>
-							<option value="<?php echo kRace_HalfElf;?>"><?php echo kRace_HalfElf;?></option>
-							<option value="<?php echo kRace_HalfOrc;?>"><?php echo kRace_HalfOrc;?></option>
-							<option value="<?php echo kRace_Other;?>"><?php echo kRace_Other;?></option>
-						</select>
-					</td>
-				</tr>
+\
 				<tr id="race-ratio-row">
 					<td class="field_title">Race Proportions</td>
 					<td class="input">
