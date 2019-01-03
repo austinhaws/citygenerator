@@ -17,20 +17,22 @@ export function getDefaultState(path) {
 const defaultState = {
 	citygen: {
 		form: {
-			name: '',
-			population_type: 'random',
-			sea: 'random',
-			river: 'random',
-			military: 'random',
-			gates: 'random',
 			buildings: 'on',
+			name: '',
+			gates: 'random',
+			military: 'random',
+			population_type: 'random',
 			professions: 'on',
-			racial_mix: 'random',
 			race: 'random',
+			raceRatios: {},
+			racial_mix: 'random',
+			river: 'random',
+			sea: 'random',
 		},
 		lists: {
 			populationTypes: undefined,
 			integration: undefined,
+			race: undefined,
 		},
 	},
 	app: {

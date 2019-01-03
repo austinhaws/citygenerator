@@ -3,7 +3,7 @@ import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import {TextField, withStyles} from "@material-ui/core";
-import {dispatchFieldCurry} from "../util/Dispatch";
+import {dispatchField, dispatchFieldCurry} from "../util/Dispatch";
 import * as PropTypes from "prop-types";
 import Select from "@material-ui/core/Select";
 import webservice, {ajaxStatus} from "../util/Webservice";
@@ -14,6 +14,7 @@ import FormHelperText from "@material-ui/core/es/FormHelperText/FormHelperText";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import green from '@material-ui/core/colors/green';
+import Slider from '@material-ui/lab/Slider';
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -45,6 +46,9 @@ const styles = theme => ({
 		marginTop: -12,
 		marginLeft: -12,
 	},
+	slider: {
+		padding: '22px 0px',
+	},
 });
 
 class CityGenForm extends React.Component {
@@ -55,6 +59,10 @@ class CityGenForm extends React.Component {
 	menuItemsFromList = list => {
 		return [<MenuItem key="random" value="random">Random</MenuItem>]
 			.concat((list || []).map(item => <MenuItem key={item.id} value={item.id}>{item.label}</MenuItem>));
+	};
+
+	generate = () => {
+		console.log('generate');
 	};
 
 	/*
@@ -128,6 +136,7 @@ class CityGenForm extends React.Component {
 							placeholder="Random"
 							value={this.props.citygen.form.name}
 							disabled={ajaxing}
+							inputProps={{ id: 'name', shrink: 'shrink' }}
 						/>
 					</FormControl>
 
@@ -250,26 +259,50 @@ class CityGenForm extends React.Component {
 							{this.menuItemsFromList(this.props.citygen.lists.integration)}
 						</Select>
 					</FormControl>
+					{
+						this.props.citygen.form.racial_mix === 'Custom' ? (
+							/* Race ratio sliders */
+							<FormControl className={classes.formControl}>
+								<InputLabel shrink>Race Proportions</InputLabel>
+								{
+									this.props.citygen.lists.race.map(race =>
+										<FormControl className={classes.formControl} key={race.id}>
+											<InputLabel htmlFor={`race-slider-${race.id}`}>{race.label}</InputLabel>
+											<Slider
+												id={`race-slider-${race.id}`}
+												classes={{ container: classes.slider }}
+												value={this.props.citygen.form.raceRatios[race.id] === undefined ? 50 : this.props.citygen.form.raceRatios[race.id]}
+												aria-labelledby="label"
+												onChange={(control, value) => dispatchField(`citygen.form.raceRatios.${race.id}`, value)}
+												disabled={ajaxing}
+											/>
+										</FormControl>
+									)
+								}
+							</FormControl>
+						) : (
+							/* Major Race */
+							<FormControl className={classes.formControl}>
+								<InputLabel shrink htmlFor="race">Major Race</InputLabel>
+								<Select
+									value={this.props.citygen.form.race}
+									onChange={dispatchFieldCurry('citygen.form.race')}
+									inputProps={{id: 'race'}}
+									disabled={ajaxing}
+								>
+									{this.menuItemsFromList(this.props.citygen.lists.race)}
+								</Select>
+							</FormControl>
+						)
+					}
 
-					{/* Major Race */}
-					<FormControl className={classes.formControl}>
-						<InputLabel shrink htmlFor="race">Major Race</InputLabel>
-						<Select
-							value={this.props.citygen.form.race}
-							onChange={dispatchFieldCurry('citygen.form.race')}
-							inputProps={{ id: 'race' }}
-							disabled={ajaxing}
-						>
-							{this.menuItemsFromList(this.props.citygen.lists.integration)}
-						</Select>
-					</FormControl>
 
 					{/* Generate Button */}
 					<FormControl className={classes.formControl}>
 						<Button
 							variant="contained"
 							color="primary"
-							onClick={() => console.log('got here')}
+							onClick={this.generate}
 							disabled={ajaxing}
 						>
 							Generate
@@ -306,28 +339,7 @@ class CityGenForm extends React.Component {
 						</select> <input type="button" value="Add Ward" class="sub-button" id="add-ward-button" />
 					</td>
 				</tr>
-\
-				<tr id="race-ratio-row">
-					<td class="field_title">Race Proportions</td>
-					<td class="input">
-						<ul>
-							<li><?php echo kRace_Human?> <div class="<?php echo kRace_Human?> slider"></div></li>
-							<li><?php echo kRace_Halfling?> <div class="<?php echo kRace_Halfling?> slider"></div></li>
-							<li><?php echo kRace_Elf?> <div class="<?php echo kRace_Elf?> slider"></div></li>
-							<li><?php echo kRace_Dwarf?> <div class="<?php echo kRace_Dwarf?> slider"></div></li>
-							<li><?php echo kRace_Gnome?> <div class="<?php echo kRace_Gnome?> slider"></div></li>
-							<li><?php echo kRace_HalfElf?> <div class="<?php echo kRace_HalfElf?> slider"></div></li>
-							<li><?php echo kRace_HalfOrc?> <div class="<?php echo kRace_HalfOrc?> slider"></div></li>
-							<li><?php echo kRace_Other?> <div class="<?php echo kRace_Other?> slider"></div></li>
-						</ul>
-						<input type="hidden" name="raceRatio" value=""/>
-					</td>
-				</tr>
-				<tr><td>&nbsp;</td></tr>
-				<tr>
-					<td class="center" colspan="100"><input type="button" id="generate-button" value="Generate" /></td>
-				</tr>
-			</tbody>
+\			</tbody>
 		</table>
 	</form>
 </div>*/
