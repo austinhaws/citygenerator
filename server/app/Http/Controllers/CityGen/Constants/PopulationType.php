@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\CityGen\Constants;
 
-class PopulationType {
+class PopulationType extends BaseEnum
+{
     const THORP = 'Thorp';
     const HAMLET = 'Hamlet';
     const VILLAGE = 'Village';

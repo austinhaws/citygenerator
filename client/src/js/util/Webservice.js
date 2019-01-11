@@ -20,8 +20,7 @@ const rawPromiseCallback = promise => promise
 	});
 
 const webserviceCityGen = new WebserviceCore({
-	// mocked url that just returns some content
-	baseUrl: 'http://localhost/citygenerator/server/public/citygenerator/',
+	baseUrl: globals.urlBase,
 	ajaxStatusCore: ajaxStatus,
 	rawPromiseCallback: rawPromiseCallback,
 });

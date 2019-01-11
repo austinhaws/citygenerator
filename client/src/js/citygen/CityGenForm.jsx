@@ -66,10 +66,6 @@ class CityGenForm extends React.Component {
 	};
 
 	/*
-<script>
-
-	var globals = {};
-
 	globals.wards = <?=json_encode($table_buildings)?>;
 	globals.wards_list = ['<?=kWard_Administration?>'
 						, '<?=kWard_Craftsmen?>'
@@ -83,42 +79,6 @@ class CityGenForm extends React.Component {
 						, '<?=kWard_Sea?>'
 						, '<?=kWard_Shanty?>'
 						, '<?=kWard_Slum?>'];
-	globals.wards_mustache = [];
-	globals.templates = new template_loader();
-
-	$(function(){
-		var select2s = $('.select2');
-		select2s.filter('.hand-entered').select2({
-			tags: true
-			, maximumSelectionSize: 1
-			//Allow manually entered text in drop down.
-			, createSearchChoice: function (term, data) {
-				if ($(data).filter(function () {
-						return this.text.localeCompare(term) === 0;
-					}).length === 0) {
-					return {id: term, text: term};
-				}
-			}
-			, data: [
-				{id: '<?php echo kRandom; ?>', text:'Random'}
-				, {id: '<?php echo kPopulationType_Thorp; ?>', text:'Thorp (20-80)'}
-				, {id: '<?php echo kPopulationType_Hamlet; ?>', text:'Hamlet (81-400)'}
-				, {id: '<?php echo kPopulationType_Village; ?>', text:'Village (401-900)'}
-				, {id: '<?php echo kPopulationType_SmallTown; ?>', text:'Small Town (901-2000)'}
-				, {id: '<?php echo kPopulationType_LargeTown; ?>', text:'Large Town (2001-5000)'}
-				, {id: '<?php echo kPopulationType_SmallCity; ?>', text:'Small City (5001-12000)'}
-				, {id: '<?php echo kPopulationType_LargeCity; ?>', text:'Large City (12001-32000)'}
-				, {id: '<?php echo kPopulationType_Metropolis; ?>', text:'Metropolis (32001+)'}
-			]
-		});
-
-		select2s.not('.hand-entered').select2({
-			minimumResultsForSearch: -1
-		});
-	});
-
-</script>
-
 	 */
 	render() {
 		const { classes } = this.props;
@@ -143,7 +103,7 @@ class CityGenForm extends React.Component {
 
 					{/* Population Type */}
 					<FormControl className={classes.formControl}>
-						<InputLabel shrink htmlFor="populationType">Population Type</InputLabel>
+						<InputLabel shrink htmlFor="populationType">Population</InputLabel>
 						<Select
 							value={this.props.citygen.form.population_type}
 							onChange={dispatchFieldCurry('citygen.form.population_type')}
