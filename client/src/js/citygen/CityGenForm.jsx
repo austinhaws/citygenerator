@@ -137,6 +137,7 @@ class CityGenForm extends React.Component {
 							value={this.props.citygen.form.name}
 							disabled={ajaxing}
 							inputProps={{ id: 'name', shrink: 'shrink' }}
+							helperText={this.props.citygen.form.name === 'Custom' ? "Translated to the majority race language" : ''}
 						/>
 					</FormControl>
 
