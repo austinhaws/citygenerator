@@ -16,9 +16,6 @@ export function getDefaultState(path) {
 
 const defaultState = {
 	citygen: {
-		inputs: {
-			customWard: '',
-		},
 		form: {
 			buildings: 'on',
 			name: '',
@@ -32,6 +29,10 @@ const defaultState = {
 			river: 'random',
 			sea: 'random',
 			wardsAdded: [],
+		},
+		generatedCity: undefined,
+		inputs: {
+			customWard: '',
 		},
 		lists: {
 			populationTypes: undefined,

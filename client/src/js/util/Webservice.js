@@ -44,5 +44,9 @@ export default {
 			Object.keys(lists).forEach(key => dispatchField(`citygen.lists.${key}`, lists[key]));
 			return lists;
 		}),
+		generate: form => webserviceCityGen.post(`generate`, form).then(city => {
+			dispatchField('citygen.generatedCity', city);
+			return city;
+		}),
 	},
 };

@@ -13,7 +13,8 @@
 
 // citygen
 $router->group(['namespace' => 'CityGen'], function ($router) {
-    $router->get('citygenerator/lists', 'ListsController@getLists');
+    $router->get('citygenerator/lists', 'CityGenController@getLists');
+    $router->post('citygenerator/generate', 'CityGenController@generate');
 });
 
 $router->get('/', function () use ($router) {

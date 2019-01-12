@@ -53,7 +53,10 @@ const styles = theme => ({
 
 class CityGenForm extends React.Component {
 	componentDidMount() {
-		webservice.citygen.lists();
+		// get lists if missing
+		if (!this.props.citygen.lists.populationTypes) {
+			webservice.citygen.lists();
+		}
 	}
 
 	menuItemsFromList = list => {
@@ -62,7 +65,8 @@ class CityGenForm extends React.Component {
 	};
 
 	generate = () => {
-		console.log('generate');
+		webservice.citygen.generate(this.props.citygen.form)
+			.then(() => this.props.history.push('/generated'));
 	};
 
 	addCustomWard = () => {
@@ -321,38 +325,6 @@ class CityGenForm extends React.Component {
 					</FormControl>
 				</div>
 			</React.Fragment>
-/*<div class="center">
-	<br />
-	<form method="POST" action="generate.php" id="generate-form">
-		<input type="hidden" name="wards-added" />
-		<table class="table_center" id="options-table">
-			<thead />
-			<tbody>
-				<tr class="wards-defining">
-					<td class="field_title">Add Ward:</td>
-					<td class="input">
-						<select name="ward-list" class="select2">
-							<option value=<?=kRandom?> selected="selected">Random</option>
-							<option value="">--------------------</option>
-							<option value="<?=kWard_Administration?>"><?=kWard_Administration?></option>
-							<option value="<?=kWard_Craftsmen?>"><?=kWard_Craftsmen?></option>
-							<option value="<?=kWard_Gate?>"><?=kWard_Gate?></option>
-							<option value="<?=kWard_Market?>"><?=kWard_Market?></option>
-							<option value="<?=kWard_Merchant?>"><?=kWard_Merchant?></option>
-							<option value="<?=kWard_Military?>"><?=kWard_Military?></option>
-							<option value="<?=kWard_Oderiforous?>"><?=kWard_Oderiforous?></option>
-							<option value="<?=kWard_Patriciate?>"><?=kWard_Patriciate?></option>
-							<option value="<?=kWard_River?>"><?=kWard_River?></option>
-							<option value="<?=kWard_Sea?>"><?=kWard_Sea?></option>
-							<option value="<?=kWard_Shanty?>"><?=kWard_Shanty?></option>
-							<option value="<?=kWard_Slum?>"><?=kWard_Slum?></option>
-						</select> <input type="button" value="Add Ward" class="sub-button" id="add-ward-button" />
-					</td>
-				</tr>
-\			</tbody>
-		</table>
-	</form>
-</div>*/
 	);
 	}
 }
