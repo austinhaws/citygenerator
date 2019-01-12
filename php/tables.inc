@@ -50,7 +50,7 @@
 	global $table_profession;
 	global $table_profession_ratio;
 	global $table_population_size;
-	global $table_population_type;
+	//global $table_population_type;
 	global $table_population_acres;
 	global $table_population_num_structures;
 	global $table_population_num_walls;
@@ -2683,17 +2683,6 @@
 			kMin => 32001,
 			kMax => 90000,
 		),
-	);
-
-	$table_population_type = array(
-		10 => kPopulationType_Thorp,
-		30 => kPopulationType_Hamlet,
-		50 => kPopulationType_Village,
-		70 => kPopulationType_SmallTown,
-		85 => kPopulationType_LargeTown,
-		95 => kPopulationType_SmallCity,
-		99 => kPopulationType_LargeCity,
-		100 => kPopulationType_Metropolis,
 	);
 
 	$table_population_acres = array(
