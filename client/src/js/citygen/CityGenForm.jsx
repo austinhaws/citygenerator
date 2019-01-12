@@ -65,21 +65,22 @@ class CityGenForm extends React.Component {
 		console.log('generate');
 	};
 
-	/*
-	globals.wards = <?=json_encode($table_buildings)?>;
-	globals.wards_list = ['<?=kWard_Administration?>'
-						, '<?=kWard_Craftsmen?>'
-						, '<?=kWard_Gate?>'
-						, '<?=kWard_Market?>'
-						, '<?=kWard_Merchant?>'
-						, '<?=kWard_Military?>'
-						, '<?=kWard_Oderiforous?>'
-						, '<?=kWard_Patriciate?>'
-						, '<?=kWard_River?>'
-						, '<?=kWard_Sea?>'
-						, '<?=kWard_Shanty?>'
-						, '<?=kWard_Slum?>'];
-	 */
+	addCustomWard = () => {
+
+		// add a custom ward entry and fill it with its buildings
+		const ward = this.props.citygen.inputs.customWard;
+		const buildings = this.props.citygen.lists.buildingsByWard[ward];
+		const buildingsList = buildings.map(ward => ({ type: ward, weight: '1' }));
+		const wardDetail = {
+			ward: ward,
+			buildings: buildingsList,
+		};
+
+		// reset menu & push new ward detail
+		dispatchField('citygen.inputs.customWard', '');
+		dispatchField(`citygen.form.wardsAdded.${this.props.citygen.form.wardsAdded.length}`, wardDetail);
+	};
+
 	render() {
 		const { classes } = this.props;
 		const ajaxing = ajaxStatus.isAjaxing();
@@ -204,9 +205,57 @@ class CityGenForm extends React.Component {
 						>
 							<MenuItem key="on" value="on">Yes</MenuItem>
 							<MenuItem key="off" value="off">No</MenuItem>
+							<MenuItem key="custom" value="custom">Custom Wards</MenuItem>
 						</Select>
 					</FormControl>
 
+					{/* Custom Wards */}
+					{
+						this.props.citygen.form.buildings === 'custom' ?
+							<FormControl className={classes.formControl}>
+								<Select
+									value={this.props.citygen.inputs.customWard}
+									onChange={dispatchFieldCurry('citygen.inputs.customWard')}
+									inputProps={{ id: 'customWard' }}
+									disabled={ajaxing}
+									placeholder="Choose Ward Type"
+								>
+									{this.props.citygen.lists.wards.map(ward => (
+										<MenuItem key={ward.id} value={ward.label}>{ward.label}</MenuItem>
+									))};
+								</Select>
+								<Button
+									variant="contained"
+									color="primary"
+									onClick={this.addCustomWard}
+									disabled={ajaxing || !this.props.citygen.inputs.customWard}
+								>
+									Add Ward
+								</Button>
+								<div className="custom_wards">
+									{this.props.citygen.form.wardsAdded.map((wardAdded, wardIdx) => (
+										<div className="custom_wards--ward" key={`${wardAdded}-${wardIdx}`}>
+											<div className="custom_wards--ward--name">{wardAdded.ward}</div>
+											<div className="custom_wards--ward--buildings">
+												{wardAdded.buildings.map((building, buildingIdx) => (
+													<FormControl className="custom_wards--ward--building" key={building.type}>
+														<TextField
+															label={building.type}
+															autoFocus={true}
+															onChange={dispatchFieldCurry(`citygen.form.wardsAdded.${wardIdx}.buildings.${buildingIdx}.weight`)}
+															value={building.weight}
+															disabled={ajaxing}
+															inputProps={{ shrink: 'shrink' }}
+														/>
+													</FormControl>
+												))}
+											</div>
+										</div>
+									))}
+								</div>
+							</FormControl>
+							: undefined
+					}
 
 					{/* Society Racial Type */}
 					<FormControl className={classes.formControl}>

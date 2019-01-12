@@ -16,6 +16,9 @@ export function getDefaultState(path) {
 
 const defaultState = {
 	citygen: {
+		inputs: {
+			customWard: '',
+		},
 		form: {
 			buildings: 'on',
 			name: '',
@@ -28,11 +31,14 @@ const defaultState = {
 			racial_mix: 'random',
 			river: 'random',
 			sea: 'random',
+			wardsAdded: [],
 		},
 		lists: {
 			populationTypes: undefined,
 			integration: undefined,
 			race: undefined,
+			wards: undefined,
+			buildingsByWard: undefined,
 		},
 	},
 	app: {
