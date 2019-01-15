@@ -3,23 +3,14 @@
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
 use App\Http\Controllers\CityGen\Models\City;
-use App\Http\Controllers\CityGen\Services\TableService;
+use App\Http\Controllers\CityGen\Services\BaseService;
 
-class RandomCityService extends BaseRandomService
+class RandomCityService extends BaseService
 {
-    private $populationService;
-
-    public function __construct(RandomCityPopulationService $populationService, TableService $tableService)
-    {
-        parent::__construct($tableService);
-        $this->populationService = $populationService;
-    }
-
-
     public function randomizeCity($cityPost) {
         $city = new City();
 
-        $this->populationService->determinePopulation($city, $cityPost);
+        $this->services->randomCityPopulationService->determinePopulation($city, $cityPost);
 
 //        $this->random_acres();
 //        $this->random_num_structures();

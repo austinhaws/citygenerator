@@ -6,8 +6,9 @@ use App\Http\Controllers\CityGen\Constants\MinMax;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Models\City;
+use App\Http\Controllers\CityGen\Services\BaseService;
 
-class RandomCityPopulationService extends BaseRandomService
+class RandomCityPopulationService extends BaseService
 {
 
     /**
@@ -19,7 +20,7 @@ class RandomCityPopulationService extends BaseRandomService
     public function determinePopulation(City $city, array $cityPost) {
         $populationType = $cityPost['population_type'];
 
-        if ($this->isRandom($populationType)) {
+        if ($this->randomService->isRandom($populationType)) {
             $this->randomPopulationType($city);
         } else {
             $this->useEnteredPopulationType($city, $populationType);

@@ -14,7 +14,7 @@ final class TablesTest extends TestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testTablesCreation()
     {
         try {
             $tables = (new ReflectionClass(Table::class))->getConstants();
@@ -26,12 +26,13 @@ final class TablesTest extends TestCase
         } catch (\ReflectionException $e) {
             throw new RuntimeException($e);
         }
+    }
 
-
-//        $this->get('/');
-//
-//        $this->assertEquals(
-//            $this->app->version(), $this->response->getContent()
-//        );
+    public function testReuseTables()
+    {
+        // getting the table a second time should return the same table
+        $table1 = Table::getTable(Table::FAMOUS);
+        $table2 = Table::getTable(Table::FAMOUS);
+        $this->assertSame($table1, $table2);
     }
 }

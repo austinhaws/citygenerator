@@ -2,19 +2,11 @@
 
 namespace App\Http\Controllers\CityGen\Services;
 
+use App\Http\Controllers\CityGen\Constants\MinMax;
 use App\Http\Controllers\CityGen\Constants\Table;
-use App\Http\Controllers\CityGen\Tables\PopulationTypeTable;
 
-class TableService
+class TableService extends BaseService
 {
-
-    private $populationTypeTable;
-
-    public function __construct(PopulationTypeTable $populationTypeTable)
-    {
-        $this->populationTypeTable = $populationTypeTable;
-    }
-
     /**
      * get value in a range
      *
@@ -61,7 +53,7 @@ class TableService
         $table = Table::getTable($tableName)->getTable();
 
         do {
-            $result = $table[rand_range(0, count($table) - 1)];
+            $result = $table[$this->services->randomService->randRange(0, count($table) - 1)];
         } while (!$result);
         return $result;
     }
@@ -78,7 +70,7 @@ class TableService
 
         $result = false;
         foreach ($table as $key => $range) {
-            if ($range[kMin] <= $value && $range[kMax] >= $value) {
+            if ($range[MinMax::MIN] <= $value && $range[MinMax::MAX] >= $value) {
                 $result = $key;
                 break;
             }

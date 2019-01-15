@@ -52,12 +52,22 @@ class Table extends BaseEnum
     const WARD_ACRES_USED = 'WardAcresUsedTable';
     const WARDS = 'WardsTable';
 
+    private static $tables = [];
+
     /**
      * @param string $tableName
      * @return BaseTable
      */
     static public function getTable(string $tableName) {
-        $pathName = "App\Http\Controllers\CityGen\Tables\\$tableName";
-        return new $pathName();
+
+        if (isset(Table::$tables[$tableName])) {
+            $table = Table::$tables[$tableName];
+        } else {
+            $pathName = "App\Http\Controllers\CityGen\Tables\\$tableName";
+            $table = new $pathName();
+            Table::$tables[$tableName] = $table;
+        }
+
+        return $table;
     }
 }
