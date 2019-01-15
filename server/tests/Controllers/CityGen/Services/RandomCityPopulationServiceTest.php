@@ -11,6 +11,10 @@ use Test\Controllers\CityGen\Util\BaseTestCase;
 
 final class RandomCityPopulationServiceTest extends BaseTestCase
 {
+    /**
+     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::determinePopulation
+     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::randomPopulationSize
+     */
     public function testGetTableResultRange_populationTypeGiven()
     {
         foreach (PopulationType::getConstants() as $populationType) {
@@ -26,6 +30,10 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
         }
     }
 
+    /**
+     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::determinePopulation
+     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::randomPopulationSize
+     */
     public function testGetTableResultRange_random()
     {
         $this->services->randomService->setRolls([
@@ -42,6 +50,9 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
         $this->assertSame(PopulationType::THORP, $city->populationType);
     }
 
+    /**
+     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::randomPopulationSize
+     */
     public function testGetTableResultRange_userEntered_low()
     {
         $this->services->randomService->setRolls([
@@ -58,6 +69,9 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
         $this->assertSame(20, $city->populationSize);
     }
 
+    /**
+     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::randomPopulationSize
+     */
     public function testGetTableResultRange_userEntered_mid()
     {
         $this->services->randomService->setRolls([
@@ -74,6 +88,9 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
         $this->assertSame(1500, $city->populationSize);
     }
 
+    /**
+     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::randomPopulationSize
+     */
     public function testGetTableResultRange_userEntered_big()
     {
         $this->services->randomService->setRolls([

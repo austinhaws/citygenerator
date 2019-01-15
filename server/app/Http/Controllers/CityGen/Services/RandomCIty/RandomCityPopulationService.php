@@ -19,22 +19,27 @@ class RandomCityPopulationService extends BaseService
      * @param PostData $postData
      */
     public function determinePopulation(City $city, PostData $postData) {
+        // population type
         $populationType = $postData->populationType;
-
         if ($this->services->randomService->isRandom($populationType)) {
-            $this->randomPopulationType($city);
+            $city->populationType = $this->services->tableService->getTableResultRandom(Table::POPULATION_TYPE);
         } else {
             $this->useEnteredPopulationType($city, $populationType);
         }
 
-        // population size
-        $this->randomPopulationSize($city);
+        // population size: if hand entered, may already be set
+        if ($city->populationSize === false) {
+            $value = $this->services->tableService->getTableResultIndex(Table::POPULATION_SIZE, $city->populationType);
+            $city->populationSize = $this->services->randomService->randRange("Random Population Size", $value[MinMax::MIN], $value[MinMax::MAX]);
+        }
     }
 
-    private function randomPopulationType($city) {
-        $city->populationType = $this->services->tableService->getTableResultRandom(Table::POPULATION_TYPE);
-    }
-
+    /**
+     * user picked a population type or an actual #. if a number then determine what size of city is good for that number
+     *
+     * @param City $city
+     * @param string $populationType
+     */
     private function useEnteredPopulationType(City $city, string $populationType) {
         switch ($populationType) {
             case PopulationType::THORP:
@@ -72,12 +77,4 @@ class RandomCityPopulationService extends BaseService
         }
     }
 
-    private function randomPopulationSize(City $city)
-    {
-        // check if it was hand entered so already set
-        if ($city->populationSize === false) {
-            $value = $this->services->tableService->getTableResultIndex(Table::POPULATION_SIZE, $city->populationType);
-            $city->populationSize = $this->services->randomService->randRange("Random Population Size", $value[MinMax::MIN], $value[MinMax::MAX]);
-        }
-    }
 }
