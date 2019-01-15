@@ -5,6 +5,7 @@ namespace App\Http\Controllers\CityGen\Services;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomService;
+use App\Http\Controllers\CityGen\Util\TestRandomService;
 
 class ServicesService
 {
@@ -13,7 +14,7 @@ class ServicesService
     public $randomCityPopulationService;
     /** @var RandomCityService  */
     public $randomCityService;
-    /** @var RandomService  */
+    /** @var RandomService|TestRandomService  */
     public $randomService;
     /** @var TableService  */
     public $tableService;

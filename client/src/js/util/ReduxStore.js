@@ -21,7 +21,7 @@ const defaultState = {
 			name: '',
 			gates: 'random',
 			military: 'random',
-			population_type: 'random',
+			populationType: 'random',
 			professions: 'on',
 			race: 'random',
 			raceRatios: {},

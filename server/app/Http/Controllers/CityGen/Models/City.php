@@ -3,17 +3,17 @@
 namespace App\Http\Controllers\CityGen\Models;
 
 class City {
-	public $population_size = false;
-	public $population_type = false;
+	public $populationSize = false;
+	public $populationType = false;
 	public $name = '';
 	public $num_structures = 0;
 	public $population_density = 0.0;
 	public $acres = 0.0;
 	public $has = array(
-		kHas_Military => false,
-		kHas_Sea => false,
-		kHas_River => false,
-		);
+        'Military' => false,
+		'Sea' => false,
+		'River' => false,
+    );
 	public $gates = 0;
 	public $wards = array();
 	public $professions = array();
@@ -57,13 +57,13 @@ class City {
 
 	private function random_famous() {
 		global $table_famous_occurrence;
-		$min_max = $table_famous_occurrence[$this->population_type];
+		$min_max = $table_famous_occurrence[$this->populationType];
 
-		$num = rand_range($min_max[kMin], $min_max[kMax]);
+		$num = rand_range($min_max[MinMax::MIN], $min_max[kMax]);
 		$this->random_famous_fill($num, 'famous');
 		sort($this->famous['famous']);
 
-		$num = rand_range($min_max[kMin], $min_max[kMax]);
+		$num = rand_range($min_max[MinMax::MIN], $min_max[kMax]);
 		$this->random_famous_fill($num, 'infamous');
 		sort($this->famous['infamous']);
 	 }
@@ -88,13 +88,13 @@ class City {
 
 	private function random_commodities() {
 		global $table_commodity_count;
-		$min_max = $table_commodity_count[$this->population_type];
+		$min_max = $table_commodity_count[$this->populationType];
 
-		$num = rand_range($min_max[kMin], $min_max[kMax]);
+		$num = rand_range($min_max[MinMax::MIN], $min_max[kMax]);
 		$this->random_commodities_fill($num, 'export');
 		sort($this->commodities['export']);
 
-		$num = rand_range($min_max[kMin], $min_max[kMax]);
+		$num = rand_range($min_max[MinMax::MIN], $min_max[kMax]);
 		$this->random_commodities_fill($num, 'import');
 		sort($this->commodities['import']);
 	}
@@ -102,33 +102,33 @@ class City {
 
 	private function random_acres() {
 		global $table_population_acres;
-		$value = get_table_result_index($table_population_acres, $this->population_type);
-		$this->acres = $this->population_size / rand_ratio_range($value[kMin], $value[kMax]);
+		$value = get_table_result_index($table_population_acres, $this->populationType);
+		$this->acres = $this->populationSize / rand_ratio_range($value[MinMax::MIN], $value[kMax]);
 	}
 
 	private function random_num_structures() {
 		global $table_population_num_structures;
-		$value = get_table_result_index($table_population_num_structures, $this->population_type);
+		$value = get_table_result_index($table_population_num_structures, $this->populationType);
 
-		$this->num_structures = $this->acres / rand_ratio_range($value[kMin], $value[kMax]);
+		$this->num_structures = $this->acres / rand_ratio_range($value[MinMax::MIN], $value[kMax]);
 	}
 
-	private function random_population_size() {
+	private function random_populationSize() {
 		global $table_population_size;
 		// check if it was hand entered so already set
-		if ($this->population_size === false) {
-			$value = get_table_result_index($table_population_size, $this->population_type);
-			$this->population_size = rand_range($value[kMin], $value[kMax]);
+		if ($this->populationSize === false) {
+			$value = get_table_result_index($table_population_size, $this->populationType);
+			$this->populationSize = rand_range($value[MinMax::MIN], $value[kMax]);
 		}
 	}
 
 	private function random_gates() {
 		global $table_population_has_walls;
 		global $table_population_num_walls;
-		$has_walls = get_table_result_index($table_population_has_walls, $this->population_type);
+		$has_walls = get_table_result_index($table_population_has_walls, $this->populationType);
 		if ($has_walls != 0 && rand_range(1, 100) <= $has_walls) {
-			$num_gates = get_table_result_index($table_population_num_walls, $this->population_type);
-			$this->gates = rand_range($num_gates[kMin], $num_gates[kMax]);
+			$num_gates = get_table_result_index($table_population_num_walls, $this->populationType);
+			$this->gates = rand_range($num_gates[MinMax::MIN], $num_gates[kMax]);
 		} else {
 			$this->gates = 0;
 		}
@@ -319,17 +319,17 @@ class City {
 		}
 	}
 
-	private function is_size_atleast($population_type) {
+	private function is_size_atleast($populationType) {
 		global $table_is_size_atleast;
-		$goods = get_table_result_index($table_is_size_atleast, $population_type);
-		return (false !== array_search($this->population_type, $goods));
+		$goods = get_table_result_index($table_is_size_atleast, $populationType);
+		return (false !== array_search($this->populationType, $goods));
 	}
 
 	private function random_buildings($ward, $building_weights) {
 		global $table_buildings;
 		global $table_buildings_subtypes;
 		global $table_population_ward_density;
-		$value = get_table_result_index($table_population_ward_density[$this->population_type], $ward->type());
+		$value = get_table_result_index($table_population_ward_density[$this->populationType], $ward->type());
 
 		$density = max(1, $value * $ward->acres);
 
@@ -366,7 +366,7 @@ class City {
 				$result = get_table_result_range($table_buildings[$ward->type()], rand_range(1, 100));
 			}
 			$type = $result['type'];
-			$quality = rand_range($result[kMin], $result[kMax]);
+			$quality = rand_range($result[MinMax::MIN], $result[kMax]);
 
 			if (isset($table_buildings_subtypes[$type])) {
 				$subtype = get_table_result_range($table_buildings_subtypes[$type], rand_range(1, 1000));
@@ -381,9 +381,9 @@ class City {
 	function add_ward($ward_type, $acres_left, $inside_walls, &$ward_count, $generate_buildings, $building_weights = false) {
 		global $table_ward_acres_used;
 		// based on city type, should allocate bigger/smaller randomness in sizes
-		$value = get_table_result_index($table_ward_acres_used, $this->population_type);
+		$value = get_table_result_index($table_ward_acres_used, $this->populationType);
 
-		$acres_used = rand_ratio_range($value[kMin], $value[kMax]);
+		$acres_used = rand_ratio_range($value[MinMax::MIN], $value[kMax]);
 		if ($acres_left - $acres_used < 0) {
 			$acres_used = $acres_left;
 			$acres_left = 0;
@@ -435,13 +435,13 @@ class City {
 		$total = 0;
 		// add automatic ratioed professions
 		foreach ($table_profession_ratio as $profession => $ratio) {
-			$num = intval(floatval($this->population_size) / floatval($ratio));
+			$num = intval(floatval($this->populationSize) / floatval($ratio));
 			$this->add_profession($profession, $num);
 			$total += $num;
 		}
 
 		// for all population not accounted for in ratioed, do random single load
-		while ($total < $this->population_size) {
+		while ($total < $this->populationSize) {
 			++$total;
 			$this->random_profession_single();
 		}
@@ -455,7 +455,7 @@ class City {
 		global $table_guilds;
 		global $table_guild_modifiers;
 
-		$modifier = get_table_result_index($table_guild_modifiers, $this->population_type);
+		$modifier = get_table_result_index($table_guild_modifiers, $this->populationType);
 		$modifier = 50 + rand_range($modifier['min'], $modifier['max']);
 
 		// loop through each guild
@@ -544,11 +544,11 @@ class City {
 		// give each race some population
 		$total = 0;
 		foreach ($raceRatios as $raceRatio) {
-			$this->races[$raceRatio['race']] = floor($raceRatio['ratio'] * $this->population_size);
+			$this->races[$raceRatio['race']] = floor($raceRatio['ratio'] * $this->populationSize);
 			$total += $this->races[$raceRatio['race']];
 		}
 		// give the majority race any left overs
-		$this->races[$raceRatios[0]['race']] += $this->population_size - $total;
+		$this->races[$raceRatios[0]['race']] += $this->populationSize - $total;
 	}
 
 	public function output_races() {
@@ -571,28 +571,28 @@ class City {
 
 	private function random_military() {
 		global $table_population_military;
-		$this->has[kHas_Military] = rand(1, 100) <= get_table_result_range($table_population_military, $this->population_type);
+		$this->has[kHas_Military] = rand(1, 100) <= get_table_result_range($table_population_military, $this->populationType);
 	}
 
 	public function wealth() {
-		return (doubleval($this->gold_piece_limit()) * 0.5) * (doubleval($this->population_size) * 0.1);
+		return (doubleval($this->gold_piece_limit()) * 0.5) * (doubleval($this->populationSize) * 0.1);
 	}
 
 	public function gold_piece_limit() {
 		global $table_population_wealth;
-		return get_table_result_index($table_population_wealth, $this->population_type);
+		return get_table_result_index($table_population_wealth, $this->populationType);
 	}
 
 	public function king_income() {
 		global $table_king_income;
-		$value = get_table_result_index($table_king_income, $this->population_type);
+		$value = get_table_result_index($table_king_income, $this->populationType);
 
 		return $value * $this->wealth();
 	}
 
 	public function magic_resources() {
 		global $table_magic_resources;
-		$value = get_table_result_index($table_magic_resources, $this->population_type);
+		$value = get_table_result_index($table_magic_resources, $this->populationType);
 		return $value * $this->wealth();
 	}
 
@@ -603,14 +603,14 @@ class City {
 		global $table_power_center_type;
 		global $table_power_center_unabsorbed;
 
-		$value = get_table_result_index($table_population_power_center, $this->population_type);
-		$count = rand_range($value[kMin], $value[kMax]);
+		$value = get_table_result_index($table_population_power_center, $this->populationType);
+		$count = rand_range($value[MinMax::MIN], $value[kMax]);
 
 		if ($count) {
-			$value = get_table_result_index($table_population_influence_points, $this->population_type);
-			$influence_points = rand_range($value[kMin], $value[kMax]);
+			$value = get_table_result_index($table_population_influence_points, $this->populationType);
+			$influence_points = rand_range($value[MinMax::MIN], $value[kMax]);
 
-			$percent = get_table_result_index($table_power_center_unabsorbed, $this->population_type);
+			$percent = get_table_result_index($table_power_center_unabsorbed, $this->populationType);
 
 			$this->influence_points_unabsorbed = $influence_points * $percent;
 			$influence_points -= $this->influence_points_unabsorbed;
@@ -619,7 +619,7 @@ class City {
 			$average_influence = $influence_points / $count;
 			$offset_influence = $average_influence / 10.0;
 
-//			$modifier = get_table_result_index($table_population_power_center_modifier, $this->population_type);
+//			$modifier = get_table_result_index($table_population_power_center_modifier, $this->populationType);
 
 			for ($i = 0; $i < $count; ++$i) {
 				$type = get_table_result_range($table_power_center_type, rand_range(1, 1000));

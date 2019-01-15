@@ -6,6 +6,7 @@ use App\Http\Controllers\CityGen\Constants\MinMax;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Models\City;
+use App\Http\Controllers\CityGen\Models\PostData;
 use App\Http\Controllers\CityGen\Services\BaseService;
 
 class RandomCityPopulationService extends BaseService
@@ -15,12 +16,12 @@ class RandomCityPopulationService extends BaseService
      * randomize or set population and side effects
      *
      * @param City $city
-     * @param array $cityPost
+     * @param PostData $postData
      */
-    public function determinePopulation(City $city, array $cityPost) {
-        $populationType = $cityPost['population_type'];
+    public function determinePopulation(City $city, PostData $postData) {
+        $populationType = $postData->populationType;
 
-        if ($this->randomService->isRandom($populationType)) {
+        if ($this->services->randomService->isRandom($populationType)) {
             $this->randomPopulationType($city);
         } else {
             $this->useEnteredPopulationType($city, $populationType);
@@ -31,7 +32,7 @@ class RandomCityPopulationService extends BaseService
     }
 
     private function randomPopulationType($city) {
-        $city->population_type = $this->tableService->getTableResultRandom(Table::POPULATION_TYPE);
+        $city->populationType = $this->services->tableService->getTableResultRandom(Table::POPULATION_TYPE);
     }
 
     private function useEnteredPopulationType(City $city, string $populationType) {
@@ -44,25 +45,29 @@ class RandomCityPopulationService extends BaseService
             case PopulationType::SMALL_CITY:
             case PopulationType::LARGE_CITY:
             case PopulationType::METROPOLIS:
-                $city->population_type = $populationType;
+                $city->populationType = $populationType;
                 break;
             default:
-                global $table_population_size;
                 // they hand entered a value
                 $entered_value = intval($populationType, 10);
+
                 // check for bounds
-                $city->population_type = false;
-                if ($entered_value < $table_population_size[PopulationType::THORP][kMin]) {
-                    $entered_value = $table_population_size[PopulationType::THORP][kMin];
-                } else if ($entered_value > $table_population_size[PopulationType::METROPOLIS][kMax]) {
+                $populationSizeTable = Table::getTable(Table::POPULATION_SIZE)->getTable();
+                $city->populationType = false;
+                if ($entered_value < $populationSizeTable[PopulationType::THORP][MinMax::MIN]) {
+                    $entered_value = $populationSizeTable[PopulationType::THORP][MinMax::MIN];
+                    $city->populationType = PopulationType::THORP;
+                } else if ($entered_value > $populationSizeTable[PopulationType::METROPOLIS][MinMax::MAX]) {
                     // hand entered a very large value, so make it a metropolis
-                    $city->population_type = PopulationType::METROPOLIS;
+                    $city->populationType = PopulationType::METROPOLIS;
                 }
+
                 // if population type not yet set, determine what it should be
-                if (!$city->population_type) {
-                    $city->population_type = $this->tableService->getTableKeyFromRangeValue(Table::POPULATION_SIZE, $entered_value);
+                if (!$city->populationType) {
+                    $city->populationType = $this->services->tableService->getTableKeyFromRangeValue(Table::POPULATION_SIZE, $entered_value);
                 }
-                $city->population_size = $entered_value;
+
+                $city->populationSize = $entered_value;
                 break;
         }
     }
@@ -70,9 +75,9 @@ class RandomCityPopulationService extends BaseService
     private function randomPopulationSize(City $city)
     {
         // check if it was hand entered so already set
-        if ($city->population_size === false) {
-            $value = $this->tableService->getTableResultIndex(Table::POPULATION_SIZE, $city->population_type);
-            $city->population_size = $this->randRange($value[MinMax::MIN], $value[MinMax::MAX]);
+        if ($city->populationSize === false) {
+            $value = $this->services->tableService->getTableResultIndex(Table::POPULATION_SIZE, $city->populationType);
+            $city->populationSize = $this->services->randomService->randRange("Random Population Size", $value[MinMax::MIN], $value[MinMax::MAX]);
         }
     }
 }

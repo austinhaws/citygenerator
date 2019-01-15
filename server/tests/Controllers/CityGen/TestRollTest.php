@@ -9,8 +9,8 @@ final class TestRollTest extends BaseTestCase
 {
     public function testRolls()
     {
-        $this->services->randomService->setRolls([new TestRoll(1, 4, 3)]);
+        $this->services->randomService->setRolls([new TestRoll("testRolls", 1, 4, 3)]);
 
-        $this->assertEquals(3, $this->services->randomService->randRange(1, 4));
+        $this->assertEquals(3, $this->services->randomService->randRange("testRolls", 1, 4));
     }
 }

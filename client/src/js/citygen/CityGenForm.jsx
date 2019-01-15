@@ -110,8 +110,8 @@ class CityGenForm extends React.Component {
 					<FormControl className={classes.formControl}>
 						<InputLabel shrink htmlFor="populationType">Population</InputLabel>
 						<Select
-							value={this.props.citygen.form.population_type}
-							onChange={dispatchFieldCurry('citygen.form.population_type')}
+							value={this.props.citygen.form.populationType}
+							onChange={dispatchFieldCurry('citygen.form.populationType')}
 							inputProps={{ id: 'populationType' }}
 							disabled={ajaxing}
 						>

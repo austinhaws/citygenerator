@@ -4,34 +4,65 @@ namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
 class RandomService
 {
+    const RANDOM = 'random';
+
+    /**
+     * @param string|int $value
+     * @return bool
+     */
     public function isRandom($value)
     {
-        return $value === 'random' || !$value;
+        return $value === RandomService::RANDOM || !$value;
     }
 
     /**
      * do anything random through this method
      * this will allow a test random service class to hijack rolling to provide reproduceable results
      *
-     * @param null $min
-     * @param null $max
+     * @param string $name
      * @return int
      */
-    protected function mtRand($min = null, $max = null)
+    protected function mtRand($name)
     {
-        return $min === null ? mt_rand() : mt_rand($min, $max);
+        return mt_rand();
     }
 
-    public function randRange($min, $max)
+    /**
+     * @param string $name
+     * @param string|int $min
+     * @param string|int $max
+     * @return int
+     */
+    protected function mtRandRange($name, $min, $max)
     {
-        return $this->mtRand($min, $max);
+        return mt_rand($min, $max);
     }
 
-    public function randRatio()
+    /**
+     * @param string $name
+     * @param string|int $min
+     * @param string|int $max
+     * @return int
+     */
+    public function randRange($name, $min, $max)
     {
-        return (float)$this->mtRand() / (float)getrandmax();
+        return $this->mtRandRange($name, $min, $max);
     }
 
+    /**
+     * @param string $name
+     * @return float|int
+     */
+    public function randRatio($name)
+    {
+        return (float)$this->mtRand($name) / (float)getrandmax();
+    }
+
+    /**
+     * @param $min
+     * @param $max
+     * @return float|int
+     */
     public function randRatioRange($min, $max)
     {
         return rand_ratio() * ($max - $min) + $min;

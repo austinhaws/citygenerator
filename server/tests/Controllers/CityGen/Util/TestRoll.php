@@ -4,17 +4,30 @@ namespace App\Http\Controllers\CityGen\Util;
 
 class TestRoll
 {
-    /** @var int  */
-    public $rollMin;
-    /** @var int  */
-    public $rollMax;
-    /** @var int  */
-    public $rollResult;
+    /** @var string  */
+    public $name;
+    /** @var int|string  */
+    public $min;
+    /** @var int|string  */
+    public $max;
+    /** @var int|string  */
+    public $result;
 
-    public function __construct(int $rollMin, int $rollMax, int $rollResult)
+    const ANY = 'any';
+    const RANDOM = 'random';
+
+    /**
+     * TestRoll constructor.
+     * @param string $name
+     * @param int|string $min
+     * @param int|string $max
+     * @param int|string $result
+     */
+    public function __construct(string $name, $min, $max, $result)
     {
-        $this->rollMax = $rollMax;
-        $this->rollMin = $rollMin;
-        $this->rollResult = $rollResult;
+        $this->name = $name;
+        $this->min = $min;
+        $this->max = $max;
+        $this->result = $result;
     }
 }
