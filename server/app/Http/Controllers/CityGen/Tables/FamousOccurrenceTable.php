@@ -22,19 +22,19 @@ class FamousOccurrenceTable extends BaseTable
                 MinMax::MIN => 0,
                 MinMax::MAX => 2,
             ),
-            PopulationType::SMALLTOWN => array(
+            PopulationType::SMALL_TOWN => array(
                 MinMax::MIN => 1,
                 MinMax::MAX => 3,
             ),
-            PopulationType::LARGETOWN => array(
+            PopulationType::LARGE_TOWN => array(
                 MinMax::MIN => 1,
                 MinMax::MAX => 4,
             ),
-            PopulationType::SMALLCITY => array(
+            PopulationType::SMALL_CITY => array(
                 MinMax::MIN => 2,
                 MinMax::MAX => 4,
             ),
-            PopulationType::LARGECITY => array(
+            PopulationType::LARGE_CITY => array(
                 MinMax::MIN => 3,
                 MinMax::MAX => 7,
             ),

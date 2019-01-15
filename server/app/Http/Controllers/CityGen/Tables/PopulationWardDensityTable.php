@@ -5,7 +5,7 @@ namespace App\Http\Controllers\CityGen\Tables;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Ward;
 
-class PopulationWardDensity extends BaseTable
+class PopulationWardDensityTable extends BaseTable
 {
 
     function getTable()

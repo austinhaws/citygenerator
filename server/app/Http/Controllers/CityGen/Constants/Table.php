@@ -57,6 +57,7 @@ class Table extends BaseEnum
      * @return BaseTable
      */
     static public function getTable(string $tableName) {
-        return new $tableName();
+        $pathName = "App\Http\Controllers\CityGen\Tables\\$tableName";
+        return new $pathName();
     }
 }

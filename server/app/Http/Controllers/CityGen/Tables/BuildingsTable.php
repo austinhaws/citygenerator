@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CityGen\Tables;
 
 use App\Http\Controllers\CityGen\Constants\Building;
 use App\Http\Controllers\CityGen\Constants\MinMax;
+use App\Http\Controllers\CityGen\Constants\Ward;
 
 class BuildingsTable extends BaseTable
 {
@@ -11,7 +12,7 @@ class BuildingsTable extends BaseTable
     function getTable()
     {
         return array(
-            kWard_Patriciate => array(
+            Ward::PATRICIATE, array(
                 '10' => array(
                     'type' => Building::HOUSE,
                     MinMax::MIN => 1,
@@ -173,7 +174,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 2,
                 ),
             ),
-            kWard_Merchant => array(
+            Ward::MERCHANT, array(
                 '10' => array(
                     'type' => Building::HOUSE,
                     MinMax::MIN => 1,
@@ -335,7 +336,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 2,
                 ),
             ),
-            kWard_Military => array(
+            Ward::MILITARY, array(
                 '10' => array(
                     'type' => Building::WAREHOUSE,
                     MinMax::MIN => 3,
@@ -497,7 +498,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 3,
                 ),
             ),
-            kWard_Administration => array(
+            Ward::ADMINISTRATION, array(
                 '10' => array(
                     'type' => Building::HOUSE,
                     MinMax::MIN => 2,
@@ -659,7 +660,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 3,
                 ),
             ),
-            kWard_Oderiforous => array(
+            Ward::ODORIFEROUS, array(
                 '10' => array(
                     'type' => Building::HOUSE,
                     MinMax::MIN => 3,
@@ -821,7 +822,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 4,
                 ),
             ),
-            kWard_Craftsmen => array(
+            Ward::CRAFTSMEN, array(
                 '10' => array(
                     'type' => Building::WORKSHOP,
                     MinMax::MIN => 2,
@@ -983,7 +984,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 2,
                 ),
             ),
-            kWard_River => array(
+            Ward::RIVER, array(
                 '10' => array(
                     'type' => Building::HOUSE,
                     MinMax::MIN => 3,
@@ -1145,7 +1146,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 4,
                 ),
             ),
-            kWard_Sea => array(
+            Ward::SEA, array(
                 '10' => array(
                     'type' => Building::HOUSE,
                     MinMax::MIN => 3,
@@ -1307,7 +1308,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 4,
                 ),
             ),
-            kWard_Market => array(
+            Ward::MARKET, array(
                 '10' => array(
                     'type' => Building::WAREHOUSE,
                     MinMax::MIN => 2,
@@ -1469,7 +1470,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 3,
                 ),
             ),
-            kWard_Gate => array(
+            Ward::GATE, array(
                 '10' => array(
                     'type' => Building::TAVERN,
                     MinMax::MIN => 2,
@@ -1631,7 +1632,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 2,
                 ),
             ),
-            kWard_Slum => array(
+            Ward::SLUM, array(
                 '10' => array(
                     'type' => Building::HOUSE,
                     MinMax::MIN => 4,
@@ -1793,7 +1794,7 @@ class BuildingsTable extends BaseTable
                     MinMax::MAX => 4,
                 ),
             ),
-            kWard_Shanty => array(
+            Ward::SHANTY, array(
                 '10' => array(
                     'type' => Building::HOUSE,
                     MinMax::MIN => 4,
