@@ -16,10 +16,10 @@ class RandomCityService extends BaseService
 
         $this->services->randomCityPopulationService->determinePopulation($city, $postData);
 
-//        $this->random_acres();
-//        $this->random_num_structures();
-//
-//        // sea, river, military, gates
+        $this->services->randomAcresStructuresService->randomAcres($city);
+        $this->services->randomAcresStructuresService->randomNumStructures($city);
+
+        //        // sea, river, military, gates
 //        if (!isset($post['sea']) || is_random($post['sea'])) {
 //            $this->random_sea();
 //        } else {

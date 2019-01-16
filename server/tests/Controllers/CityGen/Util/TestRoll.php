@@ -23,11 +23,11 @@ class TestRoll
      * @param int|string $max
      * @param int|string $result
      */
-    public function __construct(string $name, $min, $max, $result)
+    public function __construct(string $name, $result, $min = null, $max = null)
     {
         $this->name = $name;
+        $this->result = $result;
         $this->min = $min;
         $this->max = $max;
-        $this->result = $result;
     }
 }

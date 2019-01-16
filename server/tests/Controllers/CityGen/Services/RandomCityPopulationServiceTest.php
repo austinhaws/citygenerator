@@ -18,7 +18,7 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
     public function testGetTableResultRange_populationTypeGiven()
     {
         foreach (PopulationType::getConstants() as $populationType) {
-            $this->services->randomService->setRolls([new TestRoll('Random Population Size', TestRoll::ANY, TestRoll::ANY, TestRoll::RANDOM)]);
+            $this->services->randomService->setRolls([new TestRoll('Random Population Size', TestRoll::RANDOM, TestRoll::ANY, TestRoll::ANY)]);
 
             $postData = new PostData();
             $postData->populationType = $populationType;
@@ -37,8 +37,8 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
     public function testGetTableResultRange_random()
     {
         $this->services->randomService->setRolls([
-            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 7, 0),
-            new TestRoll('Random Population Size', 20, 80, 30),
+            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 0, 7),
+            new TestRoll('Random Population Size', 30, 20, 80),
         ]);
 
         $postData = new PostData();
@@ -56,7 +56,7 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
     public function testGetTableResultRange_userEntered_low()
     {
         $this->services->randomService->setRolls([
-            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 7, 0),
+            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 0, 7),
         ]);
 
         $postData = new PostData();
@@ -75,7 +75,7 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
     public function testGetTableResultRange_userEntered_mid()
     {
         $this->services->randomService->setRolls([
-            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 7, 0),
+            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 0, 7),
         ]);
 
         $postData = new PostData();
@@ -94,7 +94,7 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
     public function testGetTableResultRange_userEntered_big()
     {
         $this->services->randomService->setRolls([
-            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 7, 0),
+            new TestRoll('getTableResultRandom-PopulationTypeTable', 0,0, 7),
         ]);
 
         $postData = new PostData();

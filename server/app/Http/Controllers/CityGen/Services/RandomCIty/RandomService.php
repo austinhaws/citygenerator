@@ -42,11 +42,22 @@ class RandomService
      * @param string $name
      * @param string|int $min
      * @param string|int $max
-     * @return int
+     * @return float
      */
-    public function randRange($name, $min, $max)
+    public function randRangeFloat($name, $min, $max)
     {
         return $this->mtRandRange($name, $min, $max);
+    }
+
+    /**
+     * @param $name
+     * @param $min
+     * @param $max
+     * @return int
+     */
+    public function randRangeInt($name, $min, $max)
+    {
+        return intval($this->randRangeFloat($name, $min, $max));
     }
 
     /**
@@ -59,12 +70,13 @@ class RandomService
     }
 
     /**
+     * @param $name
      * @param $min
      * @param $max
      * @return float|int
      */
-    public function randRatioRange($min, $max)
+    public function randRatioRange($name, $min, $max)
     {
-        return rand_ratio() * ($max - $min) + $min;
+        return $this->randRatio($name) * ($max - $min) + $min;
     }
 }

@@ -30,7 +30,7 @@ class TestRandomService extends RandomService
     private function nextRoll($name, $min = null, $max = null)
     {
         if (count($this->rolls) === 0) {
-            var_dump(debug_backtrace());
+//var_dump(debug_backtrace());
             exit("There are no more rolls for $name : $min -> $max");
         }
 

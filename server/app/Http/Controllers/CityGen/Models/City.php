@@ -6,7 +6,7 @@ class City {
 	public $populationSize = false;
 	public $populationType = false;
 	public $name = '';
-	public $num_structures = 0;
+	public $numStructures = 0;
 	public $population_density = 0.0;
 	public $acres = 0.0;
 	public $has = array(
@@ -99,19 +99,6 @@ class City {
 		sort($this->commodities['import']);
 	}
 
-
-	private function random_acres() {
-		global $table_population_acres;
-		$value = get_table_result_index($table_population_acres, $this->populationType);
-		$this->acres = $this->populationSize / rand_ratio_range($value[MinMax::MIN], $value[kMax]);
-	}
-
-	private function random_num_structures() {
-		global $table_population_num_structures;
-		$value = get_table_result_index($table_population_num_structures, $this->populationType);
-
-		$this->num_structures = $this->acres / rand_ratio_range($value[MinMax::MIN], $value[kMax]);
-	}
 
 	private function random_populationSize() {
 		global $table_population_size;

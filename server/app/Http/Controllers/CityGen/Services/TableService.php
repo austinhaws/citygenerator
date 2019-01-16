@@ -47,13 +47,13 @@ class TableService extends BaseService
      * get a random table result
      *
      * @param string $tableName
-     * @return mixed
+     * @return int
      */
     function getTableResultRandom($tableName) {
         $table = Table::getTable($tableName)->getTable();
 
         do {
-            $result = $table[array_keys($table)[$this->services->randomService->randRange("getTableResultRandom-$tableName", 0, count($table) - 1)]];
+            $result = $table[array_keys($table)[$this->services->randomService->randRangeInt("getTableResultRandom-$tableName", 0, count($table) - 1)]];
         } while (!$result);
         return $result;
     }
