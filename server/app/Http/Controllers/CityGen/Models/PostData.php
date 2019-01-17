@@ -2,20 +2,16 @@
 
 namespace App\Http\Controllers\CityGen\Models;
 
-class PostData {
-
+class PostData
+{
     /** @var string */
     public $populationType;
-
-
-    /**
-     * PostData constructor.
-     * @param string $_post post data to convert to this object
-     */
-    public function __construct(string $_post = null)
-    {
-        if ($_post) {
-            $this->populationType = $_post['population_type'];
-        }
-    }
+    /** @var string BooleanRandom */
+    public $hasSea;
+    /** @var string BooleanRandom */
+    public $hasMilitary;
+    /** @var string BooleanRandom */
+    public $hasRiver;
+    /** @var string BooleanRandom */
+    public $hasGates;
 }

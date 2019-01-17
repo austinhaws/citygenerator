@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
+use App\Http\Controllers\CityGen\Constants\BooleanRandom;
+
 class RandomService
 {
-    const RANDOM = 'random';
+    const RANDOM = 'Random';
 
     /**
      * @param string|int $value
@@ -13,6 +15,23 @@ class RandomService
     public function isRandom($value)
     {
         return $value === RandomService::RANDOM || !$value;
+    }
+
+    public function randomBoolean($post, $field)
+    {
+        $value = null;
+        if (isset($post[$field])) {
+            $value = $post[$field];
+        }
+
+        if ($value !== BooleanRandom::TRUE &&
+            $value !== BooleanRandom::FALSE &&
+            $value !== BooleanRandom::RANDOM
+        ) {
+            $value = BooleanRandom::RANDOM;
+        }
+
+        return $value;
     }
 
     /**
@@ -78,5 +97,14 @@ class RandomService
     public function randRatioRange($name, $min, $max)
     {
         return $this->randRatio($name) * ($max - $min) + $min;
+    }
+
+    /**
+     * @param $name
+     * @return int
+     */
+    public function percentile($name)
+    {
+        return $this->randRangeInt($name, 1, 100);
     }
 }

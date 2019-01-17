@@ -9,7 +9,7 @@ include __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/Assert/Func
 class TestRandomService extends RandomService
 {
 
-    /** @var TestRoll[]  */
+    /** @var TestRoll[] */
     private $rolls = null;
 
     /**
@@ -31,7 +31,7 @@ class TestRandomService extends RandomService
     {
         if (count($this->rolls) === 0) {
 //var_dump(debug_backtrace());
-            exit("There are no more rolls for $name : $min -> $max");
+            exit("\nError: There are no more rolls for $name : $min -> $max\n");
         }
 
         $roll = array_shift($this->rolls);

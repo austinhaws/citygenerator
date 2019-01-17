@@ -11,10 +11,10 @@ class TableService extends BaseService
      * get value in a range
      *
      * @param string $tableName
-     * @param int $index
+     * @param string|int $index
      * @return mixed|null
      */
-    function getTableResultRange(string $tableName, int $index) {
+    function getTableResultRange(string $tableName, $index) {
         $table = Table::getTable($tableName)->getTable();
 
         foreach ($table as $key => $value) {

@@ -9,11 +9,10 @@ class City {
 	public $numStructures = 0;
 	public $population_density = 0.0;
 	public $acres = 0.0;
-	public $has = array(
-        'Military' => false,
-		'Sea' => false,
-		'River' => false,
-    );
+	public $hasSea = false;
+	public $hasMilitary = false;
+	public $hasRiver = false;
+	// todo rename to numGates
 	public $gates = 0;
 	public $wards = array();
 	public $professions = array();
@@ -106,18 +105,6 @@ class City {
 		if ($this->populationSize === false) {
 			$value = get_table_result_index($table_population_size, $this->populationType);
 			$this->populationSize = rand_range($value[MinMax::MIN], $value[kMax]);
-		}
-	}
-
-	private function random_gates() {
-		global $table_population_has_walls;
-		global $table_population_num_walls;
-		$has_walls = get_table_result_index($table_population_has_walls, $this->populationType);
-		if ($has_walls != 0 && rand_range(1, 100) <= $has_walls) {
-			$num_gates = get_table_result_index($table_population_num_walls, $this->populationType);
-			$this->gates = rand_range($num_gates[MinMax::MIN], $num_gates[kMax]);
-		} else {
-			$this->gates = 0;
 		}
 	}
 
@@ -548,18 +535,6 @@ class City {
 		return implode($parts, '; ');
 	}
 
-	private function random_sea() {
-		$this->has[kHas_Sea] = rand_range(1, 100) <= 33;
-	}
-
-	private function random_river() {
-		$this->has[kHas_River] = rand_range(1, 100) <= 33;
-	}
-
-	private function random_military() {
-		global $table_population_military;
-		$this->has[kHas_Military] = rand(1, 100) <= get_table_result_range($table_population_military, $this->populationType);
-	}
 
 	public function wealth() {
 		return (doubleval($this->gold_piece_limit()) * 0.5) * (doubleval($this->populationSize) * 0.1);

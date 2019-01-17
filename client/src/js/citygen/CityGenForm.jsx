@@ -60,7 +60,7 @@ class CityGenForm extends React.Component {
 	}
 
 	menuItemsFromList = list => {
-		return [<MenuItem key="random" value="random">Random</MenuItem>]
+		return [<MenuItem key="Random" value="Random">Random</MenuItem>]
 			.concat((list || []).map(item => <MenuItem key={item.id} value={item.id}>{item.label}</MenuItem>));
 	};
 
@@ -88,6 +88,11 @@ class CityGenForm extends React.Component {
 	render() {
 		const { classes } = this.props;
 		const ajaxing = ajaxStatus.isAjaxing();
+
+		const randomMenuItems = this.props.citygen.lists.booleanRandomValues ?
+			Object.keys(this.props.citygen.lists.booleanRandomValues).map(key => <MenuItem key={key} value={this.props.citygen.lists.booleanRandomValues[key]}>{this.props.citygen.lists.booleanRandomValues[key]}</MenuItem>) :
+			undefined;
+
 
 		return (
 			<React.Fragment>
@@ -133,9 +138,7 @@ class CityGenForm extends React.Component {
 							inputProps={{ id: 'byTheSea' }}
 							disabled={ajaxing}
 						>
-							<MenuItem key="random" value="random">Random</MenuItem>
-							<MenuItem key="yes" value="1">Yes</MenuItem>
-							<MenuItem key="no" value="0">No</MenuItem>
+							{randomMenuItems}
 						</Select>
 					</FormControl>
 
@@ -148,9 +151,7 @@ class CityGenForm extends React.Component {
 							inputProps={{ id: 'byTheRiver' }}
 							disabled={ajaxing}
 						>
-							<MenuItem key="random" value="random">Random</MenuItem>
-							<MenuItem key="yes" value="1">Yes</MenuItem>
-							<MenuItem key="no" value="0">No</MenuItem>
+							{randomMenuItems}
 						</Select>
 					</FormControl>
 
@@ -163,9 +164,7 @@ class CityGenForm extends React.Component {
 							inputProps={{ id: 'military' }}
 							disabled={ajaxing}
 						>
-							<MenuItem key="random" value="random">Random</MenuItem>
-							<MenuItem key="yes" value="1">Yes</MenuItem>
-							<MenuItem key="no" value="0">No</MenuItem>
+							{randomMenuItems}
 						</Select>
 					</FormControl>
 
@@ -178,7 +177,7 @@ class CityGenForm extends React.Component {
 							inputProps={{ id: 'gates' }}
 							disabled={ajaxing}
 						>
-							<MenuItem key="random" value="random">Random</MenuItem>
+							<MenuItem key="Random" value="Random">Random</MenuItem>
 							{Array(11).fill(false).map((_, i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
 						</Select>
 						<FormHelperText>At least one gate means city has walls</FormHelperText>
@@ -193,8 +192,8 @@ class CityGenForm extends React.Component {
 							inputProps={{ id: 'professions' }}
 							disabled={ajaxing}
 						>
-							<MenuItem key="on" value="on">Yes</MenuItem>
-							<MenuItem key="off" value="off">No</MenuItem>
+							<MenuItem key="Yes" value="Yes">Yes</MenuItem>
+							<MenuItem key="No" value="No">No</MenuItem>
 						</Select>
 					</FormControl>
 
@@ -207,8 +206,8 @@ class CityGenForm extends React.Component {
 							inputProps={{ id: 'buildings' }}
 							disabled={ajaxing}
 						>
-							<MenuItem key="on" value="on">Yes</MenuItem>
-							<MenuItem key="off" value="off">No</MenuItem>
+							<MenuItem key="Yes" value="Yes">Yes</MenuItem>
+							<MenuItem key="No" value="No">No</MenuItem>
 							<MenuItem key="custom" value="custom">Custom Wards</MenuItem>
 						</Select>
 					</FormControl>

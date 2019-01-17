@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CityGen\Services;
 
+use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Race;
 use App\Http\Controllers\CityGen\Constants\Ward;
@@ -29,6 +30,7 @@ class ListsService
             'race' => $this->enumToList(Race::getConstants()),
             'wards' => $this->enumToList(Ward::getConstants()),
             'buildingsByWard' => $this->buildingsByWard(),
+            'booleanRandomValues' => BooleanRandom::getConstants(),
         ];
     }
 
