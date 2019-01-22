@@ -14,8 +14,8 @@ class RandomAcresStructuresService extends BaseService
      */
     public function randomAcres(City $city)
     {
-        $value = $this->services->tableService->getTableResultIndex(Table::POPULATION_ACRES, $city->populationType);
-        $city->acres = intVal($city->populationSize / $this->services->randomService->randRatioRange("randomAcres", $value[MinMax::MIN], $value[MinMax::MAX]));
+        $value = $this->services->table->getTableResultIndex(Table::POPULATION_ACRES, $city->populationType);
+        $city->acres = intVal($city->populationSize / $this->services->random->randRatioRange("randomAcres", $value[MinMax::MIN], $value[MinMax::MAX]));
     }
 
     /**
@@ -23,7 +23,7 @@ class RandomAcresStructuresService extends BaseService
      */
     public function randomNumStructures(City $city)
     {
-        $value = $this->services->tableService->getTableResultIndex(Table::POPULATION_NUM_STRUCTURES, $city->populationType);
-        $city->numStructures = intVal($city->acres / $this->services->randomService->randRatioRange("randomNumStructures", $value[MinMax::MIN], $value[MinMax::MAX]));
+        $value = $this->services->table->getTableResultIndex(Table::POPULATION_NUM_STRUCTURES, $city->populationType);
+        $city->numStructures = intVal($city->acres / $this->services->random->randRatioRange("randomNumStructures", $value[MinMax::MIN], $value[MinMax::MAX]));
     }
 }

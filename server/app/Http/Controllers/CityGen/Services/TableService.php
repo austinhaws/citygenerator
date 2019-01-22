@@ -53,7 +53,7 @@ class TableService extends BaseService
         $table = Table::getTable($tableName)->getTable();
 
         do {
-            $result = $table[array_keys($table)[$this->services->randomService->randRangeInt("getTableResultRandom-$tableName", 0, count($table) - 1)]];
+            $result = $table[array_keys($table)[$this->services->random->randRangeInt("getTableResultRandom-$tableName", 0, count($table) - 1)]];
         } while (!$result);
         return $result;
     }

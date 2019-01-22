@@ -26,13 +26,13 @@ final class RandomAcresStructuresServiceTest extends BaseTestCase
         $city->populationSize = 1000;
 
         foreach ($tests as $test) {
-            $this->services->randomService->setRolls([
+            $this->services->random->setRolls([
                 new TestRoll('randomAcres', RollRatio::ratioPercent($test['percent'])),
             ]);
 
-            $this->services->randomAcresStructuresService->randomAcres($city);
+            $this->services->randomAcresStructures->randomAcres($city);
 
-            $this->services->randomService->verifyRolls();
+            $this->services->random->verifyRolls();
 
             $this->assertSame($test['result'], $city->acres, "${test['percent']}% => ${test['result']}");
         }
@@ -48,13 +48,13 @@ final class RandomAcresStructuresServiceTest extends BaseTestCase
         $city->populationSize = 1000;
         $city->acres = 230;
 
-        $this->services->randomService->setRolls([
+        $this->services->random->setRolls([
             new TestRoll('randomNumStructures', RollRatio::ratioPercent(50)),
         ]);
 
-        $this->services->randomAcresStructuresService->randomNumStructures($city);
+        $this->services->randomAcresStructures->randomNumStructures($city);
 
-        $this->services->randomService->verifyRolls();
+        $this->services->random->verifyRolls();
 
         $this->assertSame(115, $city->numStructures);
     }

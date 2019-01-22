@@ -7,6 +7,7 @@ use App\Http\Controllers\CityGen\Services\RandomCity\RandomAcresStructuresServic
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomSeaRiverMilitaryGatesService;
+use App\Http\Controllers\CityGen\Services\RandomCity\RandomWardsService;
 use App\Http\Controllers\CityGen\Services\ServicesService;
 use App\Http\Controllers\CityGen\Services\TableService;
 use App\Http\Controllers\CityGen\Util\TestRandomService;
@@ -17,12 +18,13 @@ class TestServicesService extends ServicesService
     {
         parent::__construct();
 
-        $this->postDataService = new PostDataService($this);
-        $this->randomAcresStructuresService = new RandomAcresStructuresService($this);
-        $this->randomCityPopulationService = new RandomCityPopulationService($this);
-        $this->randomCityService = new RandomCityService($this);
-        $this->randomService = new TestRandomService();
-        $this->tableService = new TableService($this);
-        $this->randomSeaRiverMilitaryGatesService = new RandomSeaRiverMilitaryGatesService($this);
+        $this->postData = new PostDataService($this);
+        $this->random = new TestRandomService();
+        $this->randomAcresStructures = new RandomAcresStructuresService($this);
+        $this->randomCityPopulation = new RandomCityPopulationService($this);
+        $this->randomCity = new RandomCityService($this);
+        $this->randomSeaRiverMilitaryGates = new RandomSeaRiverMilitaryGatesService($this);
+        $this->randomWards = new RandomWardsService($this);
+        $this->table = new TableService($this);
     }
 }

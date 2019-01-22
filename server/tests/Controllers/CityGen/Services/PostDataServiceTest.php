@@ -11,7 +11,7 @@ final class PostDataServiceTest extends BaseTestCase
 
     public function testCreatePostData()
     {
-        $postData = $this->services->postDataService->createPostData([
+        $postData = $this->services->postData->createPostData([
             'populationType' => PopulationType::LARGE_CITY,
             'sea' => BooleanRandom::TRUE,
             'military' => BooleanRandom::FALSE,
@@ -27,7 +27,7 @@ final class PostDataServiceTest extends BaseTestCase
 
     public function testCreatePostData_BooleanRandom()
     {
-        $postData = $this->services->postDataService->createPostData([
+        $postData = $this->services->postData->createPostData([
             'sea' => BooleanRandom::TRUE,
             'river' => BooleanRandom::RANDOM,
             'gates' => 'somethingunknown',

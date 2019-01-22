@@ -76,7 +76,7 @@ class TestRandomService extends RandomService
      */
     public function setRolls($rolls)
     {
-        assertSame(0, count($this->rolls), 'Previous≠ existing rolls');
+        $this->rolls && assertSame(0, count($this->rolls), 'Previous≠ existing rolls');
         $this->rolls = $rolls;
     }
 

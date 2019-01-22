@@ -21,16 +21,16 @@ class RandomCityPopulationService extends BaseService
     public function determinePopulation(City $city, PostData $postData) {
         // population type
         $populationType = $postData->populationType;
-        if ($this->services->randomService->isRandom($populationType)) {
-            $city->populationType = $this->services->tableService->getTableResultRandom(Table::POPULATION_TYPE);
+        if ($this->services->random->isRandom($populationType)) {
+            $city->populationType = $this->services->table->getTableResultRandom(Table::POPULATION_TYPE);
         } else {
             $this->useEnteredPopulationType($city, $populationType);
         }
 
         // population size: if hand entered, may already be set
         if ($city->populationSize === false) {
-            $value = $this->services->tableService->getTableResultIndex(Table::POPULATION_SIZE, $city->populationType);
-            $city->populationSize = $this->services->randomService->randRangeInt("Random Population Size", $value[MinMax::MIN], $value[MinMax::MAX]);
+            $value = $this->services->table->getTableResultIndex(Table::POPULATION_SIZE, $city->populationType);
+            $city->populationSize = $this->services->random->randRangeInt("Random Population Size", $value[MinMax::MIN], $value[MinMax::MAX]);
         }
     }
 
@@ -69,7 +69,7 @@ class RandomCityPopulationService extends BaseService
 
                 // if population type not yet set, determine what it should be
                 if (!$city->populationType) {
-                    $city->populationType = $this->services->tableService->getTableKeyFromRangeValue(Table::POPULATION_SIZE, $entered_value);
+                    $city->populationType = $this->services->table->getTableKeyFromRangeValue(Table::POPULATION_SIZE, $entered_value);
                 }
 
                 $city->populationSize = $entered_value;

@@ -15,7 +15,7 @@ class Table extends BaseEnum
     const GUILD_MODIFIERS = 'GuildModifiersTable';
     const GUILDS = 'GuildsTable';
     const INTEGRATION = 'IntegrationTable';
-    const IS_SIZE_AT_LEAST = 'IsSizeAtLeastTable';
+    const IS_CITY_SIZE_AT_LEAST = 'IsCitySizeAtLeastTable';
     const KING_INCOME = 'KingIncomeTable';
     const MAGIC_RESOURCES = 'MagicResourcesTable';
     const NAME_NUM_SYLLABLES = 'NameNumSyllablesTable';

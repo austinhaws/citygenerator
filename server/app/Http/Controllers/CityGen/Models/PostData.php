@@ -14,4 +14,8 @@ class PostData
     public $hasRiver;
     /** @var string BooleanRandom */
     public $hasGates;
+    /** @var WardAdded[] */
+    public $wardsAdded;
+    /** @var string BooleanRandom */
+    public $generateBuildings;
 }

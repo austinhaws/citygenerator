@@ -12,30 +12,30 @@ final class TableServiceTest extends BaseTestCase
     public function testGetTableResultRange()
     {
         for ($x = 0; $x < 10; $x++) {
-            $this->services->randomService->setRolls([new TestRoll('Random famous test', TestRoll::RANDOM, TestRoll::ANY, TestRoll::ANY)]);
-            $this->assertTrue(!!$this->services->tableService->getTableResultRange(Table::FAMOUS, $this->services->randomService->randRangeInt("Random famous test", 1, 4250)));
+            $this->services->random->setRolls([new TestRoll('Random famous test', TestRoll::RANDOM, TestRoll::ANY, TestRoll::ANY)]);
+            $this->assertTrue(!!$this->services->table->getTableResultRange(Table::FAMOUS, $this->services->random->randRangeInt("Random famous test", 1, 4250)));
         }
     }
 
     public function testGetTableResultIndex()
     {
-        $this->assertEquals(40, $this->services->tableService->getTableResultIndex(Table::POPULATION_WEALTH, PopulationType::THORP));
-        $this->assertEquals(15000, $this->services->tableService->getTableResultIndex(Table::POPULATION_WEALTH, PopulationType::SMALL_CITY));
+        $this->assertEquals(40, $this->services->table->getTableResultIndex(Table::POPULATION_WEALTH, PopulationType::THORP));
+        $this->assertEquals(15000, $this->services->table->getTableResultIndex(Table::POPULATION_WEALTH, PopulationType::SMALL_CITY));
 
     }
 
     public function testGetTableResultRandom()
     {
-        $this->services->randomService->setRolls([new TestRoll("getTableResultRandom-NameWordsTable", 2, 0, 1140)]);
-        $this->assertEquals('autumn', $this->services->tableService->getTableResultRandom(Table::NAME_WORDS));
+        $this->services->random->setRolls([new TestRoll("getTableResultRandom-NameWordsTable", 2, 0, 1140)]);
+        $this->assertEquals('autumn', $this->services->table->getTableResultRandom(Table::NAME_WORDS));
     }
 
     public function testGetTableKeyFromRangeValue()
     {
-        $this->assertEquals(PopulationType::THORP, $this->services->tableService->getTableKeyFromRangeValue(Table::POPULATION_SIZE, 30));
-        $this->assertEquals(PopulationType::METROPOLIS, $this->services->tableService->getTableKeyFromRangeValue(Table::POPULATION_SIZE, 90000));
-        $this->assertEquals(false, $this->services->tableService->getTableKeyFromRangeValue(Table::POPULATION_SIZE, 90001));
-        $this->assertEquals(false, $this->services->tableService->getTableKeyFromRangeValue(Table::POPULATION_SIZE, 10));
+        $this->assertEquals(PopulationType::THORP, $this->services->table->getTableKeyFromRangeValue(Table::POPULATION_SIZE, 30));
+        $this->assertEquals(PopulationType::METROPOLIS, $this->services->table->getTableKeyFromRangeValue(Table::POPULATION_SIZE, 90000));
+        $this->assertEquals(false, $this->services->table->getTableKeyFromRangeValue(Table::POPULATION_SIZE, 90001));
+        $this->assertEquals(false, $this->services->table->getTableKeyFromRangeValue(Table::POPULATION_SIZE, 10));
 
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\CityGen\Tables;
 
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 
-class IsSizeAtLeastTable extends BaseTable
+class IsCitySizeAtLeastTable extends BaseTable
 {
     function getTable()
     {

@@ -15,38 +15,17 @@ class RandomCityService extends BaseService
     {
         $city = new City();
 
-        $this->services->randomCityPopulationService->determinePopulation($city, $postData);
+        $this->services->randomCityPopulation->determinePopulation($city, $postData);
 
-        $this->services->randomAcresStructuresService->randomAcres($city);
-        $this->services->randomAcresStructuresService->randomNumStructures($city);
+        $this->services->randomAcresStructures->randomAcres($city);
+        $this->services->randomAcresStructures->randomNumStructures($city);
 
-        $this->services->randomSeaRiverMilitaryGatesService->determineZones($city, $postData);
+        $this->services->randomSeaRiverMilitaryGates->determineZones($city, $postData);
 
-        // sea, river, military, gates
-        if (!isset($post['sea']) || is_random($post['sea'])) {
-            $this->random_sea();
-        } else {
-            $this->has[kHas_Sea] = isset($post['sea']) && $post['sea'];
-        }
-        if (!isset($post['river']) || is_random($post['river'])) {
-            $this->random_river();
-        } else {
-            $this->has[kHas_River] = isset($post['river']) && $post['river'];
-        }
-        if (!isset($post['military']) || is_random($post['military'])) {
-            $this->random_military();
-        } else {
-            $this->has[kHas_Military] = isset($post['military']) && $post['military'];
-        }
-        if (!isset($post['gates']) || is_random($post['gates'])) {
-            $this->random_gates();
-        } else {
-            $this->gates = $post['gates'];
-        }
-//
-//        // wards
-//        $this->random_wards(isset($post['buildings']), $_POST);
-//
+        // wards
+        $this->services->randomWardsService->determineWards($city, $postData);
+        $this->random_wards(isset($post['buildings']), $_POST);
+
 //        // professions
 //        if (isset($post['professions']) && $post['professions']) {
 //            $this->random_professions();
