@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
+use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\MinMax;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Table;
@@ -21,7 +22,7 @@ class RandomWardsService extends BaseService
         $wardMetaData = $this->determineWardCounts($city, $postData);
         $wardMetaData->acresToFill = $city->acres;
 
-        $this->addSpecificWards($city, $postData , $wardMetaData);
+        $this->addSpecificWards($city, $postData, $wardMetaData);
 
         // fill up acres with wards
         while ($wardMetaData->acresToFill > 0) {
@@ -32,38 +33,28 @@ class RandomWardsService extends BaseService
     /**
      * @param City $city
      * @param string $ward_type
-     * @param float $acresLeft
      * @param bool $insideWalls
      * @param int[] $wardCount how many of each ward
-     * @param bool $generateBuildings
+     * @param string $generateBuildings RandomBoolean::
      * @param int[]|null $buildingWeights
-     * @return float
+     * @return float how many acres are left
      */
-    private function addWard(City $city, string $ward_type, float &$acresLeft, bool $insideWalls, array &$wardCount, bool $generateBuildings, array $buildingWeights = null)
+    private function addWard(City $city, string $ward_type, bool $insideWalls, array &$wardCount, string $generateBuildings, array $buildingWeights = null)
     {
         // based on city type, should allocate bigger/smaller randomness in sizes
         $value = $this->services->table->getTableResultIndex(Table::WARD_ACRES_USED, $city->populationType);
 
         $acresUsed = $this->services->random->randRatioRange('Ward acres used', $value[MinMax::MIN], $value[MinMax::MAX]);
-        if ($acresLeft - $acresUsed < 0) {
-            $acresUsed = $acresLeft;
-            $acresLeft = 0;
-        } else {
-            $acresLeft -= $acresUsed;
-        }
 
         $ward = new CityWard();
         $ward->type = $ward_type;
         $ward->acres = $acresUsed;
         $ward->insideWalls = $insideWalls;
-        if ($generateBuildings) {
+        if ($generateBuildings === BooleanRandom::TRUE) {
             $this->services->randomBuildings->generateBuildings($ward, $buildingWeights);
         }
 
         $city->wards[] = $ward;
-        if (!isset($wardCount[$ward->type])) {
-            $wardCount[$ward->type] = 0;
-        }
         $wardCount[$ward->type]++;
 
         return $acresUsed;
@@ -118,45 +109,45 @@ class RandomWardsService extends BaseService
      */
     private function addSpecificWards(City $city, PostData $postData, RandomWardMetaData $wardMetaData)
     {
-        foreach ($postData->wardsAdded as $ward_added) {
-            $wardMetaData->acresToFill -= $this->addWard($city, $ward_added->ward, $wardMetaData->acresPerWard, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+        foreach ($postData->wardsAdded as $wardAdded) {
+            $wardMetaData->acresToFill -= $this->addWard($city, $wardAdded->ward, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
         }
 
         // put in wards
         for ($i = 1; $i <= $wardMetaData->numGates; ++$i) {
-            $wardMetaData->acresToFill -= $this->addWard($city, kWard_Gate, $wardMetaData->acresPerWard, true, $wardMetaData->wardCount, $postData->generateBuildings);
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::GATE, true, $wardMetaData->wardCount, $postData->generateBuildings);
         }
 
-        if ($city->hasSea && !$wardMetaData->alreadyDone[Ward::SEA]) {
-            $wardMetaData->acresToFill -= $this->addWard($city, Ward::SEA, $wardMetaData->acresPerWard, $postData->hasGates && rand_range(1, 100) < 50, $wardMetaData->wardCount, $postData->generateBuildings);
+        if ($city->hasSea === BooleanRandom::TRUE && !$wardMetaData->alreadyDone[Ward::SEA]) {
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::SEA, $postData->hasGates === BooleanRandom::TRUE && $this->services->random->percentile('Sea inside walls') < 50, $wardMetaData->wardCount, $postData->generateBuildings);
         }
 
-        if ($city->hasRiver && !$wardMetaData->alreadyDone[Ward::RIVER]) {
-            $wardMetaData->acresToFill -= $this->addWard($city, Ward::RIVER, $wardMetaData->acresPerWard, $postData->hasGates && rand_range(1, 100) < 50, $wardMetaData->wardCount, $postData->generateBuildings);
+        if ($city->hasRiver === BooleanRandom::TRUE && !$wardMetaData->alreadyDone[Ward::RIVER]) {
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::RIVER, $postData->hasGates === BooleanRandom::TRUE && $this->services->random->percentile('River inside walls') < 50, $wardMetaData->wardCount, $postData->generateBuildings);
         }
 
-        if ($city->hasMilitary && !$wardMetaData->alreadyDone[Ward::MILITARY]) {
-            $wardMetaData->acresToFill -= $this->addWard($city, Ward::MILITARY, $wardMetaData->acresPerWard, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+        if ($city->hasMilitary === BooleanRandom::TRUE && !$wardMetaData->alreadyDone[Ward::MILITARY]) {
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::MILITARY, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
         }
 
         if (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::SMALL_TOWN, $this->services) && !$wardMetaData->alreadyDone[Ward::ADMINISTRATION]) {
-            $wardMetaData->acresToFill -= $this->addWard($city, Ward::ADMINISTRATION, $wardMetaData->acresPerWard, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::ADMINISTRATION, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
         }
 
         if (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::SMALL_CITY, $this->services) && !$wardMetaData->alreadyDone[Ward::CRAFTSMEN]) {
-            $wardMetaData->acresToFill -= $this->addWard($city, Ward::CRAFTSMEN, $wardMetaData->acresPerWard, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::CRAFTSMEN, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
         }
 
         if (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::METROPOLIS, $this->services) && !$wardMetaData->alreadyDone[Ward::PATRICIATE]) {
-            $wardMetaData->acresToFill -= $this->addWard($city, Ward::PATRICIATE, $wardMetaData->acresPerWard, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::PATRICIATE, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
         }
 
         if (!$wardMetaData->alreadyDone[Ward::MARKET]) {
-            $wardMetaData->acresToFill -= $this->addWard($city, Ward::MARKET, $wardMetaData->acresPerWard, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::MARKET, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
         }
 
         if (!$wardMetaData->alreadyDone[Ward::MERCHANT]) {
-            $wardMetaData->acresToFill -= $this->addWard($city, Ward::MERCHANT, $wardMetaData->acresPerWard, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::MERCHANT, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
         }
     }
 
@@ -181,77 +172,80 @@ class RandomWardsService extends BaseService
         // Patriciate //
         if ($rand <= 1) {
             if (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::SMALL_CITY, $this->services) && $wardMetaData->wardCount[Ward::PATRICIATE] == 0) {
-                // only one administration ward
+                // only one patriciate ward
                 // always inside the walls
-                $wardMetaData->acresToFill -= $this->addWard($city, Ward::PATRICIATE, $wardMetaData->acresToFill, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+                $wardMetaData->acresToFill -= $this->addWard($city, Ward::PATRICIATE, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
             }
 
             // Administration //
         } elseif ($rand <= 11) {
+            // if small town or smaller then will ALWAYS get administration above; so when it gets here it will always have an administration ward if it's small_city or bigger, so this is worthless and unreachable
             if (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::SMALL_CITY, $this->services) && $wardMetaData->wardCount[Ward::ADMINISTRATION] == 0) {
                 //only one administration ward
                 // always inside the walls
-                $wardMetaData->acresToFill -= $this->addWard($city, Ward::ADMINISTRATION, $wardMetaData->acresToFill, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+                // !!! unreachable !!! //
+                $wardMetaData->acresToFill -= $this->addWard($city, Ward::ADMINISTRATION, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
             }
 
             // Sea //
         } elseif ($rand <= 13) {
-            if ($city->hasSea) {
+            if ($city->hasSea === BooleanRandom::TRUE) {
+                $seaCount = 0;
                 foreach ($city->wards as $ward) {
                     if ($ward->type == Ward::SEA) {
-                        $wardMetaData->seaCount++;
+                        $seaCount++;
                     }
                 }
                 // seas start in corners of city so don't allow more than 4
-                if ($wardMetaData->seaCount < 4) {
-                    $wardMetaData->acresToFill -= $this->addWard($city, Ward::SEA, $wardMetaData->acresToFill, false, $wardMetaData->wardCount, $postData->generateBuildings);
+                if ($seaCount < 4) {
+                    $wardMetaData->acresToFill -= $this->addWard($city, Ward::SEA, false, $wardMetaData->wardCount, $postData->generateBuildings);
                 }
             }
 
             // River //
         } elseif ($rand <= 16) {
-            if ($city->hasRiver) {
-                $wardMetaData->acresToFill -= $this->addWard($city, Ward::RIVER, $wardMetaData->acresToFill, $postData->hasGates && $this->services->random->percentile('River inside walls?') < 50, $wardMetaData->wardCount, $postData->generateBuildings);
+            if ($city->hasRiver === BooleanRandom::TRUE) {
+                $wardMetaData->acresToFill -= $this->addWard($city, Ward::RIVER, $postData->hasGates === BooleanRandom::TRUE && $this->services->random->percentile('River inside walls?') < 50, $wardMetaData->wardCount, $postData->generateBuildings);
             }
 
             // Odoriferous //
         } elseif ($rand <= 25) {
-            $wardMetaData->acresToFill -= $this->addWard($city, Ward::ODORIFEROUS, $wardMetaData->acresToFill, $postData->hasGates && $this->services->random->percentile('Odoriferous inside walls?') < 5, $wardMetaData->wardCount, $postData->generateBuildings);
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::ODORIFEROUS, $postData->hasGates === BooleanRandom::TRUE && $this->services->random->percentile('Odoriferous inside walls?') < 5, $wardMetaData->wardCount, $postData->generateBuildings);
 
             // Shanty //
         } elseif ($rand <= 30) {
             if (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::SMALL_CITY, $this->services)) {
                 // outside the walls
-                $wardMetaData->acresToFill -= $this->addWard($city, Ward::SHANTY, $wardMetaData->acresToFill, false, $wardMetaData->wardCount, $postData->generateBuildings);
+                $wardMetaData->acresToFill -= $this->addWard($city, Ward::SHANTY, false, $wardMetaData->wardCount, $postData->generateBuildings);
             }
 
             // Slum //
         } elseif ($rand <= 40) {
             if (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::SMALL_CITY, $this->services)) {
                 // outside the walls
-                $wardMetaData->acresToFill -= $this->addWard($city, Ward::SLUM, $wardMetaData->acresToFill, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+                $wardMetaData->acresToFill -= $this->addWard($city, Ward::SLUM, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
             }
 
             // Merchant //
         } elseif ($rand <= 55) {
-            // one merchant ward in town unless metropolis
-            if ($wardMetaData->wardCount[Ward::MERCHANT] == 0 || PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::METROPOLIS, $this->services)) {
-                $wardMetaData->acresToFill -= $this->addWard($city, Ward::MERCHANT, $wardMetaData->acresToFill, $postData->hasGates, $wardMetaData->wardCount, $postData->generateBuildings);
+            // one merchant ward in town unless metropolis; note: merchant is always added, so don't need to check for === 0 since it will always be > 0
+            if (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::METROPOLIS, $this->services)) {
+                $wardMetaData->acresToFill -= $this->addWard($city, Ward::MERCHANT, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
             }
 
             // Market //
         } elseif ($rand <= 75) {
             // mostly inside walls
-            $wardMetaData->acresToFill -= $this->addWard($city, Ward::MARKET, $wardMetaData->acresToFill, $postData->hasGates && $this->services->random->percentile('Market inside walls?') < 83, $wardMetaData->wardCount, $postData->generateBuildings);
+            $wardMetaData->acresToFill -= $this->addWard($city, Ward::MARKET, $postData->hasGates === BooleanRandom::TRUE && $this->services->random->percentile('Market inside walls?') < 83, $wardMetaData->wardCount, $postData->generateBuildings);
 
+            // Craftsmen //
         } else {
             // most common ward within city walls
             // more than one ward possible in large towns or larger
             // mostly inside city walls
-            if (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::SMALL_CITY, $this->services)
-                && ((PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::LARGE_TOWN, $this->services) && $wardMetaData->wardCount[Ward::CRAFTSMEN] <= 1)
-                    || PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::METROPOLIS, $this->services))) {
-                $wardMetaData->acresToFill -= $this->addWard($city, Ward::CRAFTSMEN, $wardMetaData->acresToFill, $postData->hasGates && $this->services->random->percentile('Craftsmen inside walls?') < 90, $wardMetaData->wardCount, $postData->generateBuildings);
+            if ((PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::LARGE_TOWN, $this->services) && $wardMetaData->wardCount[Ward::CRAFTSMEN] <= 1)
+                    || PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::METROPOLIS, $this->services)) {
+                $wardMetaData->acresToFill -= $this->addWard($city, Ward::CRAFTSMEN, $postData->hasGates === BooleanRandom::TRUE && $this->services->random->percentile('Craftsmen inside walls?') < 90, $wardMetaData->wardCount, $postData->generateBuildings);
             }
         }
     }

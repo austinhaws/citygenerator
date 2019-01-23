@@ -11,6 +11,7 @@ class TestRandomService extends RandomService
 
     /** @var TestRoll[] */
     private $rolls = null;
+    private $rollIndex = 0;
 
     /**
      * @param null $name
@@ -29,18 +30,18 @@ class TestRandomService extends RandomService
      */
     private function nextRoll($name, $min = null, $max = null)
     {
-        if (count($this->rolls) === 0) {
+        if (!$this->rolls || count($this->rolls) === 0) {
 //var_dump(debug_backtrace());
-            exit("\nError: There are no more rolls for $name : $min -> $max\n");
+            throw new \RuntimeException("\nError: There are no more rolls for '$name' : $min -> $max; Roll Index: {$this->rollIndex}\n");
         }
 
         $roll = array_shift($this->rolls);
-        assertSame($name, $roll->name, "$name ($min->$max)");
+        assertSame($roll->name, $name, "$name ($min->$max); Roll Index: {$this->rollIndex}");
         if ($roll->min !== TestRoll::ANY) {
-            assertSame($min, $roll->min, $name);
+            assertSame($roll->min, $min, "$name; Roll Index: {$this->rollIndex}");
         }
         if ($roll->max !== TestRoll::ANY) {
-            assertSame($max, $roll->max, $name);
+            assertSame($roll->max, $max, "$name; Roll Index: {$this->rollIndex}");
         }
 
         // allow random results
@@ -54,6 +55,7 @@ class TestRandomService extends RandomService
             $result = $roll->result;
         }
 
+        $this->rollIndex++;
         return $result;
     }
 
@@ -76,8 +78,9 @@ class TestRandomService extends RandomService
      */
     public function setRolls($rolls)
     {
-        $this->rolls && assertSame(0, count($this->rolls), 'Previous≠ existing rolls');
+        $this->rolls && assertSame(0, count($this->rolls), 'Previous existing rolls');
         $this->rolls = $rolls;
+        $this->rollIndex = 0;
     }
 
     public function verifyRolls()

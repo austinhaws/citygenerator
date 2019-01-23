@@ -19,8 +19,6 @@ class RandomWardMetaData
     public $requiredWards;
     /** @var int */
     public $acresToFill;
-    /** @var int how many seas there are touching the city (they start in corners so only allow 4) */
-    public $seaCount = 0;
 
     public function __construct()
     {

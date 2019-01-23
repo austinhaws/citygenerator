@@ -4,8 +4,14 @@ namespace App\Http\Controllers\CityGen\Models;
 
 class WardAdded
 {
-    /** @var string Ward */
-    public $ward;
     /** @var WardAddedBuilding[] */
     public $buildings;
+    /** @var string Ward */
+    public $ward;
+
+    public function __construct($buildings = null, $ward = null)
+    {
+        $this->buildings = $buildings;
+        $this->ward = $ward;
+    }
 }
