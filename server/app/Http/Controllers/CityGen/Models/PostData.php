@@ -6,16 +6,18 @@ class PostData
 {
     /** @var string */
     public $populationType;
-    /** @var string BooleanRandom */
+    /** @var string BooleanRandom:: */
     public $hasSea;
-    /** @var string BooleanRandom */
+    /** @var string BooleanRandom:: */
     public $hasMilitary;
-    /** @var string BooleanRandom */
+    /** @var string BooleanRandom:: */
     public $hasRiver;
-    /** @var string BooleanRandom */
+    /** @var string BooleanRandom:: */
     public $hasGates;
     /** @var WardAdded[] */
     public $wardsAdded;
-    /** @var string BooleanRandom */
+    /** @var string BooleanRandom:: */
     public $generateBuildings;
+    /** @var string BooleanRandom:: */
+    public $professions;
 }

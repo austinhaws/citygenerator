@@ -2,22 +2,34 @@
 
 namespace App\Http\Controllers\CityGen\Models;
 
+use App\Http\Controllers\CityGen\Constants\BooleanRandom;
+
 class City
 {
-    public $populationSize = false;
-    public $populationType = false;
+    /** @var int */
+    public $populationSize = null;
+    /** @var string PopulationType:: */
+    public $populationType = null;
+    /** @var string */
     public $name = '';
+    /** @var int int */
     public $numStructures = 0;
-    public $population_density = 0.0;
+    /** @var float  */
     public $acres = 0.0;
-    public $hasSea = false;
-    public $hasMilitary = false;
-    public $hasRiver = false;
+    /** @var bool BooleanRandom:: */
+    public $hasSea = BooleanRandom::FALSE;
+    /** @var bool BooleanRandom:: */
+    public $hasMilitary = BooleanRandom::FALSE;
+    /** @var bool BooleanRandom:: */
+    public $hasRiver = BooleanRandom::FALSE;
     // todo rename to numGates
+    /** @var int */
     public $gates = 0;
     /** @var CityWard[] */
     public $wards = array();
+    /** @var CityProfession[] */
     public $professions = array();
+    public $population_density = 0.0;
     public $power_centers = array();
     public $influence_points_unabsorbed = 0;
     public $races = array();
@@ -169,54 +181,6 @@ class City
             $ward->add_building($type, $subtype, $quality);
         }
     }
-
-    private function random_profession_single()
-    {
-        global $table_profession;
-        $profession = get_table_result_range($table_profession, rand_range(1, 10000));
-
-        $this->add_profession($profession, 1);
-    }
-
-    private function add_profession($profession, $num)
-    {
-        if ($num > 0) {
-            $found = false;
-            foreach ($this->professions as $key => $profession_loop) {
-                if ($profession_loop['profession'] == $profession) {
-                    $found =& $this->professions[$key];
-                    break;
-                }
-            }
-            if ($found) {
-                $found['total'] += $num;
-            } else {
-                $this->professions[] = array('profession' => $profession, 'total' => $num);
-            }
-        }
-    }
-
-    private function random_professions()
-    {
-        global $table_profession_ratio;
-        $total = 0;
-        // add automatic ratioed professions
-        foreach ($table_profession_ratio as $profession => $ratio) {
-            $num = intval(floatval($this->populationSize) / floatval($ratio));
-            $this->add_profession($profession, $num);
-            $total += $num;
-        }
-
-        // for all population not accounted for in ratioed, do random single load
-        while ($total < $this->populationSize) {
-            ++$total;
-            $this->random_profession_single();
-        }
-        usort($this->professions, function ($a, $b) {
-            return strcmp($a['profession'], $b['profession']);
-        });
-    }
-
 
     private function random_guilds()
     {

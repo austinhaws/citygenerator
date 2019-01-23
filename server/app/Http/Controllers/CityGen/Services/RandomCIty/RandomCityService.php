@@ -22,14 +22,9 @@ class RandomCityService extends BaseService
 
         $this->services->randomSeaRiverMilitaryGates->determineZones($city, $postData);
 
-        // wards
-        $this->services->randomWardsService->determineWards($city, $postData);
-        $this->random_wards(isset($post['buildings']), $_POST);
+        $this->services->randomWards->determineWards($city, $postData);
 
-//        // professions
-//        if (isset($post['professions']) && $post['professions']) {
-//            $this->random_professions();
-//        }
+        $this->services->randomProfessions->determineProfessions($city, $postData);
 //
 //        $this->random_power_centers();
 //        $this->random_races($post);

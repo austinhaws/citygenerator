@@ -14,6 +14,8 @@ final class TableServiceTest extends BaseTestCase
         for ($x = 0; $x < 10; $x++) {
             $this->services->random->setRolls([new TestRoll('Random famous test', TestRoll::RANDOM, TestRoll::ANY, TestRoll::ANY)]);
             $this->assertTrue(!!$this->services->table->getTableResultRange(Table::FAMOUS, $this->services->random->randRangeInt("Random famous test", 1, 4250)));
+
+            $this->services->random->verifyRolls();
         }
     }
 
@@ -28,6 +30,8 @@ final class TableServiceTest extends BaseTestCase
     {
         $this->services->random->setRolls([new TestRoll("getTableResultRandom-NameWordsTable", 2, 0, 1140)]);
         $this->assertEquals('autumn', $this->services->table->getTableResultRandom(Table::NAME_WORDS));
+
+        $this->services->random->verifyRolls();
     }
 
     public function testGetTableKeyFromRangeValue()

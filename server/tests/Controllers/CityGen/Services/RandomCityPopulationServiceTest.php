@@ -13,7 +13,6 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
 {
     /**
      * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::determinePopulation
-     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::randomPopulationSize
      */
     public function testGetTableResultRange_populationTypeGiven()
     {
@@ -26,13 +25,14 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
             $city = new City();
             $this->services->randomCityPopulation->determinePopulation($city, $postData);
 
+            $this->services->random->verifyRolls();
+
             $this->assertSame($populationType, $city->populationType);
         }
     }
 
     /**
      * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::determinePopulation
-     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::randomPopulationSize
      */
     public function testGetTableResultRange_random()
     {
@@ -47,18 +47,13 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
         $city = new City();
         $this->services->randomCityPopulation->determinePopulation($city, $postData);
 
+        $this->services->random->verifyRolls();
+
         $this->assertSame(PopulationType::THORP, $city->populationType);
     }
 
-    /**
-     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::randomPopulationSize
-     */
     public function testGetTableResultRange_userEntered_low()
     {
-        $this->services->random->setRolls([
-            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 0, 7),
-        ]);
-
         $postData = new PostData();
         $postData->populationType = 1;
 
@@ -69,15 +64,8 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
         $this->assertSame(20, $city->populationSize);
     }
 
-    /**
-     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::randomPopulationSize
-     */
     public function testGetTableResultRange_userEntered_mid()
     {
-        $this->services->random->setRolls([
-            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 0, 7),
-        ]);
-
         $postData = new PostData();
         $postData->populationType = 1500;
 
@@ -88,15 +76,8 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
         $this->assertSame(1500, $city->populationSize);
     }
 
-    /**
-     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::randomPopulationSize
-     */
     public function testGetTableResultRange_userEntered_big()
     {
-        $this->services->random->setRolls([
-            new TestRoll('getTableResultRandom-PopulationTypeTable', 0,0, 7),
-        ]);
-
         $postData = new PostData();
         $postData->populationType = 999999999;
 
