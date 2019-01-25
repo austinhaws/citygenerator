@@ -29,6 +29,7 @@ class Table extends BaseEnum
     const NPC_CLASSES_MAX_LEVEL = 'NPCClassesMaxLevelTable';
     const NPC_LEVEL_MODIFIERS = 'NPCLevelModifierTable';
     const POPULATION_ACRES = 'PopulationAcresTable';
+    const POPULATION_CENTER_UNABSORBED = 'PopulationCenterUnabsorbedTable';
     const POPULATION_HAS_WALLS = 'PopulationHasWallsTable';
     const POPULATION_INFLUENCE_POINTS = 'PopulationInfluencePointsTable';
     const POPULATION_MILITARY = 'PopulationMilitaryTable';
@@ -36,13 +37,12 @@ class Table extends BaseEnum
     const POPULATION_NUM_WALLS = 'PopulationNumWallsTable';
     const POPULATION_POWER_CENTER = 'PopulationPowerCenterTable';
     const POPULATION_POWER_CENTER_MODIFIER = 'PopulationPowerCenterModifierTable';
-    const POWER_CENTER_TYPE = 'PowerCenterTypeTable';
     const POPULATION_SIZE = 'PopulationSizeTable';
     const POPULATION_TYPE = 'PopulationTypeTable';
     const POPULATION_WARD_DENSITY = 'PopulationWardDensityTable';
     const POPULATION_WEALTH = 'PopulationWealthTable';
-    const POWER_CENTER_ALIGNMENT = 'PopulationCenterAlignmentTable';
-    const POWER_CENTER_UNABSORBED = 'PopulationCenterUnabsorbedTable';
+    const POWER_CENTER_ALIGNMENT = 'PowerCenterAlignmentTable';
+    const POWER_CENTER_TYPE = 'PowerCenterTypeTable';
     const PROFESSION = 'ProfessionTable';
     const PROFESSION_RATIO = 'ProfessionRatioTable';
     const RACES = 'RaceTable';

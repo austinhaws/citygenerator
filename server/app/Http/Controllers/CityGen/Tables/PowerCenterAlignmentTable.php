@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\CityGen\Tables;
 
-class PopulationCenterAlignmentTable extends BaseTable
+class PowerCenterAlignmentTable extends BaseTable
 {
     function getTable()
     {

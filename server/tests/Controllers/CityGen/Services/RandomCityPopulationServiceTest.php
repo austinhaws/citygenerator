@@ -87,4 +87,63 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
         $this->assertSame(PopulationType::METROPOLIS, $city->populationType);
         $this->assertSame(999999999, $city->populationSize);
     }
+
+    /**
+     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::determinePopulation
+     */
+    public function testResourcesLargeTown()
+    {
+        $postData = new PostData();
+        $postData->populationType = PopulationType::LARGE_TOWN;
+
+        $this->services->random->setRolls([
+            new TestRoll('Random Population Size', 30, 2001, 5000),
+        ]);
+
+        $city = new City();
+        $this->services->randomCityPopulation->determinePopulation($city, $postData);
+
+        $this->services->random->verifyRolls();
+
+        $this->assertSame(7000, $city->goldPieceLimit);
+        $this->assertSame(10500.0, $city->wealth);
+        $this->assertSame(105.0, $city->kingIncome);
+        $this->assertSame(525.0, $city->magicResources);
+    }
+
+    /**
+     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::determinePopulation
+     */
+    public function testResourcesSpecificSize()
+    {
+        $postData = new PostData();
+        $postData->populationType = 999888;
+
+        $city = new City();
+        $this->services->randomCityPopulation->determinePopulation($city, $postData);
+
+        $this->assertSame(PopulationType::METROPOLIS, $city->populationType);
+        $this->assertSame(160000, $city->goldPieceLimit);
+        $this->assertSame(7999104000.0, $city->wealth);
+        $this->assertSame(3999552.0, $city->kingIncome);
+        $this->assertSame(799910400.0, $city->magicResources);
+    }
+
+    /**
+     * @covers \App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService::determinePopulation
+     */
+    public function testDecimals()
+    {
+        $postData = new PostData();
+        $postData->populationType = 125;
+
+        $city = new City();
+        $this->services->randomCityPopulation->determinePopulation($city, $postData);
+
+        $this->assertSame(PopulationType::HAMLET, $city->populationType);
+        $this->assertSame(100, $city->goldPieceLimit);
+        $this->assertSame(625.0, $city->wealth);
+        $this->assertSame(1.25, $city->kingIncome);
+        $this->assertSame(0.0, $city->magicResources);
+    }
 }

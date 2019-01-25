@@ -6,6 +6,7 @@ use App\Http\Controllers\CityGen\Services\PostDataService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomAcresStructuresService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityService;
+use App\Http\Controllers\CityGen\Services\RandomCity\RandomPowerCentersService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomProfessionsService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomSeaRiverMilitaryGatesService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomService;
@@ -29,6 +30,7 @@ class TestServicesService extends ServicesService
         $this->randomAcresStructures = new RandomAcresStructuresService($this);
         $this->randomCityPopulation = new RandomCityPopulationService($this);
         $this->randomCity = new RandomCityService($this);
+        $this->randomPowerCenters = new RandomPowerCentersService($this);
         $this->randomProfessions = new RandomProfessionsService($this);
         $this->randomSeaRiverMilitaryGates = new RandomSeaRiverMilitaryGatesService($this);
         $this->randomWards = new RandomWardsService($this);

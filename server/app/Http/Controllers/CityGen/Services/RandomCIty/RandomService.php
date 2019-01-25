@@ -70,11 +70,11 @@ class RandomService
 
     /**
      * @param $name
-     * @param $min
-     * @param $max
+     * @param int $min
+     * @param int $max
      * @return int
      */
-    public function randRangeInt($name, $min, $max)
+    public function randRangeInt($name, int $min, int $max)
     {
         return intval($this->randRangeFloat($name, $min, $max));
     }

@@ -18,7 +18,8 @@ class RandomCityPopulationService extends BaseService
      * @param City $city
      * @param PostData $postData
      */
-    public function determinePopulation(City $city, PostData $postData) {
+    public function determinePopulation(City $city, PostData $postData)
+    {
         // population type
         $populationType = $postData->populationType;
         if ($this->services->random->isRandom($populationType)) {
@@ -32,6 +33,11 @@ class RandomCityPopulationService extends BaseService
             $value = $this->services->table->getTableResultIndex(Table::POPULATION_SIZE, $city->populationType);
             $city->populationSize = $this->services->random->randRangeInt("Random Population Size", $value[MinMax::MIN], $value[MinMax::MAX]);
         }
+
+        $city->goldPieceLimit = $this->services->table->getTableResultIndex(Table::POPULATION_WEALTH, $city->populationType);
+        $city->wealth = (float)$city->goldPieceLimit * 0.5 * (float)($city->populationSize) * 0.1;
+        $city->kingIncome = $this->services->table->getTableResultIndex(Table::KING_INCOME, $city->populationType) * $city->wealth;
+        $city->magicResources = $this->services->table->getTableResultIndex(Table::MAGIC_RESOURCES, $city->populationType) * $city->wealth;
     }
 
     /**
@@ -40,7 +46,8 @@ class RandomCityPopulationService extends BaseService
      * @param City $city
      * @param string $populationType
      */
-    private function useEnteredPopulationType(City $city, string $populationType) {
+    private function useEnteredPopulationType(City $city, string $populationType)
+    {
         switch ($populationType) {
             case PopulationType::THORP:
             case PopulationType::HAMLET:

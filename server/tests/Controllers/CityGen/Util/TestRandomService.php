@@ -38,10 +38,10 @@ class TestRandomService extends RandomService
         $roll = array_shift($this->rolls);
         assertSame($roll->name, $name, "$name ($min->$max); Roll Index: {$this->rollIndex}");
         if ($roll->min !== TestRoll::ANY) {
-            assertSame($roll->min, $min, "$name; Roll Index: {$this->rollIndex}");
+            assertSame($roll->min, $min, "MIN: $name; Roll Index: {$this->rollIndex}");
         }
         if ($roll->max !== TestRoll::ANY) {
-            assertSame($roll->max, $max, "$name; Roll Index: {$this->rollIndex}");
+            assertSame($roll->max, $max, "MAX: $name; Roll Index: {$this->rollIndex}");
         }
 
         // allow random results

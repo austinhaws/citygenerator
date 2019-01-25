@@ -26,12 +26,25 @@ class City
     /** @var int */
     public $gates = 0;
     /** @var CityWard[] */
-    public $wards = array();
+    public $wards = [];
     /** @var CityProfession[] */
-    public $professions = array();
+    public $professions = [];
+    /** @var int */
+    public $influencePointsUnabsorbed = 0;
+
+    /** @var float */
+    public $wealth;
+    /** @var int */
+    public $goldPieceLimit;
+    /** @var float */
+    public $magicResources;
+    /** @var float */
+    public $kingIncome;
+
+    /** @var array CityPowerCenter[] */
+    public $powerCenters = [];
+
     public $population_density = 0.0;
-    public $power_centers = array();
-    public $influence_points_unabsorbed = 0;
     public $races = array();
     public $guilds = array();
     public $commodities = array('export' => array(), 'import' => array());
@@ -295,80 +308,6 @@ class City
         return implode($parts, '; ');
     }
 
-
-    public function wealth()
-    {
-        return (doubleval($this->gold_piece_limit()) * 0.5) * (doubleval($this->populationSize) * 0.1);
-    }
-
-    public function gold_piece_limit()
-    {
-        global $table_population_wealth;
-        return get_table_result_index($table_population_wealth, $this->populationType);
-    }
-
-    public function king_income()
-    {
-        global $table_king_income;
-        $value = get_table_result_index($table_king_income, $this->populationType);
-
-        return $value * $this->wealth();
-    }
-
-    public function magic_resources()
-    {
-        global $table_magic_resources;
-        $value = get_table_result_index($table_magic_resources, $this->populationType);
-        return $value * $this->wealth();
-    }
-
-    private function random_power_centers()
-    {
-        global $table_population_power_center;
-        global $table_population_influence_points;
-        global $table_population_power_center_modifier;
-        global $table_power_center_type;
-        global $table_power_center_unabsorbed;
-
-        $value = get_table_result_index($table_population_power_center, $this->populationType);
-        $count = rand_range($value[MinMax::MIN], $value[kMax]);
-
-        if ($count) {
-            $value = get_table_result_index($table_population_influence_points, $this->populationType);
-            $influence_points = rand_range($value[MinMax::MIN], $value[kMax]);
-
-            $percent = get_table_result_index($table_power_center_unabsorbed, $this->populationType);
-
-            $this->influence_points_unabsorbed = $influence_points * $percent;
-            $influence_points -= $this->influence_points_unabsorbed;
-            $total_influence_points = $influence_points;
-
-            $average_influence = $influence_points / $count;
-            $offset_influence = $average_influence / 10.0;
-
-//			$modifier = get_table_result_index($table_population_power_center_modifier, $this->populationType);
-
-            for ($i = 0; $i < $count; ++$i) {
-                $type = get_table_result_range($table_power_center_type, rand_range(1, 1000));
-
-                if ($i == $count) {
-                    // use the remainder of points
-                    $influence = $influence_points;
-                } else {
-                    // get random amount based on range of possibles
-                    $influence = rand($average_influence - $offset_influence, $average_influence + $offset_influence);
-                    $influence_points = $influence_points - $influence;
-                }
-
-                // power center's wealth is a matching ratio of city's wealth to influence points percentage
-                $ratio = $influence / $total_influence_points;
-                $wealth = $ratio * $this->wealth();
-
-                // nonstandard has a 5% chance of being monstrous
-                $this->power_centers[] = new power_center_class($type, $influence, $wealth, $count, $this);
-            }
-        }
-    }
 
     public function random_name()
     {

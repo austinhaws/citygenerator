@@ -25,8 +25,9 @@ class RandomCityService extends BaseService
         $this->services->randomWards->determineWards($city, $postData);
 
         $this->services->randomProfessions->determineProfessions($city, $postData);
-//
-//        $this->random_power_centers();
+
+        $this->random_power_centers();
+
 //        $this->random_races($post);
 //        $this->random_guilds();
 //        $this->random_commodities();

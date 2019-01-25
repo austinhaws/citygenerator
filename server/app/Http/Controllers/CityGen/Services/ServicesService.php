@@ -6,6 +6,7 @@ use App\Http\Controllers\CityGen\Services\RandomCity\RandomAcresStructuresServic
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomBuildingsService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityService;
+use App\Http\Controllers\CityGen\Services\RandomCity\RandomPowerCentersService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomProfessionsService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomSeaRiverMilitaryGatesService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomService;
@@ -27,6 +28,8 @@ class ServicesService
     public $randomCityPopulation;
     /** @var RandomCityService */
     public $randomCity;
+    /** @var RandomPowerCentersService */
+    public $randomPowerCenters;
     /** @var RandomProfessionsService */
     public $randomProfessions;
     /** @var RandomSeaRiverMilitaryGatesService */
@@ -43,6 +46,7 @@ class ServicesService
         ?RandomCityPopulationService $randomCityPopulationService = null,
         ?RandomCityService $randomCityService = null,
         ?RandomProfessionsService $randomProfessions = null,
+        ?RandomPowerCentersService $randomPowerCenters = null,
         ?RandomSeaRiverMilitaryGatesService $randomSeaRiverMilitaryGatesService = null,
         ?RandomService $randomService = null,
         ?RandomWardsService $randomWardsService = null,
@@ -55,6 +59,7 @@ class ServicesService
         $this->randomBuildings = $randomBuildingsService;
         $this->randomCityPopulation = $randomCityPopulationService;
         $this->randomCity = $randomCityService;
+        $this->randomPowerCenters = $randomPowerCenters;
         $this->randomProfessions = $randomProfessions;
         $this->randomSeaRiverMilitaryGates = $randomSeaRiverMilitaryGatesService;
         $this->randomWards = $randomWardsService;
