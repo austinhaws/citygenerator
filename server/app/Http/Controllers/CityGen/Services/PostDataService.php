@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CityGen\Services;
 
 use App\Http\Controllers\CityGen\Models\PostData;
+use App\Http\Controllers\CityGen\Models\PostRaceRatio;
 
 class PostDataService extends BaseService
 {
@@ -21,7 +22,14 @@ class PostDataService extends BaseService
             $postData->hasRiver = $this->services->random->randomBoolean($post, 'river');
             $postData->hasGates = $this->services->random->randomBoolean($post, 'gates');
             $postData->generateBuildings = $this->services->random->randomBoolean($post, 'buildings');
+            $postData->racialMix = isset($post['racialMix']) ? $post['racialMix'] : [];
+            if (isset($post['raceRatios'])) {
+                $postData->raceRatio = array_map(function ($ratio) {
+                    return new PostRaceRatio($ratio['race'], floatval($ratio['ratio']) / 100.0);
+                }, $post['raceRatios']);
+            }
         }
+
         return $postData;
     }
 }

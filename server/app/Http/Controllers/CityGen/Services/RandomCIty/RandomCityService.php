@@ -26,9 +26,10 @@ class RandomCityService extends BaseService
 
         $this->services->randomProfessions->determineProfessions($city, $postData);
 
-        $this->random_power_centers();
+        $this->services->randomPowerCenters->determinePowerCenters($city, $postData);
 
-//        $this->random_races($post);
+        $this->services->randomRacesService->determineRaces($city, $postData);
+
 //        $this->random_guilds();
 //        $this->random_commodities();
 //        $this->random_famous();

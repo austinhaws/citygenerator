@@ -44,12 +44,15 @@ class City
     /** @var array CityPowerCenter[] */
     public $powerCenters = [];
 
+    /** @var string Race:: */
+    public $majorityRace;
+    /** @var CityRace[] */
+    public $races;
+
     public $population_density = 0.0;
-    public $races = array();
     public $guilds = array();
     public $commodities = array('export' => array(), 'import' => array());
     public $famous = array('famous' => array(), 'infamous' => array());
-    public $majority_race;
 //	public $layout = new Layout_CityMapClass();
 
     // outputs for json (sorry, hacky)
@@ -228,74 +231,6 @@ class City
         }
     }
 
-    private function random_races($post)
-    {
-        global $table_races;
-        global $table_integration;
-        global $table_races_percents;
-        global $table_races_random;
-
-        if ($post['racial_mix'] == 'Custom') {
-            // create map of {race, value}
-            $jsonArray = (array)json_decode($post['raceRatio']);
-            $raceRatios = array_map(function ($race, $ratio) {
-                return ['race' => $race, 'ratio' => floatval($ratio)];
-            }, array_keys($jsonArray), $jsonArray);
-
-            usort($raceRatios, function ($a, $b) {
-                return $b['ratio'] - $a['ratio'];
-            });
-
-            $totalValues = array_reduce($raceRatios, function ($total, $raceRatio) {
-                return $total + $raceRatio['ratio'];
-            }, 0.0);
-
-            if ($totalValues == 0) {
-                $post['racial_mix'] = kRandom;
-            } else {
-                foreach ($raceRatios as $idx => $raceRatio) {
-                    $raceRatios[$idx]['ratio'] = $raceRatio['ratio'] / $totalValues;
-                }
-                $this->majority_race = $raceRatios[0]['race'];
-            }
-        }
-
-        // if they didn't choose custom or they didn't choose sliders for custom
-        if ($post['racial_mix'] != 'Custom') {
-            $mix = (is_random($post['racial_mix']) ? get_table_result_index($table_integration, rand_range(1, 3)) : $post['racial_mix']);
-            if (is_random($post['race'])) {
-                $this->majority_race = get_table_result_range($table_races_random, rand_range(1, 100));
-            } else {
-                $this->majority_race = $post['race'];
-            }
-
-            // list of races with majority at top
-            $races = [$this->majority_race];
-            foreach ($table_races as $race) {
-                if ($race != $this->majority_race) {
-                    $races[] = $race;
-                }
-            }
-
-            // convert to race ratio maps
-            $raceRatios = array_map(function ($race) {
-                return ['race' => $race, 'ratio' => false];
-            }, $races);
-            // zipper in the ratios for each race
-            for ($i = 0; $i < count($table_races); $i++) {
-                $raceRatios[$i]['ratio'] = $table_races_percents[$mix][$i];
-            }
-        }
-
-        // give each race some population
-        $total = 0;
-        foreach ($raceRatios as $raceRatio) {
-            $this->races[$raceRatio['race']] = floor($raceRatio['ratio'] * $this->populationSize);
-            $total += $this->races[$raceRatio['race']];
-        }
-        // give the majority race any left overs
-        $this->races[$raceRatios[0]['race']] += $this->populationSize - $total;
-    }
 
     public function output_races()
     {

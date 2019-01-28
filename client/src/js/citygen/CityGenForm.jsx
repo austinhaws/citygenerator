@@ -262,35 +262,42 @@ class CityGenForm extends React.Component {
 
 					{/* Society Racial Type */}
 					<FormControl className={classes.formControl}>
-						<InputLabel shrink htmlFor="racial_mix">Society Type</InputLabel>
+						<InputLabel shrink htmlFor="racialMix">Society Type</InputLabel>
 						<Select
-							value={this.props.citygen.form.racial_mix}
-							onChange={dispatchFieldCurry('citygen.form.racial_mix')}
-							inputProps={{ id: 'racial_mix' }}
+							value={this.props.citygen.form.racialMix}
+							onChange={dispatchFieldCurry('citygen.form.racialMix')}
+							inputProps={{ id: 'racialMix' }}
 							disabled={ajaxing}
 						>
 							{this.menuItemsFromList(this.props.citygen.lists.integration)}
 						</Select>
 					</FormControl>
 					{
-						this.props.citygen.form.racial_mix === 'Custom' ? (
+						this.props.citygen.form.racialMix === 'Custom' ? (
 							/* Race ratio sliders */
 							<FormControl className={classes.formControl}>
 								<InputLabel shrink>Race Proportions</InputLabel>
 								{
-									this.props.citygen.lists.race.map(race =>
-										<FormControl className={classes.formControl} key={race.id}>
+									this.props.citygen.lists.race.map(race => {
+										const raceRatioIdx = this.props.citygen.form.raceRatios.findIndex(ratio => ratio.race === race.id);
+										return (<FormControl className={classes.formControl} key={race.id}>
 											<InputLabel htmlFor={`race-slider-${race.id}`}>{race.label}</InputLabel>
 											<Slider
 												id={`race-slider-${race.id}`}
-												classes={{ container: classes.slider }}
-												value={this.props.citygen.form.raceRatios[race.id] === undefined ? 50 : this.props.citygen.form.raceRatios[race.id]}
+												classes={{container: classes.slider}}
+												value={raceRatioIdx === -1 ? 0 : this.props.citygen.form.raceRatios[raceRatioIdx].ratio}
 												aria-labelledby="label"
-												onChange={(control, value) => dispatchField(`citygen.form.raceRatios.${race.id}`, value)}
+												onChange={(control, value) => {
+													if (raceRatioIdx === -1) {
+														dispatchField(`citygen.form.raceRatios.${this.props.citygen.form.raceRatios.length}`, { race: race.id, ratio: value });
+													} else {
+														dispatchField(`citygen.form.raceRatios.${raceRatioIdx}.ratio`, value);
+													}
+												}}
 												disabled={ajaxing}
 											/>
-										</FormControl>
-									)
+										</FormControl>);
+									})
 								}
 							</FormControl>
 						) : (

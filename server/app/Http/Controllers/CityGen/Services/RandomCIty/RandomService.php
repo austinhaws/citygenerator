@@ -7,6 +7,7 @@ use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 class RandomService
 {
     const RANDOM = 'Random';
+    const CUSTOM = 'Custom';
 
     /**
      * @param string|int $value

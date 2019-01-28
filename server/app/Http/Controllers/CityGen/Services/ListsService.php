@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CityGen\Services;
 
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
+use App\Http\Controllers\CityGen\Constants\Integration;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Race;
 use App\Http\Controllers\CityGen\Constants\Ward;
@@ -26,7 +27,7 @@ class ListsService
                 PopulationType::LARGE_CITY => 'Large City (12001-32000)',
                 PopulationType::METROPOLIS => 'Metropolis (32001+)',
             ]),
-            'integration' => $this->enumToList(Race::getConstants()),
+            'integration' => $this->enumToList(Integration::getConstants()),
             'race' => $this->enumToList(Race::getConstants()),
             'wards' => $this->enumToList(Ward::getConstants()),
             'buildingsByWard' => $this->buildingsByWard(),

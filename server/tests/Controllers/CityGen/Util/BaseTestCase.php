@@ -20,7 +20,18 @@ class BaseTestCase extends TestCase
     {
         $values = array_map(function ($object) use($getSortValueCallback) { return $getSortValueCallback($object); }, $array);
         $isSorted = array_reduce($values, function ($carry, $value) {
-            return $carry === null ? null : (strcmp($value, $carry) > 0 ? $value : null);
+            if ($carry !== null) {
+                // strings must be string sorted
+                if (((($carry !== null && is_string($carry)) || ($carry === null && is_string($value))) && strcmp($value, $carry) > 0) ||
+                    // numbers must be number sorted
+                    ((($carry !== null && !is_string($carry)) || ($carry === null && !is_string($value))) && $value > $carry)
+                ) {
+                    $carry = $value;
+                } else {
+                    $carry = null;
+                }
+            }
+            return $carry;
         }, '');
         $this->assertNotNull($isSorted);
     }

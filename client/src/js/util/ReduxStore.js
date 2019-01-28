@@ -24,8 +24,9 @@ const defaultState = {
 			populationType: 'Random',
 			professions: 'Yes',
 			race: 'Random',
-			raceRatios: {},
-			racial_mix: 'Random',
+			// [ {race: 'Halfling', ratio: 32.54}, ... ]
+			raceRatios: [],
+			racialMix: 'Random',
 			river: 'Random',
 			sea: 'Random',
 			wardsAdded: [],

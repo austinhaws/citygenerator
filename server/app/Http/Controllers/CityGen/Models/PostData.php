@@ -20,4 +20,11 @@ class PostData
     public $generateBuildings;
     /** @var string BooleanRandom:: */
     public $professions;
+
+    /** @var string Custom || Race::*/
+    public $racialMix;
+    /** @var PostRaceRatio[] */
+    public $raceRatio;
+    /** @var string Race:: major race */
+    public $race;
 }
