@@ -49,8 +49,10 @@ class City
     /** @var CityRace[] */
     public $races;
 
+    /** @var CityGuild[] */
+    public $guilds = [];
+
     public $population_density = 0.0;
-    public $guilds = array();
     public $commodities = array('export' => array(), 'import' => array());
     public $famous = array('famous' => array(), 'infamous' => array());
 //	public $layout = new Layout_CityMapClass();
@@ -66,7 +68,6 @@ class City
     public $famous_famous = false;
     public $famous_infamous = false;
     public $buildings_total = false;
-    public $guilds_count = 0;
 
 //	public function generate_map() {
 //		$this->layout->generate($this);
@@ -198,40 +199,6 @@ class City
         }
     }
 
-    private function random_guilds()
-    {
-        global $table_guilds;
-        global $table_guild_modifiers;
-
-        $modifier = get_table_result_index($table_guild_modifiers, $this->populationType);
-        $modifier = 50 + rand_range($modifier['min'], $modifier['max']);
-
-        // loop through each guild
-        foreach ($table_guilds as $guild => $professions) {
-            // count up number of $this->professions for each guild profession from table
-            $count = 0;
-            foreach ($professions as $profession) {
-                $found = false;
-                foreach ($this->professions as $profession_loop) {
-                    if ($profession_loop['profession'] == $profession) {
-                        $found = $profession_loop;
-                        break;
-                    }
-                }
-                if ($found) {
-                    $count += $found['total'];
-                }
-                // divide by 50 +/- offset to get # of guilds of this type in this city
-            }
-            $number = floor($count / $modifier);
-            if ($number) {
-                $this->guilds_count += $number;
-                $this->guilds[] = array('guild' => $guild, 'total' => $number);
-            }
-        }
-    }
-
-
     public function output_races()
     {
         $parts = array();
@@ -332,11 +299,7 @@ class City
         $this->name = ucwords($this->name);
     }
 
-    public function guilds_count()
-    {
-        return $this->guilds_count;
-    }
-
+    // todo: remove this - but is it used?
     public function wards_count($ward_type)
     {
         $count = 0;

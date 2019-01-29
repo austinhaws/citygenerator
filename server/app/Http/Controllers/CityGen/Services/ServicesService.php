@@ -6,6 +6,7 @@ use App\Http\Controllers\CityGen\Services\RandomCity\RandomAcresStructuresServic
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomBuildingsService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityService;
+use App\Http\Controllers\CityGen\Services\RandomCity\RandomGuildsService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomPowerCentersService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomProfessionsService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomRacesService;
@@ -29,6 +30,8 @@ class ServicesService
     public $randomCityPopulation;
     /** @var RandomCityService */
     public $randomCity;
+    /** @var RandomGuildsService */
+    public $randomGuildService;
     /** @var RandomPowerCentersService */
     public $randomPowerCenters;
     /** @var RandomProfessionsService */
@@ -43,11 +46,12 @@ class ServicesService
     public $table;
 
     public function __construct(
-        ?PostDataService $oostDataService = null,
+        ?PostDataService $postDataService = null,
         ?RandomAcresStructuresService $randomAcresStructuresService = null,
         ?RandomBuildingsService $randomBuildingsService = null,
         ?RandomCityPopulationService $randomCityPopulationService = null,
         ?RandomCityService $randomCityService = null,
+        ?RandomGuildsService $randomGuildService = null,
         ?RandomProfessionsService $randomProfessions = null,
         ?RandomPowerCentersService $randomPowerCenters = null,
         ?RandomRacesService $randomRacesService = null,
@@ -57,12 +61,13 @@ class ServicesService
         ?TableService $tableService = null
     )
     {
-        $this->postData = $oostDataService;
+        $this->postData = $postDataService;
         $this->random = $randomService;
         $this->randomAcresStructures = $randomAcresStructuresService;
         $this->randomBuildings = $randomBuildingsService;
         $this->randomCityPopulation = $randomCityPopulationService;
         $this->randomCity = $randomCityService;
+        $this->randomGuildService = $randomGuildService;
         $this->randomPowerCenters = $randomPowerCenters;
         $this->randomProfessions = $randomProfessions;
         $this->randomRacesService = $randomRacesService;
