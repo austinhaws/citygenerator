@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
-use App\Http\Controllers\CityGen\Constants\MinMax;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Table;
-use App\Http\Controllers\CityGen\Models\City;
-use App\Http\Controllers\CityGen\Models\PostData;
+use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Services\BaseService;
 
 class RandomCityPopulationService extends BaseService
@@ -31,7 +30,7 @@ class RandomCityPopulationService extends BaseService
         // population size: if hand entered, may already be set
         if ($city->populationSize === null) {
             $value = $this->services->table->getTableResultIndex(Table::POPULATION_SIZE, $city->populationType);
-            $city->populationSize = $this->services->random->randRangeInt("Random Population Size", $value[MinMax::MIN], $value[MinMax::MAX]);
+            $city->populationSize = $this->services->random->randMinMax("Random Population Size", $value);
         }
 
         $city->goldPieceLimit = $this->services->table->getTableResultIndex(Table::POPULATION_WEALTH, $city->populationType);
@@ -66,10 +65,10 @@ class RandomCityPopulationService extends BaseService
                 // check for bounds
                 $populationSizeTable = Table::getTable(Table::POPULATION_SIZE)->getTable();
                 $city->populationType = false;
-                if ($entered_value < $populationSizeTable[PopulationType::THORP][MinMax::MIN]) {
-                    $entered_value = $populationSizeTable[PopulationType::THORP][MinMax::MIN];
+                if ($entered_value < $populationSizeTable[PopulationType::THORP]->min) {
+                    $entered_value = $populationSizeTable[PopulationType::THORP]->min;
                     $city->populationType = PopulationType::THORP;
-                } else if ($entered_value > $populationSizeTable[PopulationType::METROPOLIS][MinMax::MAX]) {
+                } else if ($entered_value > $populationSizeTable[PopulationType::METROPOLIS]->max) {
                     // hand entered a very large value, so make it a metropolis
                     $city->populationType = PopulationType::METROPOLIS;
                 }

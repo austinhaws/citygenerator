@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
+use App\Http\Controllers\CityGen\Models\MinMax;
 
 class RandomService
 {
@@ -107,5 +108,15 @@ class RandomService
     public function percentile($name)
     {
         return $this->randRangeInt($name, 1, 100);
+    }
+
+    /**
+     * @param string $name
+     * @param MinMax $minMax [MinMax::MIN => #, MinMax::Max => #]
+     * @return int
+     */
+    public function randMinMax(string $name, $minMax)
+    {
+        return $this->randRangeInt($name, $minMax->min, $minMax->max);
     }
 }

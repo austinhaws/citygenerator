@@ -3,7 +3,7 @@
 namespace Test\Controllers\CityGen\Tables;
 
 use App\Http\Controllers\CityGen\Constants\PopulationType;
-use App\Http\Controllers\CityGen\Models\City;
+use App\Http\Controllers\CityGen\Models\City\City;
 use App\Http\Controllers\CityGen\Util\RollRatio;
 use App\Http\Controllers\CityGen\Util\TestRoll;
 use Test\Controllers\CityGen\Util\BaseTestCase;

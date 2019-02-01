@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CityGen\Models;
+namespace App\Http\Controllers\CityGen\Models\City;
 
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 
@@ -52,8 +52,12 @@ class City
     /** @var CityGuild[] */
     public $guilds = [];
 
+    /** @var string[] */
+    public $commoditiesExport = [];
+    /** @var string[] */
+    public $commoditiesImport = [];
+
     public $population_density = 0.0;
-    public $commodities = array('export' => array(), 'import' => array());
     public $famous = array('famous' => array(), 'infamous' => array());
 //	public $layout = new Layout_CityMapClass();
 
@@ -63,8 +67,6 @@ class City
     public $wealth_output = false;
     public $king_income_output = false;
     public $magic_resources_output = false;
-    public $commodities_export = false;
-    public $commodities_import = false;
     public $famous_famous = false;
     public $famous_infamous = false;
     public $buildings_total = false;
@@ -99,40 +101,6 @@ class City
         $this->random_famous_fill($num, 'infamous');
         sort($this->famous['infamous']);
     }
-
-    private function random_commodities_fill($num, $type)
-    {
-        global $table_commodities;
-        while ($num > 0) {
-            $result = get_table_result_range($table_commodities, rand_range(1, 3700));
-            $found = false;
-            // make it unique across all types
-            foreach ($this->commodities as $values) {
-                if (false !== array_search($result, $values)) {
-                    $found = true;
-                }
-            }
-            if (!$found) {
-                $this->commodities[$type][] = $result;
-                --$num;
-            }
-        }
-    }
-
-    private function random_commodities()
-    {
-        global $table_commodity_count;
-        $min_max = $table_commodity_count[$this->populationType];
-
-        $num = rand_range($min_max[MinMax::MIN], $min_max[kMax]);
-        $this->random_commodities_fill($num, 'export');
-        sort($this->commodities['export']);
-
-        $num = rand_range($min_max[MinMax::MIN], $min_max[kMax]);
-        $this->random_commodities_fill($num, 'import');
-        sort($this->commodities['import']);
-    }
-
 
     private function random_populationSize()
     {

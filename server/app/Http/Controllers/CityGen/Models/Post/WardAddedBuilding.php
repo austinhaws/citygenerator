@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CityGen\Models;
+namespace App\Http\Controllers\CityGen\Models\Post;
 
 class WardAddedBuilding
 {

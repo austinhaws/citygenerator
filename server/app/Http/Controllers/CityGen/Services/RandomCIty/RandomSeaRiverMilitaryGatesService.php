@@ -5,8 +5,8 @@ namespace App\Http\Controllers\CityGen\Services\RandomCity;
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\MinMax;
 use App\Http\Controllers\CityGen\Constants\Table;
-use App\Http\Controllers\CityGen\Models\City;
-use App\Http\Controllers\CityGen\Models\PostData;
+use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Services\BaseService;
 
 class RandomSeaRiverMilitaryGatesService extends BaseService
@@ -41,7 +41,7 @@ class RandomSeaRiverMilitaryGatesService extends BaseService
 
         if ($postData->hasGates === BooleanRandom::TRUE) {
             $numGatesRange = $this->services->table->getTableResultIndex(Table::POPULATION_NUM_WALLS, $city->populationType);
-            $city->gates = $this->services->random->randRangeInt('Num Gates', $numGatesRange[MinMax::MIN], $numGatesRange[MinMax::MAX]);
+            $city->gates = $this->services->random->randMinMax('Num Gates', $numGatesRange);
         } else {
             $city->gates = 0;
         }

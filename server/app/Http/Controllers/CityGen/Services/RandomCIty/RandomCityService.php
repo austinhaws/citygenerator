@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
-use App\Http\Controllers\CityGen\Models\City;
-use App\Http\Controllers\CityGen\Models\PostData;
+use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Services\BaseService;
 
 class RandomCityService extends BaseService
@@ -16,21 +16,15 @@ class RandomCityService extends BaseService
         $city = new City();
 
         $this->services->randomCityPopulation->determinePopulation($city, $postData);
-
         $this->services->randomAcresStructures->randomAcres($city);
         $this->services->randomAcresStructures->randomNumStructures($city);
-
         $this->services->randomSeaRiverMilitaryGates->determineZones($city, $postData);
-
         $this->services->randomWards->determineWards($city, $postData);
-
         $this->services->randomProfessions->determineProfessions($city, $postData);
-
         $this->services->randomPowerCenters->determinePowerCenters($city, $postData);
-
         $this->services->randomRacesService->determineRaces($city, $postData);
+        $this->services->randomGuildService->determineGuilds($city, $postData);
 
-//        $this->random_guilds();
 //        $this->random_commodities();
 //        $this->random_famous();
 //

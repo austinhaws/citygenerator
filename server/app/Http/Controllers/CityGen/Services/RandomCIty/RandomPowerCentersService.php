@@ -4,11 +4,11 @@ namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
 use App\Http\Controllers\CityGen\Constants\MinMax;
 use App\Http\Controllers\CityGen\Constants\Table;
-use App\Http\Controllers\CityGen\Models\City;
-use App\Http\Controllers\CityGen\Models\CityNPCLevelCount;
-use App\Http\Controllers\CityGen\Models\CityNPCs;
-use App\Http\Controllers\CityGen\Models\CityPowerCenter;
-use App\Http\Controllers\CityGen\Models\PostData;
+use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\City\CityNPCLevelCount;
+use App\Http\Controllers\CityGen\Models\City\CityNPCs;
+use App\Http\Controllers\CityGen\Models\City\CityPowerCenter;
+use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Services\BaseService;
 
 class RandomPowerCentersService extends BaseService
@@ -22,11 +22,11 @@ class RandomPowerCentersService extends BaseService
     public function determinePowerCenters(City $city, PostData $postData)
     {
         $powerLevelMinMax = $this->services->table->getTableResultIndex(Table::POPULATION_POWER_CENTER, $city->populationType);
-        $powerLevel = $this->services->random->randRangeInt('Power Level', $powerLevelMinMax[MinMax::MIN], $powerLevelMinMax[MinMax::MAX]);
+        $powerLevel = $this->services->random->randMinMax('Power Level', $powerLevelMinMax);
 
         if ($powerLevel) {
             $influenceMinMax = $this->services->table->getTableResultIndex(Table::POPULATION_INFLUENCE_POINTS, $city->populationType);
-            $influencePoints = $this->services->random->randRangeInt('Influence points', $influenceMinMax[MinMax::MIN], $influenceMinMax[MinMax::MAX]);
+            $influencePoints = $this->services->random->randMinMax('Influence points', $influenceMinMax);
 
             $percent = $this->services->table->getTableResultIndex(Table::POPULATION_CENTER_UNABSORBED, $city->populationType);
 

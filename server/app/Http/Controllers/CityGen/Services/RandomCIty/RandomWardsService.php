@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
-use App\Http\Controllers\CityGen\Constants\MinMax;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Constants\Ward;
-use App\Http\Controllers\CityGen\Models\City;
-use App\Http\Controllers\CityGen\Models\CityWard;
-use App\Http\Controllers\CityGen\Models\PostData;
-use App\Http\Controllers\CityGen\Models\RandomWardMetaData;
+use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\City\CityWard;
+use App\Http\Controllers\CityGen\Models\Post\PostData;
+use App\Http\Controllers\CityGen\Models\Service\RandomWardMetaData;
 use App\Http\Controllers\CityGen\Services\BaseService;
 
 class RandomWardsService extends BaseService
@@ -44,7 +43,7 @@ class RandomWardsService extends BaseService
         // based on city type, should allocate bigger/smaller randomness in sizes
         $value = $this->services->table->getTableResultIndex(Table::WARD_ACRES_USED, $city->populationType);
 
-        $acresUsed = $this->services->random->randRatioRange('Ward acres used', $value[MinMax::MIN], $value[MinMax::MAX]);
+        $acresUsed = $this->services->random->randMinMax('Ward acres used', $value);
 
         $ward = new CityWard();
         $ward->type = $ward_type;

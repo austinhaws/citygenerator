@@ -5,9 +5,9 @@ namespace Test\Controllers\CityGen\Tables;
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Ward;
-use App\Http\Controllers\CityGen\Models\City;
-use App\Http\Controllers\CityGen\Models\PostData;
-use App\Http\Controllers\CityGen\Models\WardAdded;
+use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\Post\PostData;
+use App\Http\Controllers\CityGen\Models\Post\WardAdded;
 use App\Http\Controllers\CityGen\Util\TestRoll;
 use Test\Controllers\CityGen\Util\BaseTestCase;
 
@@ -35,9 +35,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -71,10 +71,10 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
+            new TestRoll('Ward acres used', 4.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -108,9 +108,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -144,10 +144,10 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
+            new TestRoll('Ward acres used', 4.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -183,9 +183,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -220,9 +220,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -258,9 +258,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -295,9 +295,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -333,9 +333,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -372,10 +372,10 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
+            new TestRoll('Ward acres used', 4.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -412,9 +412,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 2, 7),
+            new TestRoll('Ward acres used', 2.5, 2, 7),
+            new TestRoll('Ward acres used', 3.5, 2, 7),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -449,10 +449,10 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
+            new TestRoll('Ward acres used', 1.5, 2, 7),
+            new TestRoll('Ward acres used', 2.5, 2, 7),
+            new TestRoll('Ward acres used', 3.5, 2, 7),
+            new TestRoll('Ward acres used', 4.5, 2, 7),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -489,10 +489,10 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
+            new TestRoll('Ward acres used', 1.5, 2, 5),
+            new TestRoll('Ward acres used', 2.5, 2, 5),
+            new TestRoll('Ward acres used', 3.5, 2, 5),
+            new TestRoll('Ward acres used', 4.5, 2, 5),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -528,9 +528,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 2, 5),
+            new TestRoll('Ward acres used', 2.5, 2, 5),
+            new TestRoll('Ward acres used', 3.5, 2, 5),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -567,9 +567,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 3, 9),
+            new TestRoll('Ward acres used', 2.5, 3, 9),
+            new TestRoll('Ward acres used', 3.5, 3, 9),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -604,10 +604,10 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
+            new TestRoll('Ward acres used', 1.5, 3, 9),
+            new TestRoll('Ward acres used', 2.5, 3, 9),
+            new TestRoll('Ward acres used', 3.5, 3, 9),
+            new TestRoll('Ward acres used', 4.5, 3, 9),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -644,10 +644,10 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
+            new TestRoll('Ward acres used', 1.5, 4, 11),
+            new TestRoll('Ward acres used', 2.5, 4, 11),
+            new TestRoll('Ward acres used', 3.5, 4, 11),
+            new TestRoll('Ward acres used', 4.5, 4, 11),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -682,11 +682,11 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
-            new TestRoll('Ward acres used', 5.5),
+            new TestRoll('Ward acres used', 1.5, 4, 11),
+            new TestRoll('Ward acres used', 2.5, 4, 11),
+            new TestRoll('Ward acres used', 3.5, 4, 11),
+            new TestRoll('Ward acres used', 4.5, 4, 11),
+            new TestRoll('Ward acres used', 5.5, 4, 11),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -723,10 +723,10 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
+            new TestRoll('Ward acres used', 1.5, 2, 5),
+            new TestRoll('Ward acres used', 2.5, 2, 5),
+            new TestRoll('Ward acres used', 3.5, 2, 5),
+            new TestRoll('Ward acres used', 4.5, 2, 5),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -762,9 +762,9 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
+            new TestRoll('Ward acres used', 1.5, 2, 5),
+            new TestRoll('Ward acres used', 2.5, 2, 5),
+            new TestRoll('Ward acres used', 3.5, 2, 5),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -801,10 +801,10 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
+            new TestRoll('Ward acres used', 1.5, 5, 13),
+            new TestRoll('Ward acres used', 2.5, 5, 13),
+            new TestRoll('Ward acres used', 3.5, 5, 13),
+            new TestRoll('Ward acres used', 4.5, 5, 13),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -839,11 +839,11 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
-            new TestRoll('Ward acres used', 5.5),
+            new TestRoll('Ward acres used', 1.5, 5, 13),
+            new TestRoll('Ward acres used', 2.5, 5, 13),
+            new TestRoll('Ward acres used', 3.5, 5, 13),
+            new TestRoll('Ward acres used', 4.5, 5, 13),
+            new TestRoll('Ward acres used', 5.5, 5, 13),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -880,8 +880,8 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -918,8 +918,8 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -957,11 +957,11 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
-            new TestRoll('Ward acres used', 5.5),
+            new TestRoll('Ward acres used', 1.5, 6, 15),
+            new TestRoll('Ward acres used', 2.5, 6, 15),
+            new TestRoll('Ward acres used', 3.5, 6, 15),
+            new TestRoll('Ward acres used', 4.5, 6, 15),
+            new TestRoll('Ward acres used', 5.5, 6, 15),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -996,12 +996,12 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
-            new TestRoll('Ward acres used', 5.5),
-            new TestRoll('Ward acres used', 6.5),
+            new TestRoll('Ward acres used', 1.5, 6, 15),
+            new TestRoll('Ward acres used', 2.5, 6, 15),
+            new TestRoll('Ward acres used', 3.5, 6, 15),
+            new TestRoll('Ward acres used', 4.5, 6, 15),
+            new TestRoll('Ward acres used', 5.5, 6, 15),
+            new TestRoll('Ward acres used', 6.5, 6, 15),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1038,12 +1038,12 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
-            new TestRoll('Ward acres used', 5.5),
-            new TestRoll('Ward acres used', 6.5),
+            new TestRoll('Ward acres used', 1.5, 5, 13),
+            new TestRoll('Ward acres used', 2.5, 5, 13),
+            new TestRoll('Ward acres used', 3.5, 5, 13),
+            new TestRoll('Ward acres used', 4.5, 5, 13),
+            new TestRoll('Ward acres used', 5.5, 5, 13),
+            new TestRoll('Ward acres used', 6.5, 5, 13),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1079,11 +1079,11 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
-            new TestRoll('Ward acres used', 5.5),
+            new TestRoll('Ward acres used', 1.5, 5, 13),
+            new TestRoll('Ward acres used', 2.5, 5, 13),
+            new TestRoll('Ward acres used', 3.5, 5, 13),
+            new TestRoll('Ward acres used', 4.5, 5, 13),
+            new TestRoll('Ward acres used', 5.5, 5, 13),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1121,10 +1121,10 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1.5),
-            new TestRoll('Ward acres used', 2.5),
-            new TestRoll('Ward acres used', 3.5),
-            new TestRoll('Ward acres used', 4.5),
+            new TestRoll('Ward acres used', 1.5, 1, 2),
+            new TestRoll('Ward acres used', 2.5, 1, 2),
+            new TestRoll('Ward acres used', 3.5, 1, 2),
+            new TestRoll('Ward acres used', 4.5, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1156,19 +1156,23 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
             new TestRoll('Ward Type', 1, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward Type', 70, 1, 100),
+            new TestRoll('Ward acres used', 11, 4, 11),
+            new TestRoll('Ward Type', 70, 1, 100),
+            new TestRoll('Ward acres used', 11, 4, 11),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame(5, count($city->wards));
+        $this->assertSame(7, count($city->wards));
 
         $this->assertSame(1, count(array_filter($city->wards, function ($ward) {
             return $ward->type === Ward::PATRICIATE && !$ward->insideWalls;
@@ -1195,15 +1199,15 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
             new TestRoll('Ward Type', 1, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
             new TestRoll('Odoriferous inside walls?', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 4, 11),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1234,11 +1238,11 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 1, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1269,13 +1273,13 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
             new TestRoll('Ward Type', 11, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 4, 11),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1309,17 +1313,17 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
             new TestRoll('Ward Type', 11, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
             new TestRoll('Odoriferous inside walls?', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 4, 11),
             new TestRoll('Ward Type', 25, 1, 100),
             new TestRoll('Odoriferous inside walls?', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 4, 11),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1350,11 +1354,11 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 11, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1387,18 +1391,18 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
+            new TestRoll('Ward acres used', 1, 1, 2),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 13, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 13, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 13, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 13, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1430,21 +1434,21 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 13, 1, 100),
             new TestRoll('Ward Type', 13, 1, 100),
             new TestRoll('Ward Type', 13, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1477,21 +1481,21 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
+            new TestRoll('Ward acres used', 1, 1, 2),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 16, 1, 100),
             new TestRoll('River inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 16, 1, 100),
             new TestRoll('River inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 16, 1, 100),
             new TestRoll('River inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
             new TestRoll('Odoriferous inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1523,21 +1527,21 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 16, 1, 100),
             new TestRoll('Ward Type', 16, 1, 100),
             new TestRoll('Ward Type', 16, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1568,14 +1572,14 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
             new TestRoll('Odoriferous inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
             new TestRoll('Odoriferous inside walls?', 100, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1609,12 +1613,12 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 1, 2),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1645,12 +1649,12 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
             new TestRoll('Ward Type', 30, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 4, 11),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1681,13 +1685,13 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 2, 5),
+            new TestRoll('Ward acres used', 1, 2, 5),
             new TestRoll('Ward Type', 30, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 2, 5),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 2, 5),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1718,12 +1722,12 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
             new TestRoll('Ward Type', 40, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 4, 11),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1754,12 +1758,12 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
+            new TestRoll('Ward acres used', 1, 4, 11),
             new TestRoll('Ward Type', 40, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 4, 11),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1790,13 +1794,13 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 2, 5),
+            new TestRoll('Ward acres used', 1, 2, 5),
             new TestRoll('Ward Type', 40, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 2, 5),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 2, 5),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1827,13 +1831,13 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
             new TestRoll('Ward Type', 55, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 6, 15),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1864,13 +1868,13 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
             new TestRoll('Ward Type', 55, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 6, 15),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1901,13 +1905,13 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 5, 13),
+            new TestRoll('Ward acres used', 1, 5, 13),
+            new TestRoll('Ward acres used', 1, 5, 13),
+            new TestRoll('Ward acres used', 1, 5, 13),
             new TestRoll('Ward Type', 55, 1, 100),
             new TestRoll('Ward Type', 40, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 5, 13),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1938,16 +1942,16 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 5, 13),
+            new TestRoll('Ward acres used', 1, 5, 13),
+            new TestRoll('Ward acres used', 1, 5, 13),
+            new TestRoll('Ward acres used', 1, 5, 13),
             new TestRoll('Ward Type', 75, 1, 100),
             new TestRoll('Market inside walls?', 100, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 5, 13),
             new TestRoll('Ward Type', 75, 1, 100),
             new TestRoll('Market inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 5, 13),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1982,14 +1986,14 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 5, 13),
+            new TestRoll('Ward acres used', 1, 5, 13),
+            new TestRoll('Ward acres used', 1, 5, 13),
+            new TestRoll('Ward acres used', 1, 5, 13),
             new TestRoll('Ward Type', 75, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 5, 13),
             new TestRoll('Ward Type', 75, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 5, 13),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -2023,16 +2027,16 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 3, 9),
+            new TestRoll('Ward acres used', 1, 3, 9),
+            new TestRoll('Ward acres used', 1, 3, 9),
+            new TestRoll('Ward acres used', 1, 3, 9),
+            new TestRoll('Ward acres used', 1, 3, 9),
             new TestRoll('Ward Type', 76, 1, 100),
             new TestRoll('Ward Type', 75, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 3, 9),
             new TestRoll('Ward Type', 75, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 3, 9),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -2065,17 +2069,17 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 3, 9),
+            new TestRoll('Ward acres used', 1, 3, 9),
+            new TestRoll('Ward acres used', 1, 3, 9),
+            new TestRoll('Ward acres used', 1, 3, 9),
             new TestRoll('Ward Type', 76, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 3, 9),
             new TestRoll('Ward Type', 76, 1, 100),
             new TestRoll('Ward Type', 75, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 3, 9),
             new TestRoll('Ward Type', 75, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 3, 9),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -2109,20 +2113,20 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
+            new TestRoll('Ward acres used', 1, 6, 15),
             new TestRoll('Ward Type', 76, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 6, 15),
             new TestRoll('Ward Type', 76, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 6, 15),
             new TestRoll('Ward Type', 75, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 1, 6, 15),
             new TestRoll('Ward Type', 75, 1, 100),
-            new TestRoll('Ward acres used', 1),
+            new TestRoll('Ward acres used', 110, 6, 15),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);

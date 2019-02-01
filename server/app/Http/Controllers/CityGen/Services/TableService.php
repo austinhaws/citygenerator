@@ -70,7 +70,7 @@ class TableService extends BaseService
 
         $result = false;
         foreach ($table as $key => $range) {
-            if ($range[MinMax::MIN] <= $value && $range[MinMax::MAX] >= $value) {
+            if ($range->min <= $value && $range->max >= $value) {
                 $result = $key;
                 break;
             }
