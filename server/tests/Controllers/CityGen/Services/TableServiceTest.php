@@ -12,8 +12,8 @@ final class TableServiceTest extends BaseTestCase
     public function testGetTableResultRange()
     {
         for ($x = 0; $x < 10; $x++) {
-            $this->services->random->setRolls([new TestRoll('Random famous test', TestRoll::RANDOM, TestRoll::ANY, TestRoll::ANY)]);
-            $this->assertTrue(!!$this->services->table->getTableResultRange(Table::FAMOUS, $this->services->random->randRangeInt("Random famous test", 1, 4250)));
+            $this->services->random->setRolls([new TestRoll('FamousTable: range', TestRoll::RANDOM, TestRoll::ANY, TestRoll::ANY)]);
+            $this->assertTrue(!!$this->services->table->getTableResultRange(Table::FAMOUS));
 
             $this->services->random->verifyRolls();
         }

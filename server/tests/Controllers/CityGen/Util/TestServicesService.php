@@ -7,6 +7,7 @@ use App\Http\Controllers\CityGen\Services\RandomCity\RandomAcresStructuresServic
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCommoditiesService;
+use App\Http\Controllers\CityGen\Services\RandomCity\RandomFamousService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomGuildsService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomPowerCentersService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomProfessionsService;
@@ -20,8 +21,9 @@ use App\Http\Controllers\CityGen\Util\TestRandomService;
 
 class TestServicesService extends ServicesService
 {
-    /** @var RandomService  */
+    /** @var RandomService */
     public $realRandom;
+
     public function __construct()
     {
         parent::__construct();
@@ -34,6 +36,7 @@ class TestServicesService extends ServicesService
         $this->randomCityPopulation = new RandomCityPopulationService($this);
         $this->randomCity = new RandomCityService($this);
         $this->randomCommodities = new RandomCommoditiesService($this);
+        $this->randomFamous = new RandomFamousService($this);
         $this->randomGuildService = new RandomGuildsService($this);
         $this->randomPowerCenters = new RandomPowerCentersService($this);
         $this->randomProfessions = new RandomProfessionsService($this);

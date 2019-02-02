@@ -38,7 +38,7 @@ class RandomPowerCentersService extends BaseService
             $offsetInfluence = $averageInfluence / 10.0;
 
             for ($i = 0; $i < $powerLevel; ++$i) {
-                $type = $this->services->table->getTableResultRange(Table::POWER_CENTER_TYPE, $this->services->random->randRangeInt('Power Center Type', 1, 1000));
+                $type = $this->services->table->getTableResultRange(Table::POWER_CENTER_TYPE);
 
                 if ($i == $powerLevel) {
                     // use the remainder of points
@@ -74,7 +74,7 @@ class RandomPowerCentersService extends BaseService
         $powerCenter->influencePoints = $influencePoints;
         $powerCenter->wealth = $wealth;
         $powerCenter->numberCenters = $powerLevel;
-        $powerCenter->alignment = $this->services->table->getTableResultRange(Table::POWER_CENTER_ALIGNMENT, $this->services->random->percentile('Power Center Alignment'));
+        $powerCenter->alignment = $this->services->table->getTableResultRange(Table::POWER_CENTER_ALIGNMENT);
 
         $city->powerCenters[] = $powerCenter;
 
@@ -109,7 +109,7 @@ class RandomPowerCentersService extends BaseService
 
         while ($influenceLeft && $notUsedCount < 5) {
             // randomly pick a class
-            $class = $this->services->table->getTableResultRange(Table::NPC_CLASS_RANDOM_CLASS, $this->services->random->randRangeInt('NPC Class', 1, 1000));
+            $class = $this->services->table->getTableResultRange(Table::NPC_CLASS_RANDOM_CLASS);
 
             // randomly pick level
             $maxLevel = $this->services->table->getTableResultIndex(Table::NPC_CLASSES_MAX_LEVEL, $class) + $modifier;

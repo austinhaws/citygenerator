@@ -30,7 +30,7 @@ final class RandomRacesServiceTest extends BaseTestCase
 
         $this->services->random->setRolls([
             new TestRoll('Racial Mix', 2, 1, 3),
-            new TestRoll('Race', 33, 1, 100),
+            new TestRoll('RacesRandomTable: range', 33, 1, 100),
         ]);
 
         $this->services->randomRacesService->determineRaces($city, $postData);
@@ -59,7 +59,7 @@ final class RandomRacesServiceTest extends BaseTestCase
         $city->populationSize = 98;
 
         $this->services->random->setRolls([
-            new TestRoll('Race', 33, 1, 100),
+            new TestRoll('RacesRandomTable: range', 33, 1, 100),
         ]);
 
         $this->services->randomRacesService->determineRaces($city, $postData);
@@ -117,7 +117,7 @@ final class RandomRacesServiceTest extends BaseTestCase
         $city->populationSize = 98;
 
         $this->services->random->setRolls([
-            new TestRoll('Race', 98, 1, 100),
+            new TestRoll('RacesRandomTable: range', 98, 1, 100),
             new TestRoll('Racial Mix', 2, 1, 3),
         ]);
 

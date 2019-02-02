@@ -35,7 +35,7 @@ final class RandomProfessionsServiceTest extends BaseTestCase
     public function testGeneration()
     {
         $this->services->random->setRolls(
-            array_fill(0, 21, new TestRoll('Single Profession', $this->services->realRandom->randRangeInt('unit test setup - single profession', 1, 10000), 1, 10000))
+            array_fill(0, 21, new TestRoll('ProfessionTable: range', $this->services->realRandom->randRangeInt('unit test setup - single profession', 1, 10000), 1, 10000))
         );
 
         $postData = new PostData();

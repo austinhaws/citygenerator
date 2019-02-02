@@ -33,7 +33,7 @@ class RandomProfessionsService extends BaseService
 
             // for all population not accounted for in ratio'ed, do random single load
             for(;$total < $city->populationSize; $total++) {
-                $this->addProfession($city, $this->services->table->getTableResultRange(Table::PROFESSION, $this->services->random->randRangeInt('Single Profession', 1, 10000)), 1);
+                $this->addProfession($city, $this->services->table->getTableResultRange(Table::PROFESSION), 1);
             }
 
             usort($city->professions, function ($a, $b) {

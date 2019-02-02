@@ -17,24 +17,8 @@ class RandomCommoditiesService extends BaseService
      */
     public function determineCommodities(City $city, PostData $postData)
     {
-        // how many commodities to generate
-        $commodityMinMax = $this->services->table->getTableResultIndex(Table::COMMODITY_COUNT, $city->populationType);
-        $this->fillCommodities($city->commoditiesExport, $this->services->random->randMinMax('Number Exports', $commodityMinMax));
-        $this->fillCommodities($city->commoditiesImport, $this->services->random->randMinMax('Number Imports', $commodityMinMax));
-    }
-
-    /**
-     * @param string[] &$commodities commodities array to load
-     * @param int $total
-     */
-    private function fillCommodities(&$commodities, $total)
-    {
-        while (count($commodities) !== $total) {
-            $commodity = $this->services->table->getTableResultRange(Table::COMMODITIES, $this->services->random->randRangeInt('Commodity', 1, 3700));
-            if (array_search($commodity, $commodities) === false) {
-                $commodities[] = $commodity;
-            }
-        }
-        sort($commodities);
+        $minMax = $this->services->table->getTableResultIndex(Table::COMMODITY_COUNT, $city->populationType);
+        $this->services->table->fillRandomStrings($city->commoditiesExport, Table::COMMODITIES, $this->services->random->randMinMax('Number Exports', $minMax));
+        $this->services->table->fillRandomStrings($city->commoditiesImport, Table::COMMODITIES, $this->services->random->randMinMax('Number Imports', $minMax));
     }
 }

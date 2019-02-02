@@ -57,10 +57,13 @@ class City
     /** @var string[] */
     public $commoditiesImport = [];
 
-    public $population_density = 0.0;
-    public $famous = array('famous' => array(), 'infamous' => array());
-//	public $layout = new Layout_CityMapClass();
+    /** @var string[] */
+    public $famous = [];
+    /** @var string[] */
+    public $infamous = [];
 
+    public $population_density = 0.0;
+//	public $layout = new Layout_CityMapClass();
     // outputs for json (sorry, hacky)
     public $races_output = false; // the races formatted for output
     public $gold_piece_limit_output = false;
@@ -74,33 +77,6 @@ class City
 //	public function generate_map() {
 //		$this->layout->generate($this);
 //	}
-
-    private function random_famous_fill($num, $type)
-    {
-        global $table_famous;
-        while ($num > 0) {
-            $result = get_table_result_range($table_famous, rand_range(1, 4250));
-
-            if (false === array_search($result, $this->famous[$type])) {
-                $this->famous[$type][] = $result;
-                --$num;
-            }
-        }
-    }
-
-    private function random_famous()
-    {
-        global $table_famous_occurrence;
-        $min_max = $table_famous_occurrence[$this->populationType];
-
-        $num = rand_range($min_max[MinMax::MIN], $min_max[kMax]);
-        $this->random_famous_fill($num, 'famous');
-        sort($this->famous['famous']);
-
-        $num = rand_range($min_max[MinMax::MIN], $min_max[kMax]);
-        $this->random_famous_fill($num, 'infamous');
-        sort($this->famous['infamous']);
-    }
 
     private function random_populationSize()
     {

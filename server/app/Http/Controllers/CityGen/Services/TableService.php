@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\CityGen\Services;
 
-use App\Http\Controllers\CityGen\Constants\MinMax;
 use App\Http\Controllers\CityGen\Constants\Table;
+use App\Http\Controllers\CityGen\Models\MinMax;
 
 class TableService extends BaseService
 {
@@ -11,11 +11,13 @@ class TableService extends BaseService
      * get value in a range
      *
      * @param string $tableName
-     * @param string|int $index
      * @return mixed|null
      */
-    function getTableResultRange(string $tableName, $index) {
+    function getTableResultRange(string $tableName) {
         $table = Table::getTable($tableName)->getTable();
+
+        $keys = array_keys($table);
+        $index = $this->services->random->randMinMax("$tableName: range", new MinMax(1, array_pop($keys)));
 
         foreach ($table as $key => $value) {
             if ($index <= $key) {
@@ -77,4 +79,21 @@ class TableService extends BaseService
         }
         return $result;
     }
+
+    /**
+     * @param string[] &$list
+     * @param string table Table::...
+     * @param int $total
+     */
+    function fillRandomStrings(&$list, $table, $total)
+    {
+        while (count($list) !== $total) {
+            $entry = $this->services->table->getTableResultRange($table);
+            if (array_search($entry, $list) === false) {
+                $list[] = $entry;
+            }
+        }
+        sort($list);
+    }
+
 }

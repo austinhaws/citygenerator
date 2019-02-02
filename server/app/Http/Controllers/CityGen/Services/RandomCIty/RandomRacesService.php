@@ -57,7 +57,7 @@ class RandomRacesService extends BaseService
             }
 
             if ($this->services->random->isRandom($postData->race)) {
-                $postData->race = $this->services->table->getTableResultRange(Table::RACES_RANDOM, $this->services->random->percentile('Race'));
+                $postData->race = $this->services->table->getTableResultRange(Table::RACES_RANDOM);
             }
             $city->majorityRace = $postData->race;
 
