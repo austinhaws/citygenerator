@@ -50,7 +50,7 @@ class RandomWardsService extends BaseService
         $ward->acres = $acresUsed;
         $ward->insideWalls = $insideWalls;
         if ($generateBuildings === BooleanRandom::TRUE) {
-            $this->services->randomBuildings->generateBuildings($ward, $buildingWeights);
+            $this->services->randomBuildings->generateBuildings($city, $ward, $buildingWeights);
         }
 
         $city->wards[] = $ward;

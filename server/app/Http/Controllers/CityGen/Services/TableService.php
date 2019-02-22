@@ -14,18 +14,7 @@ class TableService extends BaseService
      * @return mixed|null
      */
     function getTableResultRange(string $tableName) {
-        $table = Table::getTable($tableName)->getTable();
-
-        $keys = array_keys($table);
-        $index = $this->services->random->randMinMax("$tableName: range", new MinMax(1, array_pop($keys)));
-
-        foreach ($table as $key => $value) {
-            if ($index <= $key) {
-                return $value;
-            }
-        }
-        pprint_r(array('index' => $index, 'table' => $table), 'get_table_result_range : Index unknown', true);
-        return null;
+        return $this->getTableResultRangeCustom("$tableName: range", Table::getTable($tableName)->getTable());
     }
 
     /**
@@ -52,12 +41,29 @@ class TableService extends BaseService
      * @return int
      */
     function getTableResultRandom($tableName) {
-        $table = Table::getTable($tableName)->getTable();
+        return $this->getTableResultRangeCustom("getTableResultRandom-$tableName", Table::getTable($tableName)->getTable());
+    }
 
-        do {
-            $result = $table[array_keys($table)[$this->services->random->randRangeInt("getTableResultRandom-$tableName", 0, count($table) - 1)]];
-        } while (!$result);
-        return $result;
+    /**
+     * get a random table result from a custom table (or sub-table of an existing table)
+     *
+     * @param string $rollName
+     * @param array $table
+     * @return mixed
+     */
+    function getTableResultRangeCustom(string $rollName, $table)
+    {
+        $keys = array_keys($table);
+        // min 1, keys[0] is because range tables start with something like 200 meaning 1->200 are that key where as NameWordsTable is a plain array that starts with a zero index
+        $index = $this->services->random->randMinMax($rollName, new MinMax(min(1, $keys[0]), array_pop($keys)));
+
+        foreach ($table as $key => $value) {
+            if ($index <= $key) {
+                return $value;
+            }
+        }
+        pprint_r(array('index' => $index, 'table' => $table), 'get_table_result_range : Index unknown', true);
+        return null;
     }
 
     /**

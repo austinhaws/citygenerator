@@ -34,6 +34,13 @@ final class TableServiceTest extends BaseTestCase
         $this->services->random->verifyRolls();
     }
 
+    public function testGetCustomTableResultRange()
+    {
+        $this->services->random->setRolls([new TestRoll("getCustomTableResultRandom-NameWordsTable", 2, 0, 1140)]);
+        $this->assertEquals('autumn', $this->services->table->getTableResultRangeCustom('getCustomTableResultRandom-NameWordsTable', Table::getTable(Table::NAME_WORDS)->getTable()));
+        $this->services->random->verifyRolls();
+    }
+
     public function testGetTableKeyFromRangeValue()
     {
         $this->assertEquals(PopulationType::THORP, $this->services->table->getTableKeyFromRangeValue(Table::POPULATION_SIZE, 30));

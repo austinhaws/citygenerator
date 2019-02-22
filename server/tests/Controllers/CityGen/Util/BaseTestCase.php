@@ -22,9 +22,9 @@ class BaseTestCase extends TestCase
         $isSorted = array_reduce($values, function ($carry, $value) {
             if ($carry !== null) {
                 // strings must be string sorted
-                if (((($carry !== null && is_string($carry)) || ($carry === null && is_string($value))) && strcmp($value, $carry) > 0) ||
+                if (((($carry !== null && is_string($carry)) || ($carry === null && is_string($value))) && strcmp($value, $carry) >= 0) ||
                     // numbers must be number sorted
-                    ((($carry !== null && !is_string($carry)) || ($carry === null && !is_string($value))) && $value > $carry)
+                    ((($carry !== null && !is_string($carry)) || ($carry === null && !is_string($value))) && $value >= $carry)
                 ) {
                     $carry = $value;
                 } else {
@@ -33,6 +33,6 @@ class BaseTestCase extends TestCase
             }
             return $carry;
         }, '');
-        $this->assertNotNull($isSorted);
+        $this->assertNotNull($isSorted, "If null then a value is not sorted correctly");
     }
 }

@@ -37,7 +37,7 @@ final class RandomCityPopulationServiceTest extends BaseTestCase
     public function testGetTableResultRange_random()
     {
         $this->services->random->setRolls([
-            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 0, 7),
+            new TestRoll('getTableResultRandom-PopulationTypeTable', 0, 1, 100),
             new TestRoll('Random Population Size', 30, 20, 80),
         ]);
 

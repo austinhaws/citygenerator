@@ -4,6 +4,7 @@ namespace Test\Controllers\CityGen\Util;
 
 use App\Http\Controllers\CityGen\Services\PostDataService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomAcresStructuresService;
+use App\Http\Controllers\CityGen\Services\RandomCity\RandomBuildingsService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCommoditiesService;
@@ -33,6 +34,7 @@ class TestServicesService extends ServicesService
         $this->postData = new PostDataService($this);
         $this->random = new TestRandomService();
         $this->randomAcresStructures = new RandomAcresStructuresService($this);
+        $this->randomBuildings = new RandomBuildingsService($this);
         $this->randomCityPopulation = new RandomCityPopulationService($this);
         $this->randomCity = new RandomCityService($this);
         $this->randomCommodities = new RandomCommoditiesService($this);
