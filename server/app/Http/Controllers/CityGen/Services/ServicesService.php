@@ -9,6 +9,7 @@ use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCommoditiesService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomFamousService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomGuildsService;
+use App\Http\Controllers\CityGen\Services\RandomCity\RandomNameService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomPowerCentersService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomProfessionsService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomRacesService;
@@ -16,10 +17,12 @@ use App\Http\Controllers\CityGen\Services\RandomCity\RandomSeaRiverMilitaryGates
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomWardsService;
 use App\Http\Controllers\CityGen\Util\TestRandomService;
+use App\Http\Controllers\Dictionary\Services\ConvertService;
 
 class ServicesService
 {
-
+    /** @var ConvertService */
+    public $dictionaryConvert;
     /** @var PostDataService */
     public $postData;
     /** @var RandomService|TestRandomService */
@@ -38,6 +41,8 @@ class ServicesService
     public $randomFamous;
     /** @var RandomGuildsService */
     public $randomGuildService;
+    /** @var RandomNameService */
+    public $randomNameService;
     /** @var RandomPowerCentersService */
     public $randomPowerCenters;
     /** @var RandomProfessionsService */
@@ -52,6 +57,7 @@ class ServicesService
     public $table;
 
     public function __construct(
+        ?ConvertService $convertService = null,
         ?PostDataService $postDataService = null,
         ?RandomAcresStructuresService $randomAcresStructuresService = null,
         ?RandomBuildingsService $randomBuildingsService = null,
@@ -60,6 +66,7 @@ class ServicesService
         ?RandomCommoditiesService $randomCommodities = null,
         ?RandomFamousService $randomFamous = null,
         ?RandomGuildsService $randomGuildService = null,
+        ?RandomNameService $randomNameService = null,
         ?RandomProfessionsService $randomProfessions = null,
         ?RandomPowerCentersService $randomPowerCenters = null,
         ?RandomRacesService $randomRacesService = null,
@@ -69,6 +76,7 @@ class ServicesService
         ?TableService $tableService = null
     )
     {
+        $this->dictionaryConvert = $convertService;
         $this->postData = $postDataService;
         $this->random = $randomService;
         $this->randomAcresStructures = $randomAcresStructuresService;
@@ -78,6 +86,7 @@ class ServicesService
         $this->randomCommodities = $randomCommodities;
         $this->randomFamous = $randomFamous;
         $this->randomGuildService = $randomGuildService;
+        $this->randomNameService = $randomNameService;
         $this->randomPowerCenters = $randomPowerCenters;
         $this->randomProfessions = $randomProfessions;
         $this->randomRacesService = $randomRacesService;

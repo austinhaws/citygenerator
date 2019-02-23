@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CityGen\Services;
 
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Models\MinMax;
+use RuntimeException;
 
 class TableService extends BaseService
 {
@@ -62,8 +63,7 @@ class TableService extends BaseService
                 return $value;
             }
         }
-        pprint_r(array('index' => $index, 'table' => $table), 'get_table_result_range : Index unknown', true);
-        return null;
+        throw new RuntimeException("index unknown for table and roll $rollName\n");
     }
 
     /**
