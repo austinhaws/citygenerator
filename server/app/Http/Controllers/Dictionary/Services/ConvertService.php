@@ -13,15 +13,16 @@ class ConvertService extends BaseService
      * convert text to another language
      *
      * @param string $dictionaryName which dictionary to use
-     * @param string $text the text to convert
+     * @param string $text the text to convert or blank to start with the table's "Start" text
      * @param bool $shuffle can the words be shuffled
      * @return string the translated string
      */
-    public function convert(string $dictionaryName, string $text, bool $shuffle)
+    public function convert(string $dictionaryName, string $text = null, bool $shuffle = false)
     {
         $dictionary = $this->loadDictionary($dictionaryName);
 
-        $phraseParts = $this->convertPhrase($dictionary, $text, $shuffle);
+        // use start text if none provided
+        $phraseParts = $this->convertPhrase($dictionary, $text == null ? PhrasesTable::START : $text, $shuffle);
 
         if ($shuffle) {
             shuffle($phraseParts);
@@ -62,7 +63,7 @@ class ConvertService extends BaseService
         return array_map(function ($part) use ($dictionary, $shuffle, $that) {
             $lowerPart = strtolower($part);
             if (isset($dictionary[$lowerPart])) {
-                $translated = $that->services->table->getTableResultRangeCustom('Translate word', $dictionary[$lowerPart]);
+                $translated = implode(' ', $this->convertPhrase($dictionary, $that->services->table->getTableResultRangeCustom('Translate word', $dictionary[$lowerPart]), $shuffle));
             } else if (mb_strlen($part, 'utf-8') > 1) {
                 $letters = array_filter(str_split($lowerPart), function ($word) {
                     return $word;

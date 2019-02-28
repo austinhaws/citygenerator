@@ -11,7 +11,7 @@ final class ConvertServiceTest extends BaseTestCase
     private function rolls($maxRoll, $numRolls = 12)
     {
         $rollCount = 0;
-        return array_map(function() use ($rollCount, $maxRoll) {
+        return array_map(function () use ($rollCount, $maxRoll) {
             return new TestRoll('Translate letter', $rollCount++ % $maxRoll, 0, TestRoll::ANY);
         }, range(0, $numRolls));
     }
@@ -113,5 +113,25 @@ final class ConvertServiceTest extends BaseTestCase
         $this->assertNotFalse(strpos($name, $char1UTF8));
         // $this->assertNotFalse(strpos($name, $char2UTF8));
         $this->assertNotFalse(strpos($name, $char3UTF8));
+    }
+
+    /**
+     * @covers \App\Http\Controllers\Dictionary\Services\ConvertService::convert
+     */
+    public function testConvertSaying()
+    {
+        $this->services->random->setRolls([
+            new TestRoll('Translate word', 0, 0, TestRoll::ANY),
+            new TestRoll('Translate word', 10, 0, 618),
+            new TestRoll('Translate word', 210, 0, 443),
+            new TestRoll('Translate word', 576, 0, 978),
+            new TestRoll('Translate word', 3001, 0, 3738),
+        ]);
+
+        $name = $this->services->realDictionaryConvert->convert(DictionaryTable::PHRASES_SAYING);
+
+        $this->services->random->verifyRolls();
+
+        $this->assertSame("{name} Announces The Light Offer Speechlessly", $name);
     }
 }

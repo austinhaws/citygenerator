@@ -10,6 +10,7 @@ class PhrasesTable extends BaseTable
 {
     const CONSONANTS = 'consonants';
     const CONSONANTS_WILD = '*consonants';
+    const START = 'start';
     const VOWELS = 'vowels';
     const VOWELS_WILD = '*vowels';
 

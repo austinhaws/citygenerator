@@ -10,6 +10,8 @@ class DictionaryTable extends BaseEnum
     const PHRASES = 'PhrasesTable';
     const PHRASES_ELF = 'PhrasesElfTable';
     const PHRASES_GOBLIN = 'PhrasesGoblinTable';
+    const PHRASES_NAME = 'PhrasesNameTable';
+    const PHRASES_SAYING = 'PhrasesSayingTable';
     const PHRASES_TOLKIEN_BLACK_SPEECH = 'PhrasesBlackSpeechTable';
     const PHRASES_UNDEAD = 'PhrasesUndeadTable';
 
