@@ -2,6 +2,7 @@
 
 namespace Test\Controllers\CityGen\Util;
 
+use App\Http\Common\Services\ServicesService;
 use App\Http\Controllers\CityGen\Services\PostDataService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomAcresStructuresService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomBuildingsService;
@@ -17,7 +18,6 @@ use App\Http\Controllers\CityGen\Services\RandomCity\RandomRacesService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomSeaRiverMilitaryGatesService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomWardsService;
-use App\Http\Controllers\CityGen\Services\ServicesService;
 use App\Http\Controllers\CityGen\Services\TableService;
 use App\Http\Controllers\CityGen\Util\TestRandomService;
 use App\Http\Controllers\Dictionary\Services\ConvertService;
@@ -30,14 +30,17 @@ class TestServicesService extends ServicesService
     public $realRandom;
     /** @var MockObject */
     public $convertMock;
+    public $realDictionaryConvert;
 
     public function __construct(TestCase $testCase)
     {
         parent::__construct();
 
         $this->realRandom = new RandomService();
+        $this->realDictionaryConvert = new ConvertService($this);
 
         $this->dictionaryConvert = $this->convertMock = $testCase->getMockBuilder(ConvertService::class)
+            ->disableOriginalConstructor()
             ->setMethods(['convert'])
             ->getMock();
         $this->postData = new PostDataService($this);
@@ -48,8 +51,8 @@ class TestServicesService extends ServicesService
         $this->randomCity = new RandomCityService($this);
         $this->randomCommodities = new RandomCommoditiesService($this);
         $this->randomFamous = new RandomFamousService($this);
-        $this->randomGuildService = new RandomGuildsService($this);
-        $this->randomNameService = new RandomNameService($this);
+        $this->randomGuild = new RandomGuildsService($this);
+        $this->randomName = new RandomNameService($this);
         $this->randomPowerCenters = new RandomPowerCentersService($this);
         $this->randomProfessions = new RandomProfessionsService($this);
         $this->randomRacesService = new RandomRacesService($this);

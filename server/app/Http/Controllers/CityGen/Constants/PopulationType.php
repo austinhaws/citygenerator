@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\CityGen\Constants;
 
-use App\Http\Controllers\CityGen\Services\ServicesService;
+use App\Http\Common\Constants\BaseEnum;
+use App\Http\Common\Services\ServicesService;
 
 class PopulationType extends BaseEnum
 {

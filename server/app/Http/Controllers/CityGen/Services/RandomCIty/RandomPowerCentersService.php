@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
-use App\Http\Controllers\CityGen\Constants\MinMax;
+use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Models\City\City;
 use App\Http\Controllers\CityGen\Models\City\CityNPCLevelCount;
 use App\Http\Controllers\CityGen\Models\City\CityNPCs;
 use App\Http\Controllers\CityGen\Models\City\CityPowerCenter;
 use App\Http\Controllers\CityGen\Models\Post\PostData;
-use App\Http\Controllers\CityGen\Services\BaseService;
 
 class RandomPowerCentersService extends BaseService
 {
@@ -19,7 +18,7 @@ class RandomPowerCentersService extends BaseService
      * @param City $city
      * @param PostData $postData
      */
-    public function determinePowerCenters(City $city, PostData $postData)
+    public function determinePowerCenters(City $city)
     {
         $powerLevelMinMax = $this->services->table->getTableResultIndex(Table::POPULATION_POWER_CENTER, $city->populationType);
         $powerLevel = $this->services->random->randMinMax('Power Level', $powerLevelMinMax);

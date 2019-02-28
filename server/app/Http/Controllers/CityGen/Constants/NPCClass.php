@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CityGen\Constants;
 
+use App\Http\Common\Constants\BaseEnum;
+
 class NPCClass extends BaseEnum
 {
     const ADEPT = 'Adept';

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
+use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Table;
@@ -10,7 +11,6 @@ use App\Http\Controllers\CityGen\Models\City\City;
 use App\Http\Controllers\CityGen\Models\City\CityWard;
 use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Models\Service\RandomWardMetaData;
-use App\Http\Controllers\CityGen\Services\BaseService;
 
 class RandomWardsService extends BaseService
 {

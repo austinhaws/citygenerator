@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CityGen\Constants;
 
+use App\Http\Common\Constants\BaseEnum;
 use http\Exception\RuntimeException;
 
 class Ward extends BaseEnum

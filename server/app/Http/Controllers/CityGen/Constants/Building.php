@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CityGen\Constants;
 
+use App\Http\Common\Constants\BaseEnum;
+
 class Building extends BaseEnum
 {
     const ADMIN = 'Admin';

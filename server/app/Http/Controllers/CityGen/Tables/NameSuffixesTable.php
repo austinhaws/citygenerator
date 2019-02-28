@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\CityGen\Tables;
 
+use App\Http\Common\Tables\BaseTable;
+
+
 class NameSuffixesTable extends BaseTable
 {
     function getTable()

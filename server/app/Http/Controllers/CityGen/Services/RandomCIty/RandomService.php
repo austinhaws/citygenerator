@@ -38,7 +38,7 @@ class RandomService
 
     /**
      * do anything random through this method
-     * this will allow a test random service class to hijack rolling to provide reproduceable results
+     * this will allow a test random service class to hijack rolling to provide reproducible results
      *
      * @param string $name
      * @return int

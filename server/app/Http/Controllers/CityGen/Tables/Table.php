@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\CityGen\Constants;
 
-use App\Http\Controllers\CityGen\Tables\BaseTable;
+use App\Http\Common\Constants\BaseEnum;
+use App\Http\Common\Tables\BaseTable;
 
 class Table extends BaseEnum
 {
@@ -58,7 +59,7 @@ class Table extends BaseEnum
      * @param string $tableName
      * @return BaseTable
      */
-    static public function getTable(string $tableName) {
+    public static function getTable(string $tableName) {
 
         if (isset(Table::$tables[$tableName])) {
             $table = Table::$tables[$tableName];

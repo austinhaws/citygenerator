@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
+use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Models\City\City;
-use App\Http\Controllers\CityGen\Models\Post\PostData;
-use App\Http\Controllers\CityGen\Services\BaseService;
 
 class RandomCommoditiesService extends BaseService
 {
@@ -13,9 +12,8 @@ class RandomCommoditiesService extends BaseService
     /**
      *
      * @param City $city
-     * @param PostData $postData
      */
-    public function determineCommodities(City $city, PostData $postData)
+    public function determineCommodities(City $city)
     {
         $minMax = $this->services->table->getTableResultIndex(Table::COMMODITY_COUNT, $city->populationType);
         $this->services->table->fillRandomStrings($city->commoditiesExport, Table::COMMODITIES, $this->services->random->randMinMax('Number Exports', $minMax));

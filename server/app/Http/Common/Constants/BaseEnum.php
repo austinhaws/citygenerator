@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CityGen\Constants;
+namespace App\Http\Common\Constants;
 
 use ReflectionClass;
 use RuntimeException;

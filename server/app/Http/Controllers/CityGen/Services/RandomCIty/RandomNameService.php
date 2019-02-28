@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
-use App\Http\Controllers\CityGen\Constants\Dictionary;
+use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\Race;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Models\City\City;
-use App\Http\Controllers\CityGen\Services\BaseService;
+use App\Http\Controllers\Dictionary\Constants\DictionaryTable;
 
 class RandomNameService extends BaseService
 {
@@ -45,25 +45,25 @@ class RandomNameService extends BaseService
         // do conversion to other languages using dictionary
         switch ($majorityRace) {
             case Race::ELF:
-                $dictionary = Dictionary::ELF;
+                $dictionary = DictionaryTable::PHRASES_ELF;
                 break;
 
             case Race::GNOME:
             case Race::DWARF:
-                $dictionary = Dictionary::GOBLIN;
+                $dictionary = DictionaryTable::PHRASES_GOBLIN;
                 break;
 
             case Race::HALFELF:
                 // split 50/50 human or elf
                 if ($this->services->random->percentile('Name: half elf') > 50) {
-                    $dictionary = Dictionary::ELF;
+                    $dictionary = DictionaryTable::PHRASES_ELF;
                 }
                 break;
 
             case Race::HALFORC:
                 // split 50/50 orc or elf
                 if ($this->services->random->percentile('Name: half orc') > 50) {
-                    $dictionary = Dictionary::TOLKIEN_BLACK;
+                    $dictionary = DictionaryTable::PHRASES_TOLKIEN_BLACK_SPEECH;
                 }
                 break;
 

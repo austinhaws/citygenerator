@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\CityGen\Tables;
 
+use App\Http\Common\Tables\BaseTable;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Models\MinMax;
+
 
 class WardAcresUsedTable extends BaseTable
 {

@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
-use App\Http\Controllers\CityGen\Constants\MinMax;
+use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Models\City\City;
 use App\Http\Controllers\CityGen\Models\City\CityGuild;
-use App\Http\Controllers\CityGen\Models\Post\PostData;
-use App\Http\Controllers\CityGen\Services\BaseService;
 
 class RandomGuildsService extends BaseService
 {
@@ -15,9 +13,8 @@ class RandomGuildsService extends BaseService
     /**
      *
      * @param City $city
-     * @param PostData $postData
      */
-    public function determineGuilds(City $city, PostData $postData)
+    public function determineGuilds(City $city)
     {
         $modifierMinMax = $this->services->table->getTableResultIndex(Table::GUILD_MODIFIERS, $city->populationType);
         $modifier = 50 + $this->services->random->randMinMax('Guild Modifier', $modifierMinMax);

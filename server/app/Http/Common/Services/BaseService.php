@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CityGen\Services;
+namespace App\Http\Common\Services;
 
 class BaseService
 {

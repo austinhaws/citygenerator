@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CityGen\Tables;
+namespace App\Http\Common\Tables;
 
 abstract class BaseTable
 {

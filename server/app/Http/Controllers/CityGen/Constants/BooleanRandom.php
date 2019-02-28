@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CityGen\Constants;
 
+use App\Http\Common\Constants\BaseEnum;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomService;
 
 class BooleanRandom extends BaseEnum
