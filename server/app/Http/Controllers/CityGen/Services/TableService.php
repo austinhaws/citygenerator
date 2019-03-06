@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\CityGen\Services;
 
+use App\Http\Common\Models\MinMax;
 use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\Table;
-use App\Http\Controllers\CityGen\Models\MinMax;
 use RuntimeException;
 
 class TableService extends BaseService

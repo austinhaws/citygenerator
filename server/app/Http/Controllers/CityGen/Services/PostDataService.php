@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\CityGen\Services;
 
 use App\Http\Common\Services\BaseService;
-use App\Http\Controllers\CityGen\Models\Post\PostData;
-use App\Http\Controllers\CityGen\Models\Post\PostRaceRatio;
+use App\Http\Controllers\CityGen\Models\CityGen\Post\PostData;
+use App\Http\Controllers\CityGen\Models\CityGen\Post\PostRaceRatio;
 
 class PostDataService extends BaseService
 {

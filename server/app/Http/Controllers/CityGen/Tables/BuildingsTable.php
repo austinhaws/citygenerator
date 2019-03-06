@@ -5,8 +5,8 @@ namespace App\Http\Controllers\CityGen\Tables;
 use App\Http\Common\Tables\BaseTable;
 use App\Http\Controllers\CityGen\Constants\Building;
 use App\Http\Controllers\CityGen\Constants\Ward;
-use App\Http\Controllers\CityGen\Models\MinMax;
-use App\Http\Controllers\CityGen\Models\Table\TableBuilding;
+use App\Http\Controllers\CityGen\Models\CityGen\Table\TableBuilding;
+use App\Http\Controllers\CityGen\Models\Common\MinMax;
 
 class BuildingsTable extends BaseTable
 {

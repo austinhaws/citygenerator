@@ -4,11 +4,11 @@ namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
 use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\Table;
-use App\Http\Controllers\CityGen\Models\City\City;
-use App\Http\Controllers\CityGen\Models\City\CityNPCLevelCount;
-use App\Http\Controllers\CityGen\Models\City\CityNPCs;
-use App\Http\Controllers\CityGen\Models\City\CityPowerCenter;
-use App\Http\Controllers\CityGen\Models\Post\PostData;
+use App\Http\Controllers\CityGen\Models\CityGen\City\City;
+use App\Http\Controllers\CityGen\Models\CityGen\City\CityNPCLevelCount;
+use App\Http\Controllers\CityGen\Models\CityGen\City\CityNPCs;
+use App\Http\Controllers\CityGen\Models\CityGen\City\CityPowerCenter;
+use App\Http\Controllers\CityGen\Models\CityGen\Post\PostData;
 
 class RandomPowerCentersService extends BaseService
 {

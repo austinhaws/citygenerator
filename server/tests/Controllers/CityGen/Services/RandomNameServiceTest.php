@@ -3,9 +3,10 @@
 namespace Test\Controllers\CityGen\Tables;
 
 use App\Http\Controllers\CityGen\Constants\Race;
-use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\CityGen\City\City;
 use App\Http\Controllers\CityGen\Util\TestRoll;
 use App\Http\Controllers\Dictionary\Constants\DictionaryTable;
+use App\Http\Controllers\Dictionary\Services\ConvertService;
 use Test\Controllers\CityGen\Util\BaseTestCase;
 
 final class RandomNameServiceTest extends BaseTestCase
@@ -51,7 +52,7 @@ final class RandomNameServiceTest extends BaseTestCase
 
         $this->services->convertMock->expects($this->once())
             ->method('convert')
-            ->with($this->identicalTo(DictionaryTable::PHRASES_ELF), $this->identicalTo('bag slyd ville ti'), $this->identicalTo(false))
+            ->with($this->identicalTo(DictionaryTable::PHRASES_ELF), $this->identicalTo('bag slyd ville ti'), $this->identicalTo(ConvertService::SHUFFLE_RANDOM))
             ->willReturn('mocked value');
 
         $this->services->random->setRolls([
@@ -65,7 +66,6 @@ final class RandomNameServiceTest extends BaseTestCase
             new TestRoll('SyllablesTable: range', 600, 1, 650),
             new TestRoll('NameNumSyllablesTable: range', 1, 1, 55),
             new TestRoll('SyllablesTable: range', 550, 1, 650),
-            new TestRoll('Shuffle name?', 1, 1, 100),
         ]);
         $this->services->randomName->generateName($city);
 
@@ -110,7 +110,7 @@ final class RandomNameServiceTest extends BaseTestCase
 
         $this->services->convertMock->expects($this->once())
             ->method('convert')
-            ->with($this->identicalTo(DictionaryTable::PHRASES_TOLKIEN_BLACK_SPEECH), $this->identicalTo('bag slyd ville ti'), $this->identicalTo(false))
+            ->with($this->identicalTo(DictionaryTable::PHRASES_TOLKIEN_BLACK_SPEECH), $this->identicalTo('bag slyd ville ti'), $this->identicalTo(ConvertService::SHUFFLE_RANDOM))
             ->willReturn('mocked value');
 
         $this->services->random->setRolls([
@@ -124,7 +124,6 @@ final class RandomNameServiceTest extends BaseTestCase
             new TestRoll('SyllablesTable: range', 600, 1, 650),
             new TestRoll('NameNumSyllablesTable: range', 1, 1, 55),
             new TestRoll('SyllablesTable: range', 550, 1, 650),
-            new TestRoll('Shuffle name?', 1, 1, 100),
         ]);
         $this->services->randomName->generateName($city);
 
@@ -169,14 +168,13 @@ final class RandomNameServiceTest extends BaseTestCase
 
         $this->services->convertMock->expects($this->once())
             ->method('convert')
-            ->with($this->identicalTo(DictionaryTable::PHRASES_ELF), $this->identicalTo('bag'), $this->identicalTo(false))
+            ->with($this->identicalTo(DictionaryTable::PHRASES_ELF), $this->identicalTo('bag'), $this->identicalTo(ConvertService::SHUFFLE_RANDOM))
             ->willReturn('mocked value');
 
         $this->services->random->setRolls([
             new TestRoll('NameNumWordsTable: range', 1, 1, 100),
             new TestRoll('NameNumSyllablesTable: range', 50, 1, 55),
             new TestRoll('SyllablesTable: range', 50, 1, 650),
-            new TestRoll('Shuffle name?', 1, 1, 100),
         ]);
         $this->services->randomName->generateName($city);
 
@@ -195,7 +193,7 @@ final class RandomNameServiceTest extends BaseTestCase
 
         $this->services->convertMock->expects($this->exactly(2))
             ->method('convert')
-            ->with($this->identicalTo(DictionaryTable::PHRASES_GOBLIN), $this->identicalTo('bag'), $this->identicalTo(false))
+            ->with($this->identicalTo(DictionaryTable::PHRASES_GOBLIN), $this->identicalTo('bag'), $this->identicalTo(ConvertService::SHUFFLE_RANDOM))
             ->willReturn('mocked value');
 
         foreach ([Race::DWARF, Race::GNOME] as $race) {
@@ -206,7 +204,6 @@ final class RandomNameServiceTest extends BaseTestCase
                 new TestRoll('NameNumWordsTable: range', 1, 1, 100),
                 new TestRoll('NameNumSyllablesTable: range', 50, 1, 55),
                 new TestRoll('SyllablesTable: range', 50, 1, 650),
-                new TestRoll('Shuffle name?', 1, 1, 100),
             ]);
             $this->services->randomName->generateName($city);
 

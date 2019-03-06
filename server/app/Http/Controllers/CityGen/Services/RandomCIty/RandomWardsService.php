@@ -7,10 +7,10 @@ use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Constants\Ward;
-use App\Http\Controllers\CityGen\Models\City\City;
-use App\Http\Controllers\CityGen\Models\City\CityWard;
-use App\Http\Controllers\CityGen\Models\Post\PostData;
-use App\Http\Controllers\CityGen\Models\Service\RandomWardMetaData;
+use App\Http\Controllers\CityGen\Models\CityGen\City\City;
+use App\Http\Controllers\CityGen\Models\CityGen\City\CityWard;
+use App\Http\Controllers\CityGen\Models\CityGen\Post\PostData;
+use App\Http\Controllers\CityGen\Models\CityGen\Service\RandomWardMetaData;
 
 class RandomWardsService extends BaseService
 {

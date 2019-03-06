@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CityGen\Models\Service;
+namespace App\Http\Controllers\CityGen\Models\CityGen\Service;
 
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Constants\Ward;

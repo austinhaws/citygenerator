@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
-use App\Http\Controllers\CityGen\Models\MinMax;
+use App\Http\Controllers\CityGen\Models\Common\MinMax;
 
 class RandomService
 {

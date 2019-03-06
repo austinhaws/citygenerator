@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\CityGen\Models\City;
+namespace App\Http\Controllers\CityGen\Models\CityGen\City;
 
 class CityWard
 {

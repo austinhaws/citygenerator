@@ -5,8 +5,8 @@ namespace App\Http\Controllers\CityGen\Services\RandomCity;
 use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Table;
-use App\Http\Controllers\CityGen\Models\City\City;
-use App\Http\Controllers\CityGen\Models\Post\PostData;
+use App\Http\Controllers\CityGen\Models\CityGen\City\City;
+use App\Http\Controllers\CityGen\Models\CityGen\Post\PostData;
 
 class RandomCityPopulationService extends BaseService
 {
