@@ -5,15 +5,14 @@ namespace App\Http\Common\Tables;
 abstract class BaseTable
 {
 
+    const SPECIFIER_CONVERTIBLE = '*';
     const SPECIFIER_DICTIONARY_NAME = ':';
-    const SPECIFIER_REPLACEABLE = '*';
+    const SPECIFIER_INCONVERTIBLE = '!';
+    const SPECIFIER_OPTIONAL_PERCENT = '%';
 
     const CONSONANTS = 'consonants';
     const START = 'start';
     const VOWELS = 'vowels';
-
-    const CONSONANTS_REPLACEABLE = BaseTable::SPECIFIER_REPLACEABLE . BaseTable::CONSONANTS;
-    const VOWELS_REPLACEABLE = BaseTable::SPECIFIER_REPLACEABLE . BaseTable::VOWELS;
 
     /**
      * @return array the actual table
@@ -26,11 +25,16 @@ abstract class BaseTable
      */
     static function tableLink(string $tableName)
     {
-        return "{BaseTable::SPECIFIER_DICTIONARY_NAME}$tableName{BaseTable::SPECIFIER_DICTIONARY_NAME}";
+        return BaseTable::SPECIFIER_DICTIONARY_NAME . $tableName . BaseTable::SPECIFIER_DICTIONARY_NAME;
     }
 
-    static function replaceable(string $word)
+    static function convertible(string $word)
     {
-        return "{BaseTable::SPECIFIER_REPLACEABLE}$word";
+        return BaseTable::SPECIFIER_CONVERTIBLE . $word;
+    }
+
+    static function inconvertible(string $word)
+    {
+        return BaseTable::SPECIFIER_INCONVERTIBLE . $word;
     }
 }

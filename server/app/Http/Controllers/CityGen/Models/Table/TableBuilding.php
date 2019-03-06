@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\CityGen\Models\CityGen\Table;
+namespace App\Http\Controllers\CityGen\Models\Table;
 
-use App\Http\Controllers\CityGen\Models\Common\MinMax;
+use App\Http\Common\Models\MinMax;
 
 class TableBuilding
 {

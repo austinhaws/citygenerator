@@ -14,7 +14,7 @@ class PhrasesTable extends BaseTable
             DictionaryTable::PHRASES_GOBLIN => DictionaryTable::getTable(DictionaryTable::PHRASES_GOBLIN)->getTable(),
             DictionaryTable::PHRASES_TOLKIEN_BLACK_SPEECH => DictionaryTable::getTable(DictionaryTable::PHRASES_TOLKIEN_BLACK_SPEECH)->getTable(),
             DictionaryTable::PHRASES_UNDEAD => DictionaryTable::getTable(DictionaryTable::PHRASES_UNDEAD)->getTable(),
-            BaseTable::START => BaseTable::tableLink(DictionaryTable::PHRASES_NAME),
+            BaseTable::START => BaseTable::convertible(BaseTable::tableLink(DictionaryTable::PHRASES_NAME)),
         ];
     }
 }

@@ -3,7 +3,7 @@
 namespace Test\Controllers\CityGen\Tables;
 
 use App\Http\Controllers\CityGen\Constants\Race;
-use App\Http\Controllers\CityGen\Models\CityGen\City\City;
+use App\Http\Controllers\CityGen\Models\City\City;
 use App\Http\Controllers\CityGen\Util\TestRoll;
 use App\Http\Controllers\Dictionary\Constants\DictionaryTable;
 use App\Http\Controllers\Dictionary\Services\ConvertService;

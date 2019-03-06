@@ -15,7 +15,7 @@ class PhrasesNameTable extends BaseTable
             'last' => [
 'a', 'b'
             ],
-            BaseTable::START => 'first %50first last',
+            BaseTable::START => '*first *%50first *last',
         ];
     }
 }

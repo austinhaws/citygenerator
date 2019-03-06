@@ -7,7 +7,6 @@ use App\Http\Common\Tables\BaseTable;
 
 class DictionaryTable extends BaseEnum
 {
-    const PHRASES = 'PhrasesTable';
     const PHRASES_ELF = 'PhrasesElfTable';
     const PHRASES_GOBLIN = 'PhrasesGoblinTable';
     const PHRASES_NAME = 'PhrasesNameTable';

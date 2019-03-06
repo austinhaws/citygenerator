@@ -5,9 +5,9 @@ namespace Test\Controllers\CityGen\Tables;
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Ward;
-use App\Http\Controllers\CityGen\Models\CityGen\City\City;
-use App\Http\Controllers\CityGen\Models\CityGen\Post\PostData;
-use App\Http\Controllers\CityGen\Models\CityGen\Post\WardAdded;
+use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\Post\PostData;
+use App\Http\Controllers\CityGen\Models\Post\WardAdded;
 use App\Http\Controllers\CityGen\Util\TestRoll;
 use Test\Controllers\CityGen\Util\BaseTestCase;
 

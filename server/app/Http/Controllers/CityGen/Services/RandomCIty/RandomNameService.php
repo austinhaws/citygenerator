@@ -5,7 +5,7 @@ namespace App\Http\Controllers\CityGen\Services\RandomCity;
 use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\Race;
 use App\Http\Controllers\CityGen\Constants\Table;
-use App\Http\Controllers\CityGen\Models\CityGen\City\City;
+use App\Http\Controllers\CityGen\Models\City\City;
 use App\Http\Controllers\Dictionary\Constants\DictionaryTable;
 use App\Http\Controllers\Dictionary\Services\ConvertService;
 

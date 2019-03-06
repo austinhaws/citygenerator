@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Dictionary\Tables;
 
 use App\Http\Common\Tables\BaseTable;
-use App\Http\Controllers\Dictionary\Constants\DictionaryTable;
 
 class PhrasesSayingTable extends BaseTable
 {
@@ -31,12 +30,11 @@ class PhrasesSayingTable extends BaseTable
             ],
 
             BaseTable::START => join(' ', [
-                BaseTable::tableLink(DictionaryTable::PHRASES_NAME),
-                BaseTable::replaceable(PhrasesSayingTable::VERBS),
-                ' the ',
-                BaseTable::replaceable(PhrasesSayingTable::ADJECTIVES),
-                BaseTable::replaceable(PhrasesSayingTable::NOUNS),
-                BaseTable::replaceable(PhrasesSayingTable::ADVERBS),
+                BaseTable::convertible(PhrasesSayingTable::VERBS),
+                BaseTable::inconvertible('the'),
+                BaseTable::convertible(PhrasesSayingTable::ADJECTIVES),
+                BaseTable::convertible(PhrasesSayingTable::NOUNS),
+                BaseTable::convertible(PhrasesSayingTable::ADVERBS),
             ]),
         ];
     }
