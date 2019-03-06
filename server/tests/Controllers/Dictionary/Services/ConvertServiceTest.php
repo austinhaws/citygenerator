@@ -251,7 +251,7 @@ final class ConvertServiceTest extends BaseTestCase
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame("Abigayle Aberah B", $name);
+        $this->assertSame("Aamoir Aakash Aaby", $name);
     }
 
     public function testPercentDisclude()
@@ -259,14 +259,14 @@ final class ConvertServiceTest extends BaseTestCase
         $this->services->random->setRolls([
             new TestRoll('Include Word', 100, 1, 100),
             new TestRoll('Translate word', 0, 0, TestRoll::ANY),
-            new TestRoll('Translate word', 0, 0, 1),
+            new TestRoll('Translate word', 0, 0, TestRoll::ANY),
         ]);
 
         $name = $this->services->realDictionaryConvert->convert(DictionaryTable::PHRASES_NAME, null, ConvertService::SHUFFLE_NONE);
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame("Abeque A", $name);
+        $this->assertSame("Aahron Aaberg", $name);
     }
 
     public function testStartNames()
