@@ -170,11 +170,11 @@ class CityGenForm extends React.Component {
 
 					{/* # Gates */}
 					<FormControl className={classes.formControl}>
-						<InputLabel shrink htmlFor="gates">Number of Gates</InputLabel>
+						<InputLabel shrink htmlFor="numGates">Number of Gates</InputLabel>
 						<Select
-							value={this.props.citygen.form.gates}
-							onChange={dispatchFieldCurry('citygen.form.gates')}
-							inputProps={{ id: 'gates' }}
+							value={this.props.citygen.form.numGates}
+							onChange={dispatchFieldCurry('citygen.form.numGates')}
+							inputProps={{ id: 'numGates' }}
 							disabled={ajaxing}
 						>
 							<MenuItem key="Random" value="Random">Random</MenuItem>

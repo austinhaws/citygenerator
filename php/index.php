@@ -118,7 +118,7 @@
 				<tr>
 					<td class="field_title">Number of Gates</td>
 					<td class="input" valign="top">
-						<select name="gates" class="select2">
+						<select name="numGates" class="select2">
 							<option value=<?php echo kRandom; ?> selected="selected">Random</option>
 							<option>--------------------</option>
 							<option value="0">0</option>

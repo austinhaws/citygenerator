@@ -22,9 +22,8 @@ class City
     public $hasMilitary = BooleanRandom::FALSE;
     /** @var bool BooleanRandom:: */
     public $hasRiver = BooleanRandom::FALSE;
-    // todo rename to numGates
     /** @var int */
-    public $gates = 0;
+    public $numGates = 0;
     /** @var CityWard[] */
     public $wards = [];
     /** @var CityProfession[] */

@@ -16,7 +16,7 @@
 			'sea' => 'random',
 			'river' => 'random',
 			'military' => 'random',
-			'gates' => 'random',
+			'numGates' => 'random',
 			'buildings' => 'on',
 			'professions' => 'on',
 			'race' => 'random',

@@ -21,7 +21,7 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = BooleanRandom::FALSE;
+        $city->numGates = BooleanRandom::FALSE;
 
         // true
         $postData = new PostData();
@@ -73,7 +73,7 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = BooleanRandom::FALSE;
+        $city->numGates = BooleanRandom::FALSE;
 
         // true
         $postData = new PostData();
@@ -125,7 +125,7 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = BooleanRandom::FALSE;
+        $city->numGates = BooleanRandom::FALSE;
 
         // true
         $postData = new PostData();
@@ -177,7 +177,7 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = BooleanRandom::FALSE;
+        $city->numGates = BooleanRandom::FALSE;
 
         // true
         $postData = new PostData();
@@ -189,14 +189,14 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         $this->services->randomSeaRiverMilitaryGates->determineZones($city, $postData);
         $this->services->random->verifyRolls();
 
-        $this->assertSame(3, $city->gates);
+        $this->assertSame(3, $city->numGates);
 
         // false
         $postData->hasGates = BooleanRandom::FALSE;
 
         $this->services->randomSeaRiverMilitaryGates->determineZones($city, $postData);
 
-        $this->assertSame(0, $city->gates);
+        $this->assertSame(0, $city->numGates);
 
         // random - yes
         $this->services->random->setRolls([
@@ -209,7 +209,7 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame(4, $city->gates);
+        $this->assertSame(4, $city->numGates);
 
         // random - no
         $this->services->random->setRolls([
@@ -221,6 +221,6 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame(0, $city->gates);
+        $this->assertSame(0, $city->numGates);
     }
 }

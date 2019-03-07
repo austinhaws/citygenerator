@@ -23,7 +23,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -61,7 +61,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 2;
+        $city->numGates = 2;
         $city->acres = 1;
 
         // true
@@ -98,7 +98,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::TRUE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -134,7 +134,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::TRUE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -171,7 +171,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::TRUE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -210,7 +210,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::TRUE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -246,7 +246,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::TRUE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -285,7 +285,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::TRUE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -321,7 +321,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::TRUE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -360,7 +360,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::TRUE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -400,7 +400,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -439,7 +439,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -477,7 +477,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -517,7 +517,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -555,7 +555,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -594,7 +594,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -632,7 +632,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -672,7 +672,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -711,7 +711,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -751,7 +751,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -789,7 +789,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -829,7 +829,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -868,7 +868,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -906,7 +906,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -945,7 +945,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 1;
 
         // true
@@ -986,7 +986,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -1026,7 +1026,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -1068,7 +1068,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -1108,7 +1108,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 1;
+        $city->numGates = 1;
         $city->acres = 1;
 
         // true
@@ -1146,7 +1146,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 17;
 
         // true
@@ -1187,7 +1187,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 21;
 
         // true
@@ -1228,7 +1228,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 3;
 
         // true
@@ -1263,7 +1263,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 17;
 
         // true
@@ -1301,7 +1301,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 21;
 
         // true
@@ -1344,7 +1344,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 3;
 
         // true
@@ -1379,7 +1379,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::TRUE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 7;
 
         // true
@@ -1423,7 +1423,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 7;
 
         // true
@@ -1469,7 +1469,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::TRUE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 7;
 
         // true
@@ -1516,7 +1516,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 7;
 
         // true
@@ -1562,7 +1562,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 4;
 
         // true
@@ -1603,7 +1603,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 4;
 
         // true
@@ -1639,7 +1639,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 20;
 
         // true
@@ -1675,7 +1675,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 8;
 
         // true
@@ -1712,7 +1712,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 20;
 
         // true
@@ -1748,7 +1748,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 20;
 
         // true
@@ -1784,7 +1784,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 8;
 
         // true
@@ -1821,7 +1821,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 35;
 
         // true
@@ -1858,7 +1858,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 35;
 
         // true
@@ -1895,7 +1895,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 25;
 
         // true
@@ -1932,7 +1932,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 26;
 
         // true
@@ -1976,7 +1976,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 26;
 
         // true
@@ -2014,7 +2014,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 20;
 
         // true
@@ -2057,7 +2057,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 20;
 
         // true
@@ -2100,7 +2100,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
-        $city->gates = 0;
+        $city->numGates = 0;
         $city->acres = 60;
 
         // true

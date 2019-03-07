@@ -71,7 +71,7 @@ class RandomWardsService extends BaseService
         $metaData = new RandomWardMetaData();
 
         $metaData->requiredWards = 2 +
-            $city->gates +
+            $city->numGates +
             ($city->hasSea ? 1 : 0) +
             ($city->hasRiver ? 1 : 0) +
             ($city->hasMilitary ? 1 : 0) +
@@ -80,14 +80,14 @@ class RandomWardsService extends BaseService
             (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::METROPOLIS, $this->services) ? 1 : 0);
 
         // check if custom entered wards satisfy required wards
-        $metaData->numGates = $city->gates;
+        $metaData->numGates = $city->numGates;
         foreach ($postData->wardsAdded as $wardAdded) {
             if ($wardAdded->ward === Ward::GATE) {
                 if ($metaData->numGates > 0) {
                     $metaData->numGates--;
                 } else {
                     // make sure the count is correct
-                    $city->gates++;
+                    $city->numGates++;
                 }
             } else {
                 // don't have to do more of these wards because it's already done

@@ -19,7 +19,7 @@ const defaultState = {
 		form: {
 			buildings: 'Yes',
 			name: '',
-			gates: 'Random',
+			numGates: 'Random',
 			military: 'Random',
 			populationType: 'Random',
 			professions: 'Yes',

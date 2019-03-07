@@ -32,7 +32,7 @@ class RandomSeaRiverMilitaryGatesService extends BaseService
             $city->hasMilitary = BooleanRandom::construct($this->services->random->percentile('Has Military') <= $range);
         }
 
-        // gates
+        // numGates
         if ($postData->hasGates === BooleanRandom::RANDOM) {
             $range = $this->services->table->getTableResultIndex(Table::POPULATION_HAS_WALLS, $city->populationType);
             $postData->hasGates = BooleanRandom::construct($this->services->random->percentile('Has Walls') <= $range);
@@ -40,9 +40,9 @@ class RandomSeaRiverMilitaryGatesService extends BaseService
 
         if ($postData->hasGates === BooleanRandom::TRUE) {
             $numGatesRange = $this->services->table->getTableResultIndex(Table::POPULATION_NUM_WALLS, $city->populationType);
-            $city->gates = $this->services->random->randMinMax('Num Gates', $numGatesRange);
+            $city->numGates = $this->services->random->randMinMax('Num Gates', $numGatesRange);
         } else {
-            $city->gates = 0;
+            $city->numGates = 0;
         }
     }
 }

@@ -18,7 +18,7 @@ final class PostDataServiceTest extends BaseTestCase
             'sea' => BooleanRandom::TRUE,
             'military' => BooleanRandom::FALSE,
             'river' => BooleanRandom::RANDOM,
-            'gates' => null,
+            'numGates' => null,
         ]);
 
         $this->assertSame(BooleanRandom::TRUE, $postData->hasSea);
@@ -32,7 +32,7 @@ final class PostDataServiceTest extends BaseTestCase
         $postData = $this->services->postData->createPostData([
             'sea' => BooleanRandom::TRUE,
             'river' => BooleanRandom::RANDOM,
-            'gates' => 'somethingunknown',
+            'numGates' => 'somethingunknown',
         ]);
 
         $this->assertSame(BooleanRandom::TRUE, $postData->hasSea);
