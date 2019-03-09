@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
 use App\Http\Common\Models\MinMax;
+use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 
-class RandomService
+class RandomService extends BaseService
 {
     const RANDOM = 'Random';
     const CUSTOM = 'Custom';

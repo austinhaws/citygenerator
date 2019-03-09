@@ -12,10 +12,10 @@ class RollRatio
      * a ratioed value from the maximum
      *
      * @param float $percent
-     * @return float|int
+     * @return int
      */
     public static function ratioPercent(float $percent)
     {
-        return ($percent / 100.0) * RollRatio::RAND_MAX;
+        return intVal(($percent / 100.0) * RollRatio::RAND_MAX);
     }
 }

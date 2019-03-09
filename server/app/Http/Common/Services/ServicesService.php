@@ -2,6 +2,7 @@
 
 namespace App\Http\Common\Services;
 
+use App\Http\Controllers\CityGen\Services\ListsService;
 use App\Http\Controllers\CityGen\Services\PostDataService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomAcresStructuresService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomBuildingsService;
@@ -25,6 +26,8 @@ class ServicesService
 {
     /** @var ConvertService */
     public $dictionaryConvert;
+    /** @var ListsService */
+    public $lists;
     /** @var PostDataService */
     public $postData;
     /** @var RandomService|TestRandomService */
@@ -42,7 +45,7 @@ class ServicesService
     /** @var RandomFamousService */
     public $randomFamous;
     /** @var RandomGuildsService */
-    public $randomGuild;
+    public $randomGuilds;
     /** @var RandomNameService */
     public $randomName;
     /** @var RandomPowerCentersService */
@@ -50,7 +53,7 @@ class ServicesService
     /** @var RandomProfessionsService */
     public $randomProfessions;
     /** @var RandomRacesService */
-    public $randomRacesService;
+    public $randomRaces;
     /** @var RandomSeaRiverMilitaryGatesService */
     public $randomSeaRiverMilitaryGates;
     /** @var RandomWardsService */
@@ -58,42 +61,25 @@ class ServicesService
     /** @var TableService */
     public $table;
 
-    public function __construct(
-        ?ConvertService $convertService = null,
-        ?PostDataService $postDataService = null,
-        ?RandomAcresStructuresService $randomAcresStructuresService = null,
-        ?RandomBuildingsService $randomBuildingsService = null,
-        ?RandomCityPopulationService $randomCityPopulationService = null,
-        ?RandomCityService $randomCityService = null,
-        ?RandomCommoditiesService $randomCommodities = null,
-        ?RandomFamousService $randomFamous = null,
-        ?RandomGuildsService $randomGuildService = null,
-        ?RandomNameService $randomNameService = null,
-        ?RandomProfessionsService $randomProfessions = null,
-        ?RandomPowerCentersService $randomPowerCenters = null,
-        ?RandomRacesService $randomRacesService = null,
-        ?RandomSeaRiverMilitaryGatesService $randomSeaRiverMilitaryGatesService = null,
-        ?RandomService $randomService = null,
-        ?RandomWardsService $randomWardsService = null,
-        ?TableService $tableService = null
-    )
+    public function __construct()
     {
-        $this->dictionaryConvert = $convertService;
-        $this->postData = $postDataService;
-        $this->random = $randomService;
-        $this->randomAcresStructures = $randomAcresStructuresService;
-        $this->randomBuildings = $randomBuildingsService;
-        $this->randomCityPopulation = $randomCityPopulationService;
-        $this->randomCity = $randomCityService;
-        $this->randomCommodities = $randomCommodities;
-        $this->randomFamous = $randomFamous;
-        $this->randomGuild = $randomGuildService;
-        $this->randomName = $randomNameService;
-        $this->randomPowerCenters = $randomPowerCenters;
-        $this->randomProfessions = $randomProfessions;
-        $this->randomRacesService = $randomRacesService;
-        $this->randomSeaRiverMilitaryGates = $randomSeaRiverMilitaryGatesService;
-        $this->randomWards = $randomWardsService;
-        $this->table = $tableService;
+        $this->dictionaryConvert = new ConvertService($this);
+        $this->lists = new ListsService($this);
+        $this->postData = new PostDataService($this);
+        $this->random = new RandomService($this);
+        $this->randomAcresStructures = new RandomAcresStructuresService($this);
+        $this->randomBuildings = new RandomBuildingsService($this);
+        $this->randomCityPopulation = new RandomCityPopulationService($this);
+        $this->randomCity = new RandomCityService($this);
+        $this->randomCommodities = new RandomCommoditiesService($this);
+        $this->randomFamous = new RandomFamousService($this);
+        $this->randomGuilds = new RandomGuildsService($this);
+        $this->randomName = new RandomNameService($this);
+        $this->randomPowerCenters = new RandomPowerCentersService($this);
+        $this->randomProfessions = new RandomProfessionsService($this);
+        $this->randomRaces = new RandomRacesService($this);
+        $this->randomSeaRiverMilitaryGates = new RandomSeaRiverMilitaryGatesService($this);
+        $this->randomWards = new RandomWardsService($this);
+        $this->table = new TableService($this);
     }
 }

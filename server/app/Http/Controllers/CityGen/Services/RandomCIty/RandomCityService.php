@@ -10,6 +10,7 @@ class RandomCityService extends BaseService
 {
     /**
      * @param PostData $postData
+     * @return City
      */
     public function randomizeCity(PostData $postData)
     {
@@ -22,10 +23,12 @@ class RandomCityService extends BaseService
         $this->services->randomWards->determineWards($city, $postData);
         $this->services->randomProfessions->determineProfessions($city, $postData);
         $this->services->randomPowerCenters->determinePowerCenters($city);
-        $this->services->randomRacesService->determineRaces($city, $postData);
-        $this->services->randomGuild->determineGuilds($city);
+        $this->services->randomRaces->determineRaces($city, $postData);
+        $this->services->randomGuilds->determineGuilds($city);
         $this->services->randomCommodities->determineCommodities($city);
         $this->services->randomFamous->determineFamous($city);
         $this->services->randomName->generateName($city);
+
+        return $city;
     }
 }

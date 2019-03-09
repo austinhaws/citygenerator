@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\CityGen\Services;
 
+use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\Integration;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Race;
 use App\Http\Controllers\CityGen\Constants\Ward;
 
-class ListsService
+class ListsService extends BaseService
 {
 
     const ID = 'id';

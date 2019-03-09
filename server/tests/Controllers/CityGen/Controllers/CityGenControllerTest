@@ -1,0 +1,25 @@
+<?php
+
+use App\Http\Controllers\CityGen\CityGenController;
+use Test\Controllers\CityGen\Util\BaseTestCase;
+use Test\Controllers\CityGen\Util\TestServicesService;
+
+class CityGenControllerTest extends BaseTestCase
+{
+    /** @var CityGenController */
+    private $cityGenController;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->cityGenController = new CityGenController(new TestServicesService($this));
+    }
+
+    public function testLists()
+    {
+        $response = $this->cityGenController->getLists();
+
+        $this->assertSame(6, count($response));
+    }
+}

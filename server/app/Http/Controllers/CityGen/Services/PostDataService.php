@@ -29,6 +29,7 @@ class PostDataService extends BaseService
                     return new PostRaceRatio($ratio['race'], floatval($ratio['ratio']) / 100.0);
                 }, $post['raceRatios']);
             }
+            $postData->wardsAdded = isset($post['wardsAdded']) ? $post['wardsAdded'] : [];
         }
 
         return $postData;

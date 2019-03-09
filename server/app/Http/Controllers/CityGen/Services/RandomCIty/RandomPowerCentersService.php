@@ -116,39 +116,41 @@ class RandomPowerCentersService extends BaseService
 
             $num = 1;
             $notUsedFor = true;
-            for ($level = $this->services->random->randRangeInt('NPC level', 1, $maxLevel); $level > 0; $level = $this->nextLevel($level)) {
-                $influenceCost = $this->services->table->getTableResultIndex(Table::NPC_CLASS_INFLUENCE, $class);
-                $notUsed = true;
-                while ($num >= 1 && $notUsed) {
-                    if (0 > $influenceLeft - ($influenceCost * $level * $num)) {
-                        --$num;
-                    } else {
-                        $influenceLeft -= $influenceCost * $level * $num;
-                        $found = false;
-                        foreach ($powerCenter->npcs as $key => $npc) {
-                            if ($npc->class == $class) {
-                                $found = $key;
-                                break;
+            if ($maxLevel) {
+                for ($level = $this->services->random->randRangeInt('NPC level', 1, $maxLevel); $level > 0; $level = $this->nextLevel($level)) {
+                    $influenceCost = $this->services->table->getTableResultIndex(Table::NPC_CLASS_INFLUENCE, $class);
+                    $notUsed = true;
+                    while ($num >= 1 && $notUsed) {
+                        if (0 > $influenceLeft - ($influenceCost * $level * $num)) {
+                            --$num;
+                        } else {
+                            $influenceLeft -= $influenceCost * $level * $num;
+                            $found = false;
+                            foreach ($powerCenter->npcs as $key => $npc) {
+                                if ($npc->class == $class) {
+                                    $found = $key;
+                                    break;
+                                }
                             }
-                        }
-                        if ($found === false) {
-                            $powerCenter->npcs[] = new CityNPCs($class, $levelsPreFilled);
-                            $found = count($powerCenter->npcs) - 1;
-                        }
-                        $foundLevel = false;
-                        foreach ($powerCenter->npcs[$found]->levels as $keyLevelLoop => $levelLoop) {
-                            if ($levelLoop->level == $level) {
-                                $foundLevel = $keyLevelLoop;
-                                break;
+                            if ($found === false) {
+                                $powerCenter->npcs[] = new CityNPCs($class, $levelsPreFilled);
+                                $found = count($powerCenter->npcs) - 1;
                             }
+                            $foundLevel = false;
+                            foreach ($powerCenter->npcs[$found]->levels as $keyLevelLoop => $levelLoop) {
+                                if ($levelLoop->level == $level) {
+                                    $foundLevel = $keyLevelLoop;
+                                    break;
+                                }
+                            }
+                            $powerCenter->npcs[$found]->levels[$foundLevel]->count += $num;
+                            $powerCenter->npcsTotal += $num;
+                            $notUsed = false;
+                            $notUsedFor = false;
                         }
-                        $powerCenter->npcs[$found]->levels[$foundLevel]->count += $num;
-                        $powerCenter->npcsTotal += $num;
-                        $notUsed = false;
-                        $notUsedFor = false;
                     }
+                    $num = max($num * 2, 1);
                 }
-                $num = max($num * 2, 1);
             }
             if ($notUsedFor) {
                 ++$notUsedCount;

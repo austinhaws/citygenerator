@@ -33,7 +33,7 @@ final class RandomRacesServiceTest extends BaseTestCase
             new TestRoll('RacesRandomTable: range', 33, 1, 100),
         ]);
 
-        $this->services->randomRacesService->determineRaces($city, $postData);
+        $this->services->randomRaces->determineRaces($city, $postData);
         $this->services->random->verifyRolls();
 
         $this->assertSame(Race::HUMAN, $city->races[0]->race);
@@ -62,7 +62,7 @@ final class RandomRacesServiceTest extends BaseTestCase
             new TestRoll('RacesRandomTable: range', 33, 1, 100),
         ]);
 
-        $this->services->randomRacesService->determineRaces($city, $postData);
+        $this->services->randomRaces->determineRaces($city, $postData);
         $this->services->random->verifyRolls();
 
         $this->assertSame(Race::HUMAN, $city->races[0]->race);
@@ -91,7 +91,7 @@ final class RandomRacesServiceTest extends BaseTestCase
             new TestRoll('Racial Mix', 2, 1, 3),
         ]);
 
-        $this->services->randomRacesService->determineRaces($city, $postData);
+        $this->services->randomRaces->determineRaces($city, $postData);
         $this->services->random->verifyRolls();
 
         $this->assertIsSorted(array_reverse($city->races), function ($race) {
@@ -121,7 +121,7 @@ final class RandomRacesServiceTest extends BaseTestCase
             new TestRoll('Racial Mix', 2, 1, 3),
         ]);
 
-        $this->services->randomRacesService->determineRaces($city, $postData);
+        $this->services->randomRaces->determineRaces($city, $postData);
         $this->services->random->verifyRolls();
 
         $this->assertIsSorted(array_reverse($city->races), function ($race) {
@@ -147,7 +147,7 @@ final class RandomRacesServiceTest extends BaseTestCase
         $city->populationType = PopulationType::HAMLET;
         $city->populationSize = 98;
 
-        $this->services->randomRacesService->determineRaces($city, $postData);
+        $this->services->randomRaces->determineRaces($city, $postData);
 
         $this->assertIsSorted(array_reverse($city->races), function ($race) {
             return $race->total;
@@ -173,7 +173,7 @@ final class RandomRacesServiceTest extends BaseTestCase
         $city->populationType = PopulationType::HAMLET;
         $city->populationSize = 98;
 
-        $this->services->randomRacesService->determineRaces($city, $postData);
+        $this->services->randomRaces->determineRaces($city, $postData);
 
         $this->assertIsSorted(array_reverse($city->races), function ($race) {
             return $race->total;

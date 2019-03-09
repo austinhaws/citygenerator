@@ -2139,4 +2139,165 @@ final class RandomWardsServiceTest extends BaseTestCase
             return $ward->type === Ward::CRAFTSMEN && !$ward->insideWalls;
         })), 'Has tested ward');
     }
+
+    public function testAllRandom()
+    {
+        $postData = $this->services->postData->createPostData([
+            'buildings' => 'Yes',
+            'military' => 'Random',
+            'name' => '',
+            'numGates' => 'Random',
+            'populationType' => 'Random',
+            'professions' => 'Yes',
+            'race' => 'Random',
+            'raceRatios' => [],
+            'racialMix' => 'Random',
+            'river' => 'Random',
+            'sea' => 'Random',
+            'wardsAdded' => [],
+        ]);
+
+        $this->services->random->setRolls([
+            // [0]
+            new TestRoll('getTableResultRandom-PopulationTypeTable', 1, 1, 100),
+            new TestRoll('Random Population Size', 20, 20, 80),
+            new TestRoll('randomAcres', 1),
+            new TestRoll('randomNumStructures', 1),
+            new TestRoll('Has Sea', 100, 1, 100),
+            new TestRoll('Has River', 100, 1, 100),
+            new TestRoll('Has Military', 100, 1, 100),
+            new TestRoll('Has Walls', 100, 1, 100),
+            new TestRoll('Ward acres used', 2, 1, 2),
+            new TestRoll('Building Weight', 100, 1, 100),
+            // [10]
+            new TestRoll('Building Quality', 3, 1, 3),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 1, 3),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 1, 3),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 1, 3),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 1, 3),
+            new TestRoll('Building Weight', 100, 1, 100),
+            // [20]
+            new TestRoll('Building Quality', 3, 1, 3),
+            new TestRoll('Ward acres used', 2, 1, 2),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 2, 1, 2),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 2, 1, 2),
+            new TestRoll('Ward Type', 100, 1, 100),
+            new TestRoll('Ward Type', 50, 1, 100),
+            new TestRoll('Ward Type', 25, 1, 100),
+            new TestRoll('Ward acres used', 2, 1, 2),
+            // [30]
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Ward Type', 100, 1, 100),
+            new TestRoll('Ward Type', 25, 1, 100),
+            // [40]
+            new TestRoll('Ward acres used', 2, 1, 2),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Ward Type', 25, 1, 100),
+            // [50]
+            new TestRoll('Ward acres used', 2, 1, 2),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Ward Type', 25, 1, 100),
+            // [60]
+            new TestRoll('Ward acres used', 2, 1, 2),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Ward Type', 25, 1, 100),
+            // [70]
+            new TestRoll('Ward acres used', 2, 1, 2),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Ward Type', 25, 1, 100),
+            // [80]
+            new TestRoll('Ward acres used', 2, 1, 2),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Ward Type', 25, 1, 100),
+            // [90]
+            new TestRoll('Ward acres used', 2, 1, 2),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Ward Type', 25, 1, 100),
+            // [100]
+            new TestRoll('Ward acres used', 2, 1, 2),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 3, 4),
+            new TestRoll('Power Level', 0, 0, 1),
+            // [110]
+            new TestRoll('Racial Mix', 1, 1, 3),
+            new TestRoll('RacesRandomTable: range', 1, 1, 100),
+            new TestRoll('Guild Modifier', 0, 0, 0),
+            new TestRoll('Number Exports', 0, 0, 0),
+            new TestRoll('Number Imports', 0, 0, 0),
+            new TestRoll('Number Famous', 0, 0, 0),
+            new TestRoll('Number Infamous', 0, 0, 0),
+            new TestRoll('Use words', 1, 1, 100),
+            new TestRoll('NameNumWordsTable: range', 1, 1, 100),
+            new TestRoll('NameNumSyllablesTable: range', 1, 1, 55),
+            // [120]
+            new TestRoll('SyllablesTable: range', 1, 1, TestRoll::ANY),
+        ]);
+
+        $city = $this->services->randomCity->randomizeCity($postData);
+        $this->services->random->verifyRolls();
+
+        $this->assertTrue(strlen($city->name) > 0);
+
+    }
 }
