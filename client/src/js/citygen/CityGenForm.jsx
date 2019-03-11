@@ -2,7 +2,7 @@ import '@babel/polyfill';
 import React from 'react';
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
-import {TextField, withStyles} from "@material-ui/core";
+import {TextField} from "@material-ui/core";
 import {dispatchField, dispatchFieldCurry} from "../util/Dispatch";
 import * as PropTypes from "prop-types";
 import Select from "@material-ui/core/Select";
@@ -13,8 +13,8 @@ import FormControl from "@material-ui/core/FormControl";
 import FormHelperText from "@material-ui/core/es/FormHelperText/FormHelperText";
 import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import green from '@material-ui/core/colors/green';
 import Slider from '@material-ui/lab/Slider';
+import withRoot from "../app/WithRoot";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -22,34 +22,6 @@ const propTypes = {
 };
 const defaultProps = {};
 const mapStateToProps = state => ({ citygen: state.citygen });
-
-const styles = theme => ({
-	root: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		flexDirection: 'column',
-		width: '250px',
-		margin: '0 auto',
-	},
-	formControl: {
-		margin: theme.spacing.unit,
-		minWidth: 120,
-	},
-	selectEmpty: {
-		marginTop: theme.spacing.unit * 2,
-	},
-	buttonProgress: {
-		color: green[500],
-		position: 'absolute',
-		top: '50%',
-		left: '50%',
-		marginTop: -12,
-		marginLeft: -12,
-	},
-	slider: {
-		padding: '22px 0px',
-	},
-});
 
 class CityGenForm extends React.Component {
 	componentDidMount() {
@@ -338,4 +310,4 @@ class CityGenForm extends React.Component {
 CityGenForm.propTypes = propTypes;
 CityGenForm.defaultProps = defaultProps;
 
-export default withRouter(connect(mapStateToProps)(withStyles(styles)(CityGenForm)));
+export default withRoot(withRouter(connect(mapStateToProps)(CityGenForm)));

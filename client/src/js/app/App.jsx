@@ -5,24 +5,21 @@ import {connect, Provider} from 'react-redux';
 import reduxStore from '../util/ReduxStore';
 import {BrowserRouter, withRouter} from 'react-router-dom';
 import AppRoutes from './AppRoutes';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import MainAppBar from "./MainAppBar";
+import withRoot from "./WithRoot";
 
 class AppClass extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				<CssBaseline/>
-
 				<MainAppBar/>
-
 				<AppRoutes {...this.props}/>
 			</React.Fragment>
 		);
 	}
 }
 
-const App = withRouter(connect()(AppClass));
+const App = withRoot(withRouter(connect()(AppClass)));
 
 
 // This will correctly set the basename so router works, if you're using a awesome vhost or not.

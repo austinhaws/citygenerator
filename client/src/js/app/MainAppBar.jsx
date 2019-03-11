@@ -6,13 +6,13 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from '@material-ui/icons/Menu';
 import Typography from "@material-ui/core/Typography";
-import {withStyles} from "@material-ui/core";
 import Popper from "@material-ui/core/Popper";
 import Grow from "@material-ui/core/Grow";
 import Paper from "@material-ui/core/Paper";
 import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
+import withRoot from "./WithRoot";
 
 const styles = {
 	root: {
@@ -51,15 +51,13 @@ class MainAppBar extends React.Component {
 	};
 
 	render() {
-		const { classes } = this.props;
 		const { open } = this.state;
 
 		return (
-			<div className={classes.root}>
+			<div>
 				<AppBar position="static">
 					<Toolbar>
 						<IconButton
-							className={classes.menuButton}
 							color="inherit"
 							aria-label="Menu"
 							buttonRef={node => this.anchorEl = node}
@@ -90,8 +88,8 @@ class MainAppBar extends React.Component {
 						</Popper>
 
 
-						<Typography variant="h6" color="inherit" className={classes.grow}>
-							City Generator <Button color={classes.rpggenerator.color} onClick={() => window.location = 'https://rpggenerator.com'}>by RPG Generator</Button>
+						<Typography variant="h6" color="inherit">
+							City Generator <Button onClick={() => window.location = 'https://rpggenerator.com'}>by RPG Generator</Button>
 						</Typography>
 						<Button color="inherit" onClick={() => alert('Coming Soon!')}>Login</Button>
 					</Toolbar>
@@ -101,4 +99,4 @@ class MainAppBar extends React.Component {
 	}
 }
 
-export default withStyles(styles)(MainAppBar);
+export default withRoot(MainAppBar);

@@ -21,6 +21,6 @@ class CityGenController extends BaseController //extends ControllerBase
     public function generate(\Illuminate\Http\Request $request) {
 	    $postData = $this->services->postData->createPostData($request->json()->all());
         $city = $this->services->randomCity->randomizeCity($postData);
-        return response()->json($city);
+        return response()->json(json_encode($city));
     }
 }
