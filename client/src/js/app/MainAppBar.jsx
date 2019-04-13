@@ -13,21 +13,14 @@ import ClickAwayListener from "@material-ui/core/ClickAwayListener";
 import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import withRoot from "./WithRoot";
+import PropTypes from "prop-types";
 
-const styles = {
-	root: {
-		flexGrow: 1,
-	},
-	grow: {
-		flexGrow: 1,
-	},
-	menuButton: {
-		marginLeft: -12,
-		marginRight: 20,
-	},
-	rpggenerator: {
-		color: 'black',
-	},
+const propTypes = {
+	classes: PropTypes.object.isRequired,
+};
+
+const defaultProps = {
+
 };
 
 class MainAppBar extends React.Component {
@@ -57,6 +50,14 @@ class MainAppBar extends React.Component {
 			<div>
 				<AppBar position="static">
 					<Toolbar>
+						<IconButton
+							color="inherit"
+							aria-label="Menu"
+							buttonRef={node => this.anchorEl = node}
+							onClick={this.handleToggle}
+						>
+							<img src="img/rpggenerator-logo.png" className={this.props.classes.appBar__logo}/>
+						</IconButton>
 						<IconButton
 							color="inherit"
 							aria-label="Menu"
@@ -98,5 +99,8 @@ class MainAppBar extends React.Component {
 		);
 	}
 }
+
+MainAppBar.propTypes = propTypes;
+MainAppBar.defaultProps = defaultProps;
 
 export default withRoot(MainAppBar);

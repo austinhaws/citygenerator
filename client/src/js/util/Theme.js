@@ -1,34 +1,34 @@
 import {createMuiTheme} from '@material-ui/core/styles';
 import green from "@material-ui/core/es/colors/green";
 
-// http://paletton.com/#uid=73m1e0kuR--j8HyozCc-GrrDblv
-// Primary //
-const primaryShade0 = '#0A92AB';
-const primaryShade1 = '#51B1C3';
-const primaryShade2 = '#2D9EB3';
-const primaryShade3 = '#037287';
-const primaryShade4 = '#025969';
+// http://paletton.com/#uid=73q1j0kvCmBn9tXtCrLCFihMncR
+// Main Primary color */
+const colorPrimary0 = '#065371';
+const colorPrimary1 = '#0a91ab';
+const colorPrimary2 = '#10698B';
+const colorPrimary3 = '#03435B';
+const colorPrimary4 = '#012F40';
 
-// Accent //
-const secondaryShade0 = '#6913B8';
-const secondaryShade1 = '#965BCC';
-const secondaryShade2 = '#7E37BF';
-const secondaryShade3 = '#510993';
-const secondaryShade4 = '#3F0673';
+// Main Secondary color (1) */
+const colorSecondary10 = '#520778';
+const colorSecondary11 = '#7A329F';
+const colorSecondary12 = '#681294';
+const colorSecondary13 = '#420461';
+const colorSecondary14 = '#2E0244';
 
-// Highlight //
-const highlightShade0 = '#FFF309';
-const highlightShade1 = '#FFF767';
-const highlightShade2 = '#FFF53B';
-const highlightShade3 = '#DBD000';
-const highlightShade4 = '#ABA300';
+// Main Secondary color (2) */
+const colorSecondary20 = '#B1B402';
+const colorSecondary21 = '#ECEE42';
+const colorSecondary22 = '#DADD10';
+const colorSecondary23 = '#8F9100';
+const colorSecondary24 = '#656600';
 
-// Detail //
-const detailShade0 = '#FF8109';
-const detailShade1 = '#FFB167';
-const detailShade2 = '#FF9B3B';
-const detailShade3 = '#DB6B00';
-const detailShade4 = '#AB5400';
+// Main Complement color */
+const colorComplement0 = '#B45F02';
+const colorComplement1 = '#EF9C42';
+const colorComplement2 = '#DD7B11';
+const colorComplement3 = '#924C00';
+const colorComplement4 = '#663500';
 
 
 const textColor = '#eeeeee';
@@ -41,21 +41,23 @@ export const theme = createMuiTheme({
 	palette: {
 		type: 'light',
 		primary: {
-			main: textColor,
+			main: colorPrimary0,
+			default: colorPrimary0,
 		},
 		secondary: {
-			main: secondaryShade0,
+			main: colorSecondary10,
+			default: colorSecondary10,
 		},
 		background: {
-			paper: primaryShade0,
-			default: primaryShade0,
+			paper: colorPrimary1,
+			default: colorPrimary1,
 		},
 		text: {
-			primary: detailShade1,
+			primary: colorComplement1,
 			secondary: textColor,
-			hint: highlightShade1,
+			hint: colorSecondary21,
 			disabled: textColor,
-		}
+		},
 	},
 });
 
@@ -85,5 +87,8 @@ export const styles = theme => ({
 	},
 	slider: {
 		padding: '22px 0px',
+	},
+	appBar__logo: {
+		width: '64px',
 	},
 });
