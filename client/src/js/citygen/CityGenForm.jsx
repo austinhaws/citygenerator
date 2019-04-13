@@ -80,6 +80,7 @@ class CityGenForm extends React.Component {
 							disabled={ajaxing}
 							inputProps={{ id: 'name', shrink: 'shrink' }}
 							helperText={this.props.citygen.form.name === 'Custom' ? "Translated to the majority race language" : ''}
+							onFocus={event => event.target.select()}
 						/>
 					</FormControl>
 

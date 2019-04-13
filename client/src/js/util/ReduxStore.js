@@ -18,7 +18,7 @@ const defaultState = {
 	citygen: {
 		form: {
 			buildings: 'Yes',
-			name: '',
+			name: 'Random',
 			numGates: 'Random',
 			military: 'Random',
 			populationType: 'Random',

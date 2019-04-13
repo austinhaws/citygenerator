@@ -98,4 +98,15 @@ export const styles = theme => ({
 		backgroundPositionY: '50%',
 		backgroundSize: '50%',
 	},
+	thanks: {
+		margin: '0 auto',
+		width: '50%',
+	},
+	thanks__title: {
+		textAlign: 'center',
+		fontSize: '2rem',
+		fontWeight: 'bold',
+		marginTop: '20px',
+		marginBottom: '8px',
+	},
 });
