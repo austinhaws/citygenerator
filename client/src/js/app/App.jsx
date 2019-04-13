@@ -13,7 +13,9 @@ class AppClass extends React.Component {
 		return (
 			<React.Fragment>
 				<MainAppBar/>
-				<AppRoutes {...this.props}/>
+				<div className={`${this.props.classes.app__background} wrapper`}>
+					<AppRoutes {...this.props}/>
+				</div>
 			</React.Fragment>
 		);
 	}

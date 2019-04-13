@@ -2,28 +2,28 @@ import {createMuiTheme} from '@material-ui/core/styles';
 import green from "@material-ui/core/es/colors/green";
 
 // http://paletton.com/#uid=73q1j0kvCmBn9tXtCrLCFihMncR
-// Main Primary color */
+// Main Primary color
 const colorPrimary0 = '#065371';
 const colorPrimary1 = '#0a91ab';
 const colorPrimary2 = '#10698B';
 const colorPrimary3 = '#03435B';
 const colorPrimary4 = '#012F40';
 
-// Main Secondary color (1) */
+// Main Secondary color (1)
 const colorSecondary10 = '#520778';
 const colorSecondary11 = '#7A329F';
 const colorSecondary12 = '#681294';
 const colorSecondary13 = '#420461';
 const colorSecondary14 = '#2E0244';
 
-// Main Secondary color (2) */
+// Main Secondary color (2)
 const colorSecondary20 = '#B1B402';
 const colorSecondary21 = '#ECEE42';
 const colorSecondary22 = '#DADD10';
 const colorSecondary23 = '#8F9100';
 const colorSecondary24 = '#656600';
 
-// Main Complement color */
+// Main Complement color
 const colorComplement0 = '#B45F02';
 const colorComplement1 = '#EF9C42';
 const colorComplement2 = '#DD7B11';
@@ -90,5 +90,12 @@ export const styles = theme => ({
 	},
 	appBar__logo: {
 		width: '64px',
+	},
+	app__background: {
+		backgroundImage: 'url(img/squidee-opaque.png)',
+		backgroundPositionX: 'center',
+		backgroundRepeat: 'no-repeat',
+		backgroundPositionY: '50%',
+		backgroundSize: '50%',
 	},
 });

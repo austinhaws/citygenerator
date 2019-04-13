@@ -152,7 +152,7 @@ class CityGenForm extends React.Component {
 							<MenuItem key="Random" value="Random">Random</MenuItem>
 							{Array(11).fill(false).map((_, i) => <MenuItem key={i} value={i}>{i}</MenuItem>)}
 						</Select>
-						<FormHelperText>At least one gate means city has walls</FormHelperText>
+						<FormHelperText variant="filled">At least one gate means city has walls</FormHelperText>
 					</FormControl>
 
 					{/* # Professions */}
