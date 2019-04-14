@@ -16,7 +16,9 @@ class CityGenGenerated extends React.Component {
 
 	render() {
 		console.log('generated!', this.props.citygen.generatedCity);
-		return <div>show generated city</div>;
+		return (
+			<div>show generated city</div>
+		);
 	}
 }
 
