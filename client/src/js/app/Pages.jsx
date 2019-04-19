@@ -1,6 +1,6 @@
 import React from "react";
 import CityGenForm from "../citygen/CityGenForm";
-import CityGenGenerated from "../citygen/CityGenGenerated";
+import CityGenGenerated from "../citygen/generated/CityGenGenerated";
 
 export default {
 	cityGen: {

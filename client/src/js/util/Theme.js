@@ -113,7 +113,7 @@ export const styles = theme => ({
 	generated__top_buttons: {
 		display: 'flex',
 		justifyContent: 'space-between',
-		width: '300px',
+		width: '400px',
 		margin: '25px auto 0',
 	}
 });
