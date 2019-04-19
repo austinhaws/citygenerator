@@ -109,4 +109,11 @@ export const styles = theme => ({
 		marginTop: '20px',
 		marginBottom: '8px',
 	},
+
+	generated__top_buttons: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		width: '300px',
+		margin: '25px auto 0',
+	}
 });

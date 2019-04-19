@@ -28,6 +28,6 @@ const App = withRoot(withRouter(connect()(AppClass)));
 
 // This will correctly set the basename so router works, if you're using a awesome vhost or not.
 const app = '/citygen';
-const examplePos = window.location.pathname.indexOf(app);
-const baseName = examplePos === -1 ? '/' : window.location.pathname.substr(0, examplePos + examples.length);
+const pos = window.location.pathname.indexOf(app);
+const baseName = pos === -1 ? '/' : window.location.pathname.substr(0, pos + app.length);
 render(<BrowserRouter basename={baseName}><Provider store={reduxStore}><App/></Provider></BrowserRouter>, document.getElementById('react'));

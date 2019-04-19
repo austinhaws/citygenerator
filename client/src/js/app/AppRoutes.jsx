@@ -1,14 +1,16 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 import CityGenForm from "../citygen/CityGenForm";
-import CityGenGenerated from "../citygen/CityGenGenerated";
 import withRoot from "./WithRoot";
+import Pages from "./Pages";
 
 class AppRoutes extends React.Component {
 	render() {
+console.log([this, this.props.history.location]);
 		return (
 			<Switch>
-				<Route path="/generated" component={CityGenGenerated}/>
+				<Route path={Pages.cityGen.generated.path} render={Pages.cityGen.generated.component}/>
+				<Route path={Pages.cityGen.home.path} render={Pages.cityGen.home.component}/>
 				<Route path="/" component={CityGenForm}/>
 			</Switch>
 		);

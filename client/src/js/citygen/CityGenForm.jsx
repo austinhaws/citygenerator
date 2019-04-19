@@ -15,6 +15,7 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import Slider from '@material-ui/lab/Slider';
 import withRoot from "../app/WithRoot";
+import Pages from "../app/Pages";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -38,7 +39,7 @@ class CityGenForm extends React.Component {
 
 	generate = () => {
 		webservice.citygen.generate(this.props.citygen.form)
-			.then(() => this.props.history.push('/generated'));
+			.then(() => Pages.cityGen.generated.forward(this.props.history));
 	};
 
 	addCustomWard = () => {
