@@ -115,5 +115,15 @@ export const styles = theme => ({
 		justifyContent: 'space-between',
 		width: '400px',
 		margin: '25px auto 0',
-	}
+	},
+
+	generated_list: {
+		width: '100%',
+		maxWidth: 500,
+		margin: '0 auto',
+	},
+	generated_list_nested: {
+		paddingLeft: theme.spacing.unit * 4,
+	},
+
 });

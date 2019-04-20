@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CityGen\Services;
 
 use App\Http\Common\Services\BaseService;
+use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Models\Post\PostRaceRatio;
 
@@ -30,6 +31,10 @@ class PostDataService extends BaseService
                 }, $post['raceRatios']);
             }
             $postData->wardsAdded = isset($post['wardsAdded']) ? $post['wardsAdded'] : [];
+        } else {
+            $postData->wardsAdded = [];
+            $postData->hasGates = BooleanRandom::RANDOM;
+            $postData->generateBuildings = BooleanRandom::RANDOM;
         }
 
         return $postData;

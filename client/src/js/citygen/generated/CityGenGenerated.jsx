@@ -6,6 +6,10 @@ import * as PropTypes from "prop-types";
 import withRoot from "../../app/WithRoot";
 import Pages from "../../app/Pages";
 import GeneratedTopButtons from "./GeneratedTopButtons";
+import ListSubheader from "@material-ui/core/ListSubheader";
+import List from "@material-ui/core/List";
+import webservice from "../../util/Webservice";
+import ListItemDetail from "./ListItemDetail";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -16,11 +20,29 @@ const mapStateToProps = state => ({ citygen: state.citygen });
 
 class CityGenGenerated extends React.Component {
 
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			openSections: {
+				cityDetail: true,
+			},
+		};
+
+		if (!this.props.citygen.generatedCity) {
+			webservice.citygen.generate();
+		}
+	}
+
+	toggleSection = sectionName => this.setState({openSections: Object.assign({}, this.state.openSections, {[sectionName]: !this.state.openSections[sectionName]})});
+
+
 	render() {
 		const {classes} = this.props;
 
 console.log('generated!', this.props.citygen.generatedCity);
-		return (
+console.log(this.props.citygen.generatedCity && this.props.citygen.generatedCity.name);
+		return this.props.citygen.generatedCity ? (
 			<div>
 				<GeneratedTopButtons
 					onBackClick={() => Pages.cityGen.home.forward(this.props.history)}
@@ -29,8 +51,22 @@ console.log('generated!', this.props.citygen.generatedCity);
 					onRegenerateClick={() => alert('Regenerating...')}
 					onShowAllClick={() => alert('need to show all...')}
 				/>
+				<hr/>
+				<List
+					component="nav"
+					subheader={<ListSubheader component="div">{this.props.citygen.generatedCity.name}</ListSubheader>}
+					className={classes.generated_list}
+				>
+					<ListItemDetail
+						title="City Detail"
+						isExpanded={this.state.openSections.cityDetail}
+						onToggleExpanded={() => this.toggleSection('cityDetail')}
+						classes={classes}
+						detail={(<div>Label: some content here"</div>)}
+					/>
+				</List>
 			</div>
-		);
+		) : null;
 	}
 }
 /*
