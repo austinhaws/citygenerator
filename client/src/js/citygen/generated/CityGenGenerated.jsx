@@ -10,6 +10,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import webservice from "../../util/Webservice";
 import ListItemDetail from "./ListItemDetail";
+import LabelValue from "./LabelValue";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -18,6 +19,10 @@ const propTypes = {
 const defaultProps = {};
 const mapStateToProps = state => ({ citygen: state.citygen });
 
+const SECTIONS = {
+	cityDetail: 'cityDetail',
+};
+
 class CityGenGenerated extends React.Component {
 
 	constructor(props) {
@@ -25,44 +30,92 @@ class CityGenGenerated extends React.Component {
 
 		this.state = {
 			openSections: {
-				cityDetail: true,
+				[SECTIONS.cityDetail]: true,
 			},
 		};
 
 		if (!this.props.citygen.generatedCity) {
-			webservice.citygen.generate();
+			this.generate();
 		}
 	}
 
 	toggleSection = sectionName => this.setState({openSections: Object.assign({}, this.state.openSections, {[sectionName]: !this.state.openSections[sectionName]})});
 
+	generate = () => webservice.citygen.generate();
+
+	closeSections = () => this.setState({openSections: _.mapValues(this.state.openSections, () => false)});
+	openSections = () => this.setState({openSections: _.mapValues(this.state.openSections, () => true)});
+
+	formatGP = amount => `${amount.toFixed(2)} gp`;
+	formatList = list => (list && list.length) ? list.join(', ') : 'None';
 
 	render() {
 		const {classes} = this.props;
+		const city = this.props.citygen.generatedCity;
+		const br = 'br';
 
-console.log('generated!', this.props.citygen.generatedCity);
-console.log(this.props.citygen.generatedCity && this.props.citygen.generatedCity.name);
-		return this.props.citygen.generatedCity ? (
+console.log('generated!', city);
+		return city ? (
 			<div>
 				<GeneratedTopButtons
 					onBackClick={() => Pages.cityGen.home.forward(this.props.history)}
-					onHideAllClick={() => alert('need to hide all...')}
+					onHideAllClick={this.closeSections}
 					onPrintClick={() => alert('Print...')}
-					onRegenerateClick={() => alert('Regenerating...')}
-					onShowAllClick={() => alert('need to show all...')}
+					onRegenerateClick={this.generate}
+					onShowAllClick={this.openSections}
 				/>
 				<hr/>
 				<List
 					component="nav"
-					subheader={<ListSubheader component="div">{this.props.citygen.generatedCity.name}</ListSubheader>}
+					subheader={<ListSubheader component="div" className={classes.generated_list_title}>{city.name}</ListSubheader>}
 					className={classes.generated_list}
 				>
 					<ListItemDetail
 						title="City Detail"
-						isExpanded={this.state.openSections.cityDetail}
-						onToggleExpanded={() => this.toggleSection('cityDetail')}
+						isExpanded={this.state.openSections[SECTIONS.cityDetail]}
+						onToggleExpanded={() => this.toggleSection(SECTIONS.cityDetail)}
 						classes={classes}
-						detail={(<div>Label: some content here"</div>)}
+						detail={
+							<React.Fragment>
+								{
+									[
+										{label: 'Community Size', value: city.populationType},
+										{label: 'Population', value: `${city.populationSize} Adults`},
+										{label: 'Size', value: `${city.acres} Acres`},
+										{label: 'Population Density (Adults/Acre)', value: `${city.populationDensity} Adults/Acre`},
+										{label: 'Races', value: city.races
+												.filter(race => race.total)
+												.map(race => <span key={race.race}>{race.race} ({race.total})</span>)
+												.reduce((prev, curr, i) => [prev, <br key={`br-${i}`}/>, curr])},
+										br,
+
+										{label: 'Gold Piece Limit', value: this.formatGP(city.goldPieceLimit)},
+										{label: 'Wealth', value: this.formatGP(city.wealth)},
+										{label: 'Income for Lord(s)/King(s)', value: this.formatGP(city.kingIncome)},
+										{label: 'Magic Resources', value: this.formatGP(city.magicResources)},
+										br,
+
+										{label: 'Imports', value: this.formatList(city.commoditiesImport)},
+										{label: 'Exports', value: this.formatList(city.commoditiesExport)},
+										{label: 'Famous', value: this.formatList(city.famous)},
+										{label: 'Infamous', value: this.formatList(city.infamous)},
+										br,
+
+										{label: '# of Wards', value: city.wards.length},
+										{label: '# of Buildings', value: city.numberBuildings},
+										{label: '# of Power Centers', value: city.powerCenters.length},
+										{label: '# of Guilds', value: city.guilds.length},
+										{label: 'Walls', value: city.numGates ? 'Has Walls' : 'No Walls'},
+									].map((item, i) =>
+										item === br ?
+											<div key={i} className={classes.labelValue_container_br}/> :
+											<LabelValue key={item.label} classes={classes} label={item.label} value={item.value}/>
+									)
+								}
+
+								{city.numGates ? <LabelValue classes={classes} label="# of Gates" value={city.numGates}/> : undefined}
+							</React.Fragment>
+						}
 					/>
 				</List>
 			</div>
@@ -96,44 +149,6 @@ console.log(this.props.citygen.generatedCity && this.props.citygen.generatedCity
 </script>
 
 <script id="city-printable" type="text/html">
-Name: {{name}}
-<br /><br />
-<div id="city_stats">
-	<span class="field_title">Community Size: </span>{{population_type}}<br />
-	<span class="field_title">Population: </span>{{population_size_formatted}} Adults<br />
-	<span class="field_title">Size: </span>{{acres_formatted}} Acres<br />
-	<span class="field_title">Population Density (Adults/Acre): </span>{{population_density}} Adults/Acre<br />
-	<span class="field_title">Races: </span>{{races_output}}<br />
-	<br />
-
-	<span class="field_title">Gold Piece Limit: </span>{{gold_piece_limit_output}}<br />
-	<span class="field_title">Wealth: </span>{{wealth_output}}<br />
-	<span class="field_title">Income for Lord(s)/King(s): </span>{{king_income_output}}<br />
-	<span class="field_title">Magic Resources: </span>{{magic_resources_output}}<br />
-	<br />
-
-	<span class="field_title">Imports: </span>{{commodities_import}}<br />
-	<span class="field_title">Exports: </span>{{commodities_export}}<br />
-	<span class="field_title">Famous: </span>{{famous_famous}}<br />
-	<span class="field_title">Infamous: </span>{{famous_infamous}}<br />
-	<br />
-
-	<span class="field_title"># of Wards: </span>{{wards_count}}<br />
-
-	<span class="field_title"># of Buildings: </span>{{buildings_total_output}}<br />
-	<span class="field_title"># of Power Centers: </span>{{power_centers_count}}<br />
-	<span class="field_title"># of Guilds: </span>{{guilds_count}}<br />
-	{{#gates}}
-		<br /><span class="field_title">Has Walls</span><br />
-		<span class="field_title"># of Gates: </span>{{gates}}<br />
-	{{/gates}}
-	{{^gates}}
-		<br /><span class="field_title">No Walls</span><br />
-	{{/gates}}
-</div>
-
-<br /><br />
-
 <div id="wards">
 	{{#wards}}{{#show_ward_list}}
 		<div class="ward_type">Ward - {{type_public}}</div>

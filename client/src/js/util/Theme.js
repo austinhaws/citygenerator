@@ -92,11 +92,11 @@ export const styles = theme => ({
 		width: '64px',
 	},
 	app__background: {
-		backgroundImage: 'url(img/squidee-opaque.png)',
-		backgroundPositionX: 'center',
-		backgroundRepeat: 'no-repeat',
-		backgroundPositionY: '50%',
-		backgroundSize: '50%',
+		// backgroundImage: 'url(img/squidee-opaque.png)',
+		// backgroundPositionX: 'center',
+		// backgroundRepeat: 'no-repeat',
+		// backgroundPositionY: '50%',
+		// backgroundSize: '50%',
 	},
 	thanks: {
 		margin: '0 auto',
@@ -119,11 +119,42 @@ export const styles = theme => ({
 
 	generated_list: {
 		width: '100%',
-		maxWidth: 500,
+		maxWidth: 1000,
 		margin: '0 auto',
+	},
+	generated_list_title: {
+		textAlign: 'center',
+		fontWeight: 'bold',
+		fontSize: '2rem',
 	},
 	generated_list_nested: {
 		paddingLeft: theme.spacing.unit * 4,
+	},
+
+	labelValue_container: {
+		display: 'flex',
+		flexDirection: 'row',
+		width: '100%',
+	},
+	labelValue_container_title: {
+		textAlign: 'center',
+		color: colorComplement4,
+		fontSize: '1.5rem',
+		// arrow takes size from right causing center to not match city name centering
+		paddingLeft: '40px',
+	},
+	labelValue_container_label: {
+		width: '30%',
+		textAlign: 'right',
+		marginRight: '11px',
+		color: colorComplement4,
+	},
+	labelValue_container_value: {
+
+	},
+	labelValue_container_br: {
+		height: '10px',
+		width: '100%',
 	},
 
 });

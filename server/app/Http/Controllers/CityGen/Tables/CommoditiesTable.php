@@ -100,7 +100,7 @@ class CommoditiesTable extends BaseTable
             1303 => 'Demantoid',
             1304 => 'Diamond',
             1350 => 'Dogs',
-            1373 => 'Donkey',
+            1373 => 'Donkeys',
             1402 => 'Doves',
             1436 => 'Ducks',
             1437 => 'Dumortierite',

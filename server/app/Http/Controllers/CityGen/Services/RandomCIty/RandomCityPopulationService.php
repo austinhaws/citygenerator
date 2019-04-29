@@ -33,6 +33,7 @@ class RandomCityPopulationService extends BaseService
             $city->populationSize = $this->services->random->randMinMax("Random Population Size", $value);
         }
 
+        // other calculations based on population type/size
         $city->goldPieceLimit = $this->services->table->getTableResultIndex(Table::POPULATION_WEALTH, $city->populationType);
         $city->wealth = (float)$city->goldPieceLimit * 0.5 * (float)($city->populationSize) * 0.1;
         $city->kingIncome = $this->services->table->getTableResultIndex(Table::KING_INCOME, $city->populationType) * $city->wealth;

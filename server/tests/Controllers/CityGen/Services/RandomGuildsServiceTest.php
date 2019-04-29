@@ -16,8 +16,6 @@ final class RandomGuildsServiceTest extends BaseTestCase
      */
     public function testNoProfessions()
     {
-        $postData = new PostData();
-
         $city = new City();
         $city->populationType = PopulationType::METROPOLIS;
 
@@ -25,7 +23,7 @@ final class RandomGuildsServiceTest extends BaseTestCase
             new TestRoll('Guild Modifier', 2, 0, 7),
         ]);
 
-        $this->services->randomGuilds->determineGuilds($city, $postData);
+        $this->services->randomGuilds->determineGuilds($city);
         $this->services->random->verifyRolls();
 
         $this->assertSame(0, count($city->guilds));
@@ -55,7 +53,7 @@ final class RandomGuildsServiceTest extends BaseTestCase
             new TestRoll('Guild Modifier', 2, 0, 7),
         ]);
 
-        $this->services->randomGuilds->determineGuilds($city, $postData);
+        $this->services->randomGuilds->determineGuilds($city);
         $this->services->random->verifyRolls();
 
         $this->assertSame(42, count($city->guilds));

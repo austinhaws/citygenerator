@@ -31,10 +31,17 @@ class PostDataService extends BaseService
                 }, $post['raceRatios']);
             }
             $postData->wardsAdded = isset($post['wardsAdded']) ? $post['wardsAdded'] : [];
+            $postData->professions = $this->services->random->randomBoolean($post, 'professions');
         } else {
-            $postData->wardsAdded = [];
+            $postData->populationType = null;
+            $postData->hasSea = BooleanRandom::RANDOM;
+            $postData->hasMilitary = BooleanRandom::RANDOM;
+            $postData->hasRiver = BooleanRandom::RANDOM;
             $postData->hasGates = BooleanRandom::RANDOM;
             $postData->generateBuildings = BooleanRandom::RANDOM;
+            $postData->racialMix = [];
+            $postData->wardsAdded = [];
+            $postData->professions = BooleanRandom::RANDOM;
         }
 
         return $postData;

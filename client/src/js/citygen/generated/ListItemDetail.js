@@ -25,7 +25,7 @@ class ListItemDetail extends React.Component {
 		return (
 			<React.Fragment>
 				<ListItem button onClick={this.props.onToggleExpanded}>
-					<ListItemText inset primary={this.props.title} />
+					<ListItemText primary={this.props.title} classes={{primary: this.props.classes.labelValue_container_title}}/>
 					{this.props.isExpanded ? <ExpandLess /> : <ExpandMore />}
 				</ListItem>
 				<Collapse in={this.props.isExpanded} timeout="auto" unmountOnExit>

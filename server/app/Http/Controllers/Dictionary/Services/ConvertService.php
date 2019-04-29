@@ -32,7 +32,12 @@ class ConvertService extends BaseService
         // use start text if none provided
         $phraseParts = $this->convertPhrase($dictionaryName, $text, true);
 
-        return ucwords(preg_replace('/ +/', ' ', $this->randomizePhrase($phraseParts, $shuffle)));
+        $result = $this->randomizePhrase($phraseParts, $shuffle);
+
+        // should prevent "Malformed UTF-8 characters, possibly incorrectly encoded<" errors
+        $result = mb_convert_encoding($result, 'UTF-8', 'UTF-8');
+
+        return ucwords(preg_replace('/ +/', ' ', $result));
     }
 
     /**

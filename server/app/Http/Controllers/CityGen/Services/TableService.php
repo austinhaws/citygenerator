@@ -30,8 +30,9 @@ class TableService extends BaseService
         $table = Table::getTable($tableName)->getTable();
 
         if (!isset($table[$index])) {
-            pprint_r(debug_backtrace(), 'backtrace');
-            pprint_r(array('index' => $index, 'table' => $table), 'get_table_result_index : Index unknown', true);
+            var_dump(debug_backtrace(), 'backtrace');
+            var_dump(array('index' => $index, 'table' => $table), 'get_table_result_index : Index unknown');
+            exit('failed');
         }
         return $table[$index];
     }

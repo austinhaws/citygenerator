@@ -2298,6 +2298,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $this->services->random->verifyRolls();
 
         $this->assertTrue(strlen($city->name) > 0);
-
+        $this->assertEquals(10, count($city->wards));
+        $this->assertEquals(6, count($city->wards[0]->buildings));
     }
 }
