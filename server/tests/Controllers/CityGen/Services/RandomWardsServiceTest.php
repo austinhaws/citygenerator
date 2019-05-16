@@ -2278,8 +2278,20 @@ final class RandomWardsServiceTest extends BaseTestCase
             new TestRoll('Building Quality', 3, 3, 4),
             new TestRoll('Building Weight', 100, 1, 100),
             new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Power Level', 0, 0, 1),
+            new TestRoll('ProfessionTable: range', 50, 1, 10000),
             // [110]
+            new TestRoll('ProfessionTable: range', 25, 1, 10000),
+            new TestRoll('ProfessionTable: range', 25, 1, 10000),
+            new TestRoll('ProfessionTable: range', 25, 1, 10000),
+            new TestRoll('ProfessionTable: range', 25, 1, 10000),
+            new TestRoll('ProfessionTable: range', 25, 1, 10000),
+            new TestRoll('ProfessionTable: range', 25, 1, 10000),
+            new TestRoll('ProfessionTable: range', 25, 1, 10000),
+            new TestRoll('ProfessionTable: range', 25, 1, 10000),
+            new TestRoll('ProfessionTable: range', 25, 1, 10000),
+            new TestRoll('ProfessionTable: range', 25, 1, 10000),
+            // [120]
+            new TestRoll('Power Level', 0, 0, 1),
             new TestRoll('Racial Mix', 1, 1, 3),
             new TestRoll('RacesRandomTable: range', 1, 1, 100),
             new TestRoll('Guild Modifier', 0, 0, 0),
@@ -2289,8 +2301,8 @@ final class RandomWardsServiceTest extends BaseTestCase
             new TestRoll('Number Infamous', 0, 0, 0),
             new TestRoll('Use words', 1, 1, 100),
             new TestRoll('NameNumWordsTable: range', 1, 1, 100),
+            // [130]
             new TestRoll('NameNumSyllablesTable: range', 1, 1, 55),
-            // [120]
             new TestRoll('SyllablesTable: range', 1, 1, TestRoll::ANY),
         ]);
 
@@ -2300,5 +2312,6 @@ final class RandomWardsServiceTest extends BaseTestCase
         $this->assertTrue(strlen($city->name) > 0);
         $this->assertEquals(10, count($city->wards));
         $this->assertEquals(6, count($city->wards[0]->buildings));
+        $this->assertEquals(5, count($city->professions));
     }
 }

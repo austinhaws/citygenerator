@@ -11,6 +11,13 @@ class RandomService extends BaseService
     const RANDOM = 'Random';
     const CUSTOM = 'Custom';
 
+    public function isTrue(&$value) {
+        if ($this->isRandom($value)) {
+            $value = $this->percentile('Random True/False') > 50;
+        }
+        return $value === BooleanRandom::TRUE;
+    }
+
     /**
      * @param string|int $value
      * @return bool
@@ -86,7 +93,7 @@ class RandomService extends BaseService
      * @param string $name
      * @return float|int
      */
-    public function randRatio($name)
+    public function randRatio(string $name)
     {
         return (float)$this->mtRand($name) / (float)getrandmax();
     }
@@ -97,16 +104,16 @@ class RandomService extends BaseService
      * @param $max
      * @return float|int
      */
-    public function randRatioRange($name, $min, $max)
+    public function randRatioRange(string $name, int $min, int $max)
     {
         return $this->randRatio($name) * ($max - $min) + $min;
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return int
      */
-    public function percentile($name)
+    public function percentile(string $name)
     {
         return $this->randRangeInt($name, 1, 100);
     }
@@ -116,7 +123,7 @@ class RandomService extends BaseService
      * @param MinMax $minMax [MinMax::MIN => #, MinMax::Max => #]
      * @return int
      */
-    public function randMinMax(string $name, $minMax)
+    public function randMinMax(string $name, MinMax $minMax)
     {
         return $this->randRangeInt($name, $minMax->min, $minMax->max);
     }

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
 use App\Http\Common\Services\BaseService;
-use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Models\City\City;
 use App\Http\Controllers\CityGen\Models\City\CityProfession;
@@ -18,7 +17,7 @@ class RandomProfessionsService extends BaseService
      */
     public function determineProfessions(City $city, PostData $postData)
     {
-        if ($postData->professions === BooleanRandom::TRUE) {
+        if ($this->services->random->isTrue($postData->professions)) {
             $total = 0;
 
             // add automatic ratio'ed professions

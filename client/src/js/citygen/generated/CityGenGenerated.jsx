@@ -10,7 +10,7 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import webservice from "../../util/Webservice";
 import ListItemDetail from "./ListItemDetail";
-import LabelValue from "./LabelValue";
+import CityDetail from "./CityDetail";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -46,13 +46,9 @@ class CityGenGenerated extends React.Component {
 	closeSections = () => this.setState({openSections: _.mapValues(this.state.openSections, () => false)});
 	openSections = () => this.setState({openSections: _.mapValues(this.state.openSections, () => true)});
 
-	formatGP = amount => `${amount.toFixed(2)} gp`;
-	formatList = list => (list && list.length) ? list.join(', ') : 'None';
-
 	render() {
 		const {classes} = this.props;
 		const city = this.props.citygen.generatedCity;
-		const br = 'br';
 
 console.log('generated!', city);
 		return city ? (
@@ -77,43 +73,7 @@ console.log('generated!', city);
 						classes={classes}
 						detail={
 							<React.Fragment>
-								{
-									[
-										{label: 'Community Size', value: city.populationType},
-										{label: 'Population', value: `${city.populationSize} Adults`},
-										{label: 'Size', value: `${city.acres} Acres`},
-										{label: 'Population Density (Adults/Acre)', value: `${city.populationDensity} Adults/Acre`},
-										{label: 'Races', value: city.races
-												.filter(race => race.total)
-												.map(race => <span key={race.race}>{race.race} ({race.total})</span>)
-												.reduce((prev, curr, i) => [prev, <br key={`br-${i}`}/>, curr])},
-										br,
-
-										{label: 'Gold Piece Limit', value: this.formatGP(city.goldPieceLimit)},
-										{label: 'Wealth', value: this.formatGP(city.wealth)},
-										{label: 'Income for Lord(s)/King(s)', value: this.formatGP(city.kingIncome)},
-										{label: 'Magic Resources', value: this.formatGP(city.magicResources)},
-										br,
-
-										{label: 'Imports', value: this.formatList(city.commoditiesImport)},
-										{label: 'Exports', value: this.formatList(city.commoditiesExport)},
-										{label: 'Famous', value: this.formatList(city.famous)},
-										{label: 'Infamous', value: this.formatList(city.infamous)},
-										br,
-
-										{label: '# of Wards', value: city.wards.length},
-										{label: '# of Buildings', value: city.numberBuildings},
-										{label: '# of Power Centers', value: city.powerCenters.length},
-										{label: '# of Guilds', value: city.guilds.length},
-										{label: 'Walls', value: city.numGates ? 'Has Walls' : 'No Walls'},
-									].map((item, i) =>
-										item === br ?
-											<div key={i} className={classes.labelValue_container_br}/> :
-											<LabelValue key={item.label} classes={classes} label={item.label} value={item.value}/>
-									)
-								}
-
-								{city.numGates ? <LabelValue classes={classes} label="# of Gates" value={city.numGates}/> : undefined}
+								<CityDetail city={city} classes={classes}/>
 							</React.Fragment>
 						}
 					/>
