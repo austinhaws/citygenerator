@@ -17,7 +17,7 @@ class RandomGuildsService extends BaseService
     public function determineGuilds(City $city)
     {
         $modifierMinMax = $this->services->table->getTableResultIndex(Table::GUILD_MODIFIERS, $city->populationType);
-        $modifier = 50 + $this->services->random->randMinMax('Guild Modifier', $modifierMinMax);
+        $modifier = 50 + $this->services->random->randMinMaxInt('Guild Modifier', $modifierMinMax);
 
         // loop through each guild
         foreach (Table::getTable(Table::GUILDS)->getTable() as $guild => $professions) {

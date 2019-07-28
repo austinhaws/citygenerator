@@ -28,7 +28,7 @@ class RandomBuildingsService extends BaseService
         // add buildings to fill densityAcres
         for ($i = 1; $i <= $wardDensityAcres; $i++) {
             $tableBuilding = $this->services->table->getTableResultRangeCustom('Building Weight', $buildingWeightsUse);
-            $quality = $this->services->random->randMinMax('Building Quality', $tableBuilding->qualityMinMax);
+            $quality = $this->services->random->randMinMaxInt('Building Quality', $tableBuilding->qualityMinMax);
 
             if (isset($tableBuildingSubtypes[$tableBuilding->building])) {
                 $subType = $this->services->table->getTableResultRangeCustom('Building SubType', $tableBuildingSubtypes[$tableBuilding->building]);

@@ -30,7 +30,7 @@ class RandomCityPopulationService extends BaseService
         // population size: if hand entered, may already be set
         if ($city->populationSize === null) {
             $value = $this->services->table->getTableResultIndex(Table::POPULATION_SIZE, $city->populationType);
-            $city->populationSize = $this->services->random->randMinMax("Random Population Size", $value);
+            $city->populationSize = $this->services->random->randMinMaxInt("Random Population Size", $value);
         }
 
         // other calculations based on population type/size

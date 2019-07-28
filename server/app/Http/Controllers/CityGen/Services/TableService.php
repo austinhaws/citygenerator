@@ -58,7 +58,7 @@ class TableService extends BaseService
     {
         $keys = array_keys($table);
         // min 1, keys[0] is because range tables start with something like 200 meaning 1->200 are that key where as NameWordsTable is a plain array that starts with a zero index
-        $index = $this->services->random->randMinMax($rollName, new MinMax(min(1, $keys[0]), array_pop($keys)));
+        $index = $this->services->random->randMinMaxInt($rollName, new MinMax(min(1, $keys[0]), array_pop($keys)));
 
         foreach ($table as $key => $value) {
             if ($index <= $key) {

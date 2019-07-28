@@ -16,7 +16,7 @@ class RandomCommoditiesService extends BaseService
     public function determineCommodities(City $city)
     {
         $minMax = $this->services->table->getTableResultIndex(Table::COMMODITY_COUNT, $city->populationType);
-        $this->services->table->fillRandomStrings($city->commoditiesExport, Table::COMMODITIES, $this->services->random->randMinMax('Number Exports', $minMax));
-        $this->services->table->fillRandomStrings($city->commoditiesImport, Table::COMMODITIES, $this->services->random->randMinMax('Number Imports', $minMax));
+        $this->services->table->fillRandomStrings($city->commoditiesExport, Table::COMMODITIES, $this->services->random->randMinMaxInt('Number Exports', $minMax));
+        $this->services->table->fillRandomStrings($city->commoditiesImport, Table::COMMODITIES, $this->services->random->randMinMaxInt('Number Imports', $minMax));
     }
 }

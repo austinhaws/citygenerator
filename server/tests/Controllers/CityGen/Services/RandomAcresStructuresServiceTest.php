@@ -17,9 +17,9 @@ final class RandomAcresStructuresServiceTest extends BaseTestCase
     public function testRandomAcres()
     {
         $tests = [
-            ['percent' => 45, 'result' => 217],
-            ['percent' => 0, 'result' => 1000],
-            ['percent' => 100, 'result' => 111],
+            ['percent' => 45, 'result' => 217.3913043742341],
+            ['percent' => 0, 'result' => 1000.0],
+            ['percent' => 100, 'result' => 111.11111111111111],
         ];
         $city = new City();
         $city->populationType = PopulationType::THORP;

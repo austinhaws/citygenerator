@@ -40,7 +40,7 @@ class RandomSeaRiverMilitaryGatesService extends BaseService
 
         if ($postData->hasGates === BooleanRandom::TRUE) {
             $numGatesRange = $this->services->table->getTableResultIndex(Table::POPULATION_NUM_WALLS, $city->populationType);
-            $city->numGates = $this->services->random->randMinMax('Num Gates', $numGatesRange);
+            $city->numGates = $this->services->random->randMinMaxInt('Num Gates', $numGatesRange);
         } else {
             $city->numGates = 0;
         }

@@ -14,7 +14,7 @@ class RandomAcresStructuresService extends BaseService
     public function randomAcres(City $city)
     {
         $value = $this->services->table->getTableResultIndex(Table::POPULATION_ACRES, $city->populationType);
-        $city->acres = intVal($city->populationSize / $this->services->random->randRatioRange("randomAcres", $value->min, $value->max));
+        $city->acres = $city->populationSize / $this->services->random->randRatioRange("randomAcres", $value->min, $value->max);
     }
 
     /**

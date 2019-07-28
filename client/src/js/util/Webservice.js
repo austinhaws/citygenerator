@@ -1,6 +1,7 @@
 import {AjaxStatusCore, WebserviceCore} from "dts-react-common";
 import store from "./ReduxStore";
 import {dispatchField} from "./Dispatch";
+import format from "../citygen/generated/Format";
 
 export const ajaxStatus = new AjaxStatusCore();
 ajaxStatus.registerChangedCallback(
@@ -45,7 +46,7 @@ export default {
 			return lists;
 		}),
 		generate: form => webserviceCityGen.post(`generate`, form).then(city => {
-			city.populationDensity = (city.populationSize / city.acres).toFixed(2);
+			city.populationDensity = format.formatFloat(city.populationSize / city.acres);
 			city.numberBuildings = city.wards.reduce((carry, ward) => carry + ward.buildings ? ward.buildings.length : 0, 0);
 			dispatchField('citygen.generatedCity', city);
 			return city;

@@ -91,7 +91,7 @@ class RandomService extends BaseService
 
     /**
      * @param string $name
-     * @return float|int
+     * @return float
      */
     public function randRatio(string $name)
     {
@@ -102,7 +102,7 @@ class RandomService extends BaseService
      * @param $name
      * @param $min
      * @param $max
-     * @return float|int
+     * @return float
      */
     public function randRatioRange(string $name, int $min, int $max)
     {
@@ -123,8 +123,17 @@ class RandomService extends BaseService
      * @param MinMax $minMax [MinMax::MIN => #, MinMax::Max => #]
      * @return int
      */
-    public function randMinMax(string $name, MinMax $minMax)
+    public function randMinMaxInt(string $name, MinMax $minMax)
     {
         return $this->randRangeInt($name, $minMax->min, $minMax->max);
+    }
+    /**
+     * @param string $name
+     * @param MinMax $minMax [MinMax::MIN => #, MinMax::Max => #]
+     * @return int
+     */
+    public function randMinMaxFloat(string $name, MinMax $minMax)
+    {
+        return $this->randRangeInt($name, $minMax->min * 100 , $minMax->max * 100) / 100.0;
     }
 }

@@ -38,10 +38,10 @@ class PostDataService extends BaseService
             $postData->hasMilitary = BooleanRandom::RANDOM;
             $postData->hasRiver = BooleanRandom::RANDOM;
             $postData->hasGates = BooleanRandom::RANDOM;
-            $postData->generateBuildings = BooleanRandom::RANDOM;
+            $postData->generateBuildings = BooleanRandom::TRUE;
             $postData->racialMix = [];
             $postData->wardsAdded = [];
-            $postData->professions = BooleanRandom::RANDOM;
+            $postData->professions = BooleanRandom::TRUE;
         }
 
         return $postData;

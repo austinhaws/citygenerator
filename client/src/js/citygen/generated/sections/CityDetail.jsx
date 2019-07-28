@@ -1,11 +1,11 @@
 import '@babel/polyfill';
 import React from 'react';
 import * as PropTypes from "prop-types";
-import withRoot from "../../app/WithRoot";
-import LabelValue from "./LabelValue";
-import LabelValueList from "./LabelValueList";
-import constants from './Constants';
-import format from "./Format";
+import withRoot from "../../../app/WithRoot";
+import LabelValue from "./../LabelValue";
+import LabelValueList from "./../LabelValueList";
+import constants from './../Constants';
+import format from "./../Format";
 
 const propTypes = {
 	city: PropTypes.object.isRequired,
@@ -24,7 +24,7 @@ class CityDetail extends React.Component {
 					[
 						{label: 'Community Size', value: city.populationType},
 						{label: 'Population', value: `${city.populationSize} Adults`},
-						{label: 'Size', value: `${city.acres} Acres`},
+						{label: 'Size', value: `${format.formatFloat(city.acres)} Acres`},
 						{label: 'Population Density (Adults/Acre)', value: `${city.populationDensity} Adults/Acre`},
 						{
 							label: 'Races', value: city.races

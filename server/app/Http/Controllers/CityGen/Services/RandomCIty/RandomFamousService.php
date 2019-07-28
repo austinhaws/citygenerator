@@ -15,7 +15,7 @@ class RandomFamousService extends BaseService
     public function determineFamous(City $city)
     {
         $famousMinMax = $this->services->table->getTableResultIndex(Table::FAMOUS_OCCURRENCE, $city->populationType);
-        $this->services->table->fillRandomStrings($city->famous, Table::FAMOUS, $this->services->random->randMinMax('Number Famous', $famousMinMax));
-        $this->services->table->fillRandomStrings($city->infamous, Table::FAMOUS, $this->services->random->randMinMax('Number Infamous', $famousMinMax));
+        $this->services->table->fillRandomStrings($city->famous, Table::FAMOUS, $this->services->random->randMinMaxInt('Number Famous', $famousMinMax));
+        $this->services->table->fillRandomStrings($city->infamous, Table::FAMOUS, $this->services->random->randMinMaxInt('Number Infamous', $famousMinMax));
     }
 }

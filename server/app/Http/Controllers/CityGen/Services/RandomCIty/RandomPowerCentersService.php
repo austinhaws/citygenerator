@@ -21,11 +21,11 @@ class RandomPowerCentersService extends BaseService
     public function determinePowerCenters(City $city)
     {
         $powerLevelMinMax = $this->services->table->getTableResultIndex(Table::POPULATION_POWER_CENTER, $city->populationType);
-        $powerLevel = $this->services->random->randMinMax('Power Level', $powerLevelMinMax);
+        $powerLevel = $this->services->random->randMinMaxInt('Power Level', $powerLevelMinMax);
 
         if ($powerLevel) {
             $influenceMinMax = $this->services->table->getTableResultIndex(Table::POPULATION_INFLUENCE_POINTS, $city->populationType);
-            $influencePoints = $this->services->random->randMinMax('Influence points', $influenceMinMax);
+            $influencePoints = $this->services->random->randMinMaxInt('Influence points', $influenceMinMax);
 
             $percent = $this->services->table->getTableResultIndex(Table::POPULATION_CENTER_UNABSORBED, $city->populationType);
 

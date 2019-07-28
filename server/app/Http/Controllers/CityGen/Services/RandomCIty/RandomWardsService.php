@@ -43,7 +43,7 @@ class RandomWardsService extends BaseService
         // based on city type, should allocate bigger/smaller randomness in sizes
         $value = $this->services->table->getTableResultIndex(Table::WARD_ACRES_USED, $city->populationType);
 
-        $acresUsed = $this->services->random->randMinMax('Ward acres used', $value);
+        $acresUsed = $this->services->random->randMinMaxFloat('Ward acres used', $value);
 
         $ward = new CityWard();
         $ward->type = $ward_type;

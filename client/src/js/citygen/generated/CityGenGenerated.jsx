@@ -10,7 +10,8 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import webservice from "../../util/Webservice";
 import ListItemDetail from "./ListItemDetail";
-import CityDetail from "./CityDetail";
+import CityDetail from "./sections/CityDetail";
+import Wards from "./sections/Wards";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -21,6 +22,7 @@ const mapStateToProps = state => ({ citygen: state.citygen });
 
 const SECTIONS = {
 	cityDetail: 'cityDetail',
+	wards: 'wards',
 };
 
 class CityGenGenerated extends React.Component {
@@ -31,6 +33,7 @@ class CityGenGenerated extends React.Component {
 		this.state = {
 			openSections: {
 				[SECTIONS.cityDetail]: true,
+				[SECTIONS.wards]: false,
 			},
 		};
 
@@ -71,11 +74,14 @@ console.log('generated!', city);
 						isExpanded={this.state.openSections[SECTIONS.cityDetail]}
 						onToggleExpanded={() => this.toggleSection(SECTIONS.cityDetail)}
 						classes={classes}
-						detail={
-							<React.Fragment>
-								<CityDetail city={city} classes={classes}/>
-							</React.Fragment>
-						}
+						detail={<CityDetail city={city} classes={classes}/>}
+					/>
+					<ListItemDetail
+						title="Wards"
+						isExpanded={this.state.openSections[SECTIONS.wards]}
+						onToggleExpanded={() => this.toggleSection(SECTIONS.wards)}
+						classes={classes}
+						detail={<Wards city={city} classes={classes}/>}
 					/>
 				</List>
 			</div>
@@ -108,76 +114,6 @@ console.log('generated!', city);
 	</tr>
 </script>
 
-<script id="city-printable" type="text/html">
-<div id="wards">
-	{{#wards}}{{#show_ward_list}}
-		<div class="ward_type">Ward - {{type_public}}</div>
-		<div>
-		<div class="ward_info">
-			{{acres_output}} Acres; {{building_total_output}} Structures;
-			{{#inside_walls}}
-				Inside Walls
-			{{/inside_walls}}
-			{{^inside_walls}}
-				Outside Walls
-			{{/inside_walls}}
-		</div>
-		{{#buildings}}
-			<span class="building_name">{{key}}</span> : <span class="building_num">{{total}}; </span>
-		{{/buildings}}
-		<br /><br />
-	{{/show_ward_list}}{{/wards}}
-	Number in parenthesis after building type is the building quality:
-	<ul>
-		<li>A is luxurious, royal, or imperial</li>
-		<li>B is tasteful, ornate, or artistic</li>
-		<li>C is utilitarian, basic, or normal</li>
-		<li>D is derelict, condemened, rough, or functional</li>
-	</ul>
-</div>
-
-<br />
-<div id="professions">
-Professions<br />
-{{#professions}}
-	{{profession}} : {{total}};
-{{/professions}}
-
-{{! power centers}}
-{{#power_centers_exists}}
-	<br /><br />
-	<div id="power_centers">
-		{{#power_centers}}
-			Power Center - {{type}}<br />
-			Alignment: {{alignment}}<br />
-			Wealth: {{wealth_output}}<br />
-			Influence Points: {{influence_points_output}}<br />
-			Total NPCs (Class Level - Count): {{npcs_total_output}}<br />
-			{{#npcs}}
-				{{class}}
-				{{#levels}}
-					{{level}}-{{count}},
-				{{/levels}}
-				<br />
-			{{/npcs}}
-		<br />
-		{{/power_centers}}
-	</div>
-{{/power_centers_exists}}
-
-{{#guilds_count}}
-	<div id="guilds">Guilds -
-		{{#guilds}}
-			{{guild}} : {{total}};
-		{{/guilds}}
-	</div>
-{{/guilds_count}}
-
-<br />
-<br />
-<div>Layout</div>
-	<div id="layout"></div>
-</script>
 
 
 <script id="city-ward-detail" type="text/html">
@@ -205,81 +141,6 @@ Professions<br />
 
 <script id="city-detail" type="text/html">
 
-	{{! city info }}
-	<div class="center toggleable" data-toggle-target="#city_stats"><h1>{{name}}</h1></div>
-
-	<div id="city_stats">
-		<div class="line"><span class="field_title">Community Size:</span>{{population_type}}</div>
-		<div class="line"><span class="field_title">Population:</span>{{population_size_formatted}} Adults</div>
-		<div class="line"><span class="field_title">Size:</span>{{acres_formatted}} Acres</div>
-		<div class="line"><span class="field_title">Population Density (Adults/Acre):</span>{{population_density}} Adults/Acre</div>
-		<div class="line"><span class="field_title">Races:</span>{{races_output}}</div>
-
-		<div class="line margin-top"><span class="field_title">Gold Piece Limit:</span>{{gold_piece_limit_output}}</div>
-		<div class="line"><span class="field_title">Wealth:</span>{{wealth_output}}</div>
-		<div class="line"><span class="field_title">Income for Lord(s)/King(s):</span>{{king_income_output}}</div>
-		<div class="line"><span class="field_title">Magic Resources:</span>{{magic_resources_output}}</div>
-
-		<div class="line margin-top"><span class="field_title">Imports:</span>{{commodities_import}}</div>
-		<div class="line"><span class="field_title">Exports:</span>{{commodities_export}}</div>
-		<div class="line"><span class="field_title">Famous:</span>{{famous_famous}}</div>
-		<div class="line"><span class="field_title">Infamous:</span>{{famous_infamous}}</div>
-
-		<div class="line margin-top"><span class="field_title"># of Wards:</span>{{wards_count}}</div>
-		<div class="line"><span class="field_title"># of Buildings:</span>{{buildings_total_output}}</div>
-		<div class="line"><span class="field_title"># of Power Centers:</span>{{power_centers_count}}</div>
-		<div class="line"><span class="field_title"># of Guilds:</span>{{guilds_count}}</div>
-
-		{{#gates}}
-			<div class="line margin-top"><span class="field_title">Has Walls</span></div>
-			<div class="line"><span class="field_title"># of Gates:</span>{{gates}}</div>
-		{{/gates}}
-		{{^gates}}
-			<div class="line margin-top"><span class="field_title">No Walls</span></div>
-		{{/gates}}
-	</div>
-
-	{{! wards }}
-	<div class="center toggleable group-title" data-toggle-target=".wards-container"><h1>Wards</h1></div>
-	<div class="content-container wards-container toggled-closed">
-		<div id="wards">
-			{{#wards}}
-				{{#show_ward_list}}
-				<div class="ward">
-					<div class="ward_type" data-ward-id="{{id}}"><span class="toggleable" data-toggle-target=".ward-id-{{id}}">{{type_public}}</span> <span class="ward-layout-key">(city layout: {{id_letter}})</span></div>
-					<div class="ward_detail ward-id-{{id}} toggled-closed">
-						<div class="ward_info">
-							{{acres_output}} Acres; {{building_total_output}} Structures;
-							{{#inside_walls}}
-								Inside Walls
-							{{/inside_walls}}
-							{{^inside_walls}}
-								Outside Walls
-							{{/inside_walls}}
-						</div>
-
-						<div class="ward_buildings">
-							{{#buildings}}
-								<div class="building">{{key}} : {{total}}</div>
-							{{/buildings}}
-						</div>
-					</div>
-				</div>
-				{{/show_ward_list}}
-			{{/wards}}
-			<div class="building-types">
-				<div class="building-types-centerer">
-					<span class="italic">Number in parenthesis after building type is the building's quality:
-					<ul>
-					<li>A is luxurious, royal, or imperial</li>
-					<li>B is tasteful, ornate, or artistic</li>
-					<li>C is utilitarian, basic, or normal</li>
-					<li>D is derelict, condemened, rough, or functional</li>
-					</ul></span>
-				</div>
-			</div>
-		</div>
-	</div>
 
 
 	{{! professions }}
