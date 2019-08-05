@@ -2,17 +2,45 @@
 
 namespace Test\Controllers\CityGen\Util;
 
+use Illuminate\Database\Capsule\Manager as DB;
 use PHPUnit\Framework\TestCase;
 
 class BaseTestCase extends TestCase
 {
     /** @var TestServicesService */
     protected $services;
+    /** @var DB the db connection */
+    private static $db;
 
     public function __construct()
     {
         parent::__construct();
         $this->services = new TestServicesService($this);
+    }
+
+    public function setUp()
+    {
+        parent::setup();
+
+        if (!self::$db) {
+            // probably a way to use Database.php in config? but this does the trick...
+            self::$db = new DB;
+            self::$db->addConnection(array(
+                'driver' => 'mysql',
+                'host' => env('DB_CITYGEN_HOST'),
+                'port' => env('DB_CITYGEN_PORT'),
+                'database' => env('DB_CITYGEN_DATABASE'),
+                'username' => env('DB_CITYGEN_USERNAME'),
+                'password' => env('DB_CITYGEN_PASSWORD'),
+                'charset' => 'utf8',
+                'collation' => 'utf8_unicode_ci',
+                'prefix' => '',
+                'strict' => false,
+            ), 'citygen');
+
+            self::$db->setAsGlobal();
+            self::$db->bootEloquent();
+        }
     }
 
     protected function assertIsSorted($array, $getSortValueCallback)
