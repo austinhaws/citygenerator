@@ -4,8 +4,6 @@ namespace App\Http\Controllers\CityGen\Constants;
 
 use App\Http\Common\Constants\BaseEnum;
 use App\Http\Common\Tables\BaseTable;
-use App\Http\Controllers\CityGen\Models\Table\TableCommodity;
-use App\Http\Controllers\CityGen\Tables\DBTable;
 
 class Table extends BaseEnum
 {
@@ -66,16 +64,8 @@ class Table extends BaseEnum
         if (isset(Table::$tables[$tableName])) {
             $table = Table::$tables[$tableName];
         } else {
-            switch ($tableName) {
-                case Table::COMMODITIES:
-                    $table = new DBTable(array_column(TableCommodity::all()->toArray(), 'name', 'range'));
-                    break;
-
-                default:
-                    $pathName = "App\Http\Controllers\CityGen\Tables\\$tableName";
-                    $table = new $pathName();
-                    break;
-            }
+            $pathName = "App\Http\Controllers\CityGen\Tables\\$tableName";
+            $table = new $pathName();
             Table::$tables[$tableName] = $table;
         }
 
