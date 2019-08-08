@@ -16,11 +16,11 @@ class WardDetail extends React.Component {
 		const {classes, ward} = this.props;
 		return <React.Fragment>
 			<div>
-				{format.formatFloat(ward.acres)} Acres; {ward.buildings ? ward.buildings : 0} Structures; {ward.insideWalls ? 'Inside' : 'Outside'} Walls
+				{format.formatFloat(ward.acres)} Acres; {ward.buildings ? ward.buildings.length : 0} Structures; {ward.insideWalls ? 'Inside' : 'Outside'} Walls
 			</div>
 
 			<div>
-				{_.map(ward.buildings, (value, key) => <div key={key}>{key} : {value}</div>)}
+				{_.map(ward.buildings, (value, key) => <div key={key}>{key} : {value.building}/{value.sumbType}/{value.quality}</div>)}
 			</div>
 		</React.Fragment>;
 	}

@@ -29,7 +29,7 @@ class ListItemDetail extends React.Component {
 					{this.props.isExpanded ? <ExpandLess /> : <ExpandMore />}
 				</ListItem>
 				<Collapse in={this.props.isExpanded} timeout="auto" unmountOnExit>
-					<List component="div" disablePadding>
+					<List component="ul" disablePadding>
 						<ListItem className={classes.generated_list_nested}>
 							<ListItemText inset>{this.props.detail}</ListItemText>
 						</ListItem>
