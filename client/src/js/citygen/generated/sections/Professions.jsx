@@ -14,9 +14,18 @@ class Professions extends React.Component {
 	render() {
 		const {classes, city} = this.props;
 		return (
-			<React.Fragment>
-				I'll give you a profession!!!
-			</React.Fragment>
+			<div className={classes.professions}>
+				{city.professions.map(profession => <div
+					key={profession.profession}
+					className={classes.professionDetail}
+				>
+					{profession.profession} : {profession.total}
+				</div> )}
+				{Array(city.professions.length % 4).fill('').map((_, i) => <div
+					key={`filler${i}`}
+					className={classes.professionDetail}
+				/>)}
+			</div>
 		);
 	}
 }

@@ -184,4 +184,16 @@ export const styles = theme => ({
 	ward_building: {
 		fontSize: '.6rem',
 	},
+
+	professions: {
+		display: 'flex',
+		flexDirection: 'row',
+		flexWrap: 'wrap',
+		justifyContent: 'space-between',
+		fontSize: '.6rem',
+	},
+
+	professionDetail: {
+		width: '23%',
+	},
 });

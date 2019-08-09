@@ -79,7 +79,7 @@ class Profession extends BaseEnum
     const HAY_MERCHANTS = 'Hay Merchants';
     const HERBALISTS = 'Herbalists';
     const HISTORIANS = 'Historians';
-    const HOUSEWIVES_HOUSEHUSBANDS = 'Hhousewives & Househusbands';
+    const HOUSEWIVES_HOUSEHUSBANDS = 'Housewives & Househusbands';
     const ILLUMINATORS = 'Illuminators';
     const INN_KEEPERS = 'Inn Keepers';
     const INSTRUMENT_MAKERS = 'Instrument Makers';
