@@ -7,6 +7,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import Collapse from "@material-ui/core/Collapse";
 import List from "@material-ui/core/List";
 import withRoot from "../../app/WithRoot";
+import joinClassNames from "dts-react-common/common/JoinClassNames";
 
 const propTypes = {
 	isExpanded: PropTypes.bool.isRequired,
@@ -14,9 +15,11 @@ const propTypes = {
 	title: PropTypes.string.isRequired,
 	detail: PropTypes.func.isRequired,
 	classes: PropTypes.object.isRequired,
+	isSubSection: PropTypes.bool,
 };
 
 const defaultProps = {
+	isSubSection: false,
 };
 
 class ListItemDetail extends React.Component {
@@ -25,7 +28,7 @@ class ListItemDetail extends React.Component {
 		return (
 			<React.Fragment>
 				<ListItem button onClick={this.props.onToggleExpanded}>
-					<ListItemText primary={this.props.title} classes={{primary: this.props.classes.labelValue_container_title}}/>
+					<ListItemText primary={this.props.title} classes={{primary: joinClassNames(classes.labelValue_container_title, this.props.isSubSection && classes.subCollapsibleSectionTitle)}}/>
 					{this.props.isExpanded ? <ExpandLess /> : <ExpandMore />}
 				</ListItem>
 				<Collapse in={this.props.isExpanded} timeout="auto" unmountOnExit>

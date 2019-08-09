@@ -13,6 +13,7 @@ import ListItemDetail from "./ListItemDetail";
 import CityDetail from "./sections/CityDetail";
 import Wards from "./sections/Wards";
 import Professions from "./sections/Professions";
+import PowerCenters from "./sections/PowerCenters";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -23,6 +24,7 @@ const mapStateToProps = state => ({ citygen: state.citygen });
 
 const SECTIONS = {
 	CITY_DETAIL: 'cityDetail',
+	POWER_CENTERS: 'powerCenters',
 	PROFESSIONS: 'professions',
 	WARDS: 'wards',
 };
@@ -70,6 +72,11 @@ class CityGenGenerated extends React.Component {
 				section: SECTIONS.PROFESSIONS,
 				title: 'Professions',
 				render: () => <Professions city={city}/>
+			},
+			{
+				section: SECTIONS.POWER_CENTERS,
+				title: 'Power Centers',
+				render: () => <PowerCenters city={city}/>
 			},
 		];
 

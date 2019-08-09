@@ -3,7 +3,7 @@ import React from 'react';
 import * as PropTypes from "prop-types";
 import withRoot from "../../../app/WithRoot";
 import ListItemDetail from "../ListItemDetail";
-import WardDetail from "./WardDetail";
+import PowerCenterDetail from "./PowerCenterDetail";
 
 const propTypes = {
 	city: PropTypes.object.isRequired,
@@ -11,7 +11,7 @@ const propTypes = {
 };
 const defaultProps = {};
 
-class Wards extends React.Component {
+class PowerCenters extends React.Component {
 
 	constructor(props) {
 		super(props);
@@ -35,16 +35,16 @@ class Wards extends React.Component {
 		const {classes, city} = this.props;
 		return (
 			<React.Fragment>
-				{city.wards.map((ward, i) => (
+				{city.powerCenters.map((powerCenter, i) => (
 					<ListItemDetail
 						className={classes.subCollapsibleSectionTitle}
 						isSubSection={true}
 						key={i}
-						title={ward.type}
+						title={powerCenter.type}
 						isExpanded={this.isSectionOpen(i)}
 						onToggleExpanded={() => this.toggleSection(i)}
 						classes={classes}
-						detail={() => <WardDetail ward={ward} classes={classes}/>}
+						detail={() => <PowerCenterDetail powerCenter={powerCenter}/>}
 					/>
 				))}
 			</React.Fragment>
@@ -52,7 +52,7 @@ class Wards extends React.Component {
 	}
 }
 
-Wards.propTypes = propTypes;
-Wards.defaultProps = defaultProps;
+PowerCenters.propTypes = propTypes;
+PowerCenters.defaultProps = defaultProps;
 
-export default withRoot(Wards);
+export default withRoot(PowerCenters);

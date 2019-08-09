@@ -30,6 +30,8 @@ const colorComplement2 = '#DD7B11';
 const colorComplement3 = '#924C00';
 const colorComplement4 = '#663500';
 
+const colorBlack = 'black';
+
 
 const textColor = '#eeeeee';
 
@@ -148,7 +150,7 @@ export const styles = theme => ({
 		width: '30%',
 		textAlign: 'right',
 		marginRight: '11px',
-		color: colorComplement4,
+		color: colorBlack,
 	},
 	labelValue_container_value: {
 
@@ -161,7 +163,6 @@ export const styles = theme => ({
 	ward_info: {
 	},
 	ward_stats: {
-		fontWeight: 'bold',
 		textAlign: 'center',
 	},
 	ward_building_legend: {
@@ -195,5 +196,36 @@ export const styles = theme => ({
 
 	professionDetail: {
 		width: '23%',
+	},
+
+	subCollapsibleSectionTitle: {
+		fontSize: '1.25rem',
+	},
+
+	powerCenters: {
+		display: 'flex',
+		flexDirection: 'column',
+		fontSize: '.8rem',
+	},
+	powerCenterLine: {
+		display: 'flex',
+		justifyContent: 'space-between',
+	},
+	powerCenterLineCellFirst: {
+		width: '100px !important',
+	},
+	powerCenterLineCell: {
+		width: '30px',
+	},
+	powerCentersCell: {
+		textAlign: 'center',
+		width: '30px',
+	},
+	powerCentersCellFirst: {
+		width: '100px',
+	},
+
+	blackColor: {
+		color: 'black',
 	},
 });
