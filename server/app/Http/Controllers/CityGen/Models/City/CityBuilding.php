@@ -8,10 +8,10 @@ class CityBuilding
     public $building;
     /** @var string */
     public $subType;
-    /** @var int */
+    /** @var string */
     public $quality;
 
-    public function __construct(string $building, ?string $subType, int $quality)
+    public function __construct(string $building, ?string $subType, string $quality)
     {
         $this->building = $building;
         $this->subType = $subType;

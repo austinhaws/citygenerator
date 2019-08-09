@@ -157,4 +157,30 @@ export const styles = theme => ({
 		width: '100%',
 	},
 
+	ward_info: {
+	},
+	ward_stats: {
+		fontWeight: 'bold',
+		textAlign: 'center',
+	},
+	ward_building_legend: {
+		fontSize: '.75rem',
+	},
+	ward_quality_buildings: {
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+	},
+	ward_building_quality: {
+		width: '20%',
+	},
+	ward_building_quality_description: {
+		borderBottom: '1px solid',
+	},
+	ward_quality_buildings_line: {
+		lineHeight: '.5rem',
+	},
+	ward_building: {
+		fontSize: '.6rem',
+	},
 });

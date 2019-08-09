@@ -10,6 +10,13 @@ use App\Http\Controllers\CityGen\Models\City\CityWard;
 
 class RandomBuildingsService extends BaseService
 {
+    const QUALITY_MAP = [
+        1 => 'A',
+        2 => 'B',
+        3 => 'C',
+        4 => 'D',
+    ];
+
     /**
      * @param City $city
      * @param CityWard $ward
@@ -28,7 +35,7 @@ class RandomBuildingsService extends BaseService
         // add buildings to fill densityAcres
         for ($i = 1; $i <= $wardDensityAcres; $i++) {
             $tableBuilding = $this->services->table->getTableResultRangeCustom('Building Weight', $buildingWeightsUse);
-            $quality = $this->services->random->randMinMaxInt('Building Quality', $tableBuilding->qualityMinMax);
+            $quality = self::QUALITY_MAP[$this->services->random->randMinMaxInt('Building Quality', $tableBuilding->qualityMinMax)];
 
             if (isset($tableBuildingSubtypes[$tableBuilding->building])) {
                 $subType = $this->services->table->getTableResultRangeCustom('Building SubType', $tableBuildingSubtypes[$tableBuilding->building]);

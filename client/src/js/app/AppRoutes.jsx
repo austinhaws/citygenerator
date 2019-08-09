@@ -6,7 +6,6 @@ import Pages from "./Pages";
 
 class AppRoutes extends React.Component {
 	render() {
-console.log([this, this.props.history.location]);
 		return (
 			<Switch>
 				<Route path={Pages.cityGen.generated.path} render={Pages.cityGen.generated.component}/>
