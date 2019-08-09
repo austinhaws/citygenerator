@@ -126,6 +126,7 @@ export const styles = theme => ({
 		textAlign: 'center',
 		fontWeight: 'bold',
 		fontSize: '2rem',
+		backgroundColor: colorPrimary1,
 	},
 	generated_list_nested: {
 		paddingLeft: theme.spacing.unit * 4,
@@ -176,6 +177,7 @@ export const styles = theme => ({
 	},
 	ward_building_quality_description: {
 		borderBottom: '1px solid',
+		cursor: 'default',
 	},
 	ward_quality_buildings_line: {
 	},
