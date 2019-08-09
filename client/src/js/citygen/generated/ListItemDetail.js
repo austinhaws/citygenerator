@@ -12,7 +12,7 @@ const propTypes = {
 	isExpanded: PropTypes.bool.isRequired,
 	onToggleExpanded: PropTypes.func.isRequired,
 	title: PropTypes.string.isRequired,
-	detail: PropTypes.object.isRequired,
+	detail: PropTypes.func.isRequired,
 	classes: PropTypes.object.isRequired,
 };
 
@@ -31,7 +31,7 @@ class ListItemDetail extends React.Component {
 				<Collapse in={this.props.isExpanded} timeout="auto" unmountOnExit>
 					<List component="ul" disablePadding>
 						<ListItem className={classes.generated_list_nested}>
-							<ListItemText inset>{this.props.detail}</ListItemText>
+							<ListItemText inset>{this.props.isExpanded ? this.props.detail() : null}</ListItemText>
 						</ListItem>
 					</List>
 				</Collapse>

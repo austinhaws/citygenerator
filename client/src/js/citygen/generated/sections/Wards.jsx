@@ -42,23 +42,9 @@ class Wards extends React.Component {
 						isExpanded={this.isSectionOpen(i)}
 						onToggleExpanded={() => this.toggleSection(i)}
 						classes={classes}
-						detail={
-							<React.Fragment>
-								<WardDetail ward={ward} classes={classes}/>
-							</React.Fragment>
-						}
+						detail={() => <WardDetail ward={ward} classes={classes}/>}
 					/>
 				))}
-				<div>
-					<span className="italic">Number in parenthesis after building type is the building's quality:</span>
-					<ul>
-						<li>A is luxurious, royal, or imperial</li>
-						<li>B is tasteful, ornate, or artistic</li>
-						<li>C is utilitarian, basic, or normal</li>
-						<li>D is derelict, condemned, rough, or functional</li>
-					</ul>
-				</div>
-
 			</React.Fragment>
 		);
 	}

@@ -12,6 +12,7 @@ import webservice from "../../util/Webservice";
 import ListItemDetail from "./ListItemDetail";
 import CityDetail from "./sections/CityDetail";
 import Wards from "./sections/Wards";
+import Professions from "./sections/Professions";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -21,8 +22,9 @@ const defaultProps = {};
 const mapStateToProps = state => ({ citygen: state.citygen });
 
 const SECTIONS = {
-	cityDetail: 'cityDetail',
-	wards: 'wards',
+	CITY_DETAIL: 'cityDetail',
+	PROFESSIONS: 'professions',
+	WARDS: 'wards',
 };
 
 class CityGenGenerated extends React.Component {
@@ -31,10 +33,10 @@ class CityGenGenerated extends React.Component {
 		super(props);
 
 		this.state = {
-			openSections: {
-				[SECTIONS.cityDetail]: true,
-				[SECTIONS.wards]: false,
-			},
+			openSections: {..._.reduce(SECTIONS, (carry, value, key) => {
+				carry[value] = false;
+				return carry;
+			}, {}), ...{[SECTIONS.CITY_DETAIL]: true}},
 		};
 
 		if (!this.props.citygen.generatedCity) {
@@ -53,6 +55,24 @@ class CityGenGenerated extends React.Component {
 		const {classes} = this.props;
 		const city = this.props.citygen.generatedCity;
 
+		const sections = [
+			{
+				section: SECTIONS.CITY_DETAIL,
+				title: 'City Detail',
+				render: () => <CityDetail key="cityDetail" city={city}/>
+			},
+			{
+				section: SECTIONS.WARDS,
+				title: 'Wards',
+				render: () => <Wards city={city}/>
+			},
+			{
+				section: SECTIONS.PROFESSIONS,
+				title: 'Professions',
+				render: () => <Professions city={city}/>
+			},
+		];
+
 console.log('generated!', city);
 		return city ? (
 			<div>
@@ -69,20 +89,14 @@ console.log('generated!', city);
 					subheader={<ListSubheader component="div" className={classes.generated_list_title}>{city.name}</ListSubheader>}
 					className={classes.generated_list}
 				>
-					<ListItemDetail
-						title="City Detail"
-						isExpanded={this.state.openSections[SECTIONS.cityDetail]}
-						onToggleExpanded={() => this.toggleSection(SECTIONS.cityDetail)}
+					{sections.map(section => <ListItemDetail
+						key={section.section}
+						title={section.title}
+						isExpanded={this.state.openSections[section.section]}
+						onToggleExpanded={() => this.toggleSection(section.section)}
 						classes={classes}
-						detail={<CityDetail city={city} classes={classes}/>}
-					/>
-					<ListItemDetail
-						title="Wards"
-						isExpanded={this.state.openSections[SECTIONS.wards]}
-						onToggleExpanded={() => this.toggleSection(SECTIONS.wards)}
-						classes={classes}
-						detail={<Wards city={city} classes={classes}/>}
-					/>
+						detail={section.render}
+					/>)}
 				</List>
 			</div>
 		) : null;

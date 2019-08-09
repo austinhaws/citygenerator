@@ -15,10 +15,10 @@ class WardDetail extends React.Component {
 	render() {
 		const {classes, ward} = this.props;
 		const qualityDescriptions = {
-			A: ['Luxurious', 'Royal', 'Imperial'],
-			B: ['Tasteful', 'Ornate', 'Artistic'],
-			C: ['Utilitarian', 'Basic', 'Normal'],
-			D: ['Derelict', 'Condemned', 'Functional'],
+			A: ['Luxurious, Royal, or Imperial'],
+			B: ['Tasteful, Ornate, or Artistic'],
+			C: ['Utilitarian, Basic, or Normal'],
+			D: ['Derelict, Condemned, Rough, or Functional'],
 		};
 		const buildingCountsByQuality = _.castArray(ward.buildings)
 			.reduce((buildingCountsByQuality, building) => {

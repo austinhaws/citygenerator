@@ -178,7 +178,6 @@ export const styles = theme => ({
 		borderBottom: '1px solid',
 	},
 	ward_quality_buildings_line: {
-		lineHeight: '.5rem',
 	},
 	ward_building: {
 		fontSize: '.6rem',
