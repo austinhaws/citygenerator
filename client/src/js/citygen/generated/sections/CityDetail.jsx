@@ -46,7 +46,6 @@ class CityDetail extends React.Component {
 						{label: 'Infamous', value: format.formatList(city.infamous)},
 						constants.br,
 
-						{label: '# of Guilds', value: city.guilds.length},
 						{label: 'Walls', value: city.numGates ? 'Has Walls' : 'No Walls'},
 					]
 				}/>

@@ -14,6 +14,7 @@ import CityDetail from "./sections/CityDetail";
 import Wards from "./sections/Wards";
 import Professions from "./sections/Professions";
 import PowerCenters from "./sections/PowerCenters";
+import Guilds from "./sections/Guilds";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -24,6 +25,7 @@ const mapStateToProps = state => ({ citygen: state.citygen });
 
 const SECTIONS = {
 	CITY_DETAIL: 'cityDetail',
+	GUILDS: 'guilds',
 	POWER_CENTERS: 'powerCenters',
 	PROFESSIONS: 'professions',
 	WARDS: 'wards',
@@ -92,6 +94,16 @@ class CityGenGenerated extends React.Component {
 					</div>
 				),
 				render: () => <PowerCenters city={city}/>
+			},
+			{
+				section: SECTIONS.GUILDS,
+				title: () => (
+					<div>
+						<span>Guilds</span>
+						<span className={classes.subCollapsibleSectionTitleInfo}>(Total: {(city && city.guilds) ? city.guilds.reduce((total, guild) => total + guild.total, 0) : 0})</span>
+					</div>
+				),
+				render: () => <Guilds city={city}/>
 			},
 		];
 
