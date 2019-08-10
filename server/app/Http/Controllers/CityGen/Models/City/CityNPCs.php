@@ -9,9 +9,9 @@ class CityNPCs
     /** @var CityNPCLevelCount */
     public $levels;
 
-    public function __construct(string $class, $levels)
+    public function __construct(string $class)
     {
         $this->class = $class;
-        $this->levels = $levels;
+        $this->levels = array_map(function ($i) { return new CityNPCLevelCount($i); }, range(1, 20));
     }
 }

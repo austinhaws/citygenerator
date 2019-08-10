@@ -2,9 +2,7 @@ import '@babel/polyfill';
 import React from 'react';
 import * as PropTypes from "prop-types";
 import withRoot from "../../../app/WithRoot";
-import format from "../Format";
 import {Tooltip} from "@material-ui/core";
-import {joinClassNames} from "dts-react-common";
 
 
 const propTypes = {
@@ -33,7 +31,6 @@ class WardDetail extends React.Component {
 
 		return <React.Fragment>
 			<div className={classes.ward_info}>
-				<div className={joinClassNames(classes.ward_stats, classes.blackColor)}>{format.formatFloat(ward.acres)} Acres; {ward.buildings ? ward.buildings.length : 0} Structures; {ward.insideWalls ? 'Inside' : 'Outside'} Walls</div>
 				<div className={classes.ward_quality_buildings}>
 					{
 						Object.keys(qualityDescriptions).map(quality => <div key={quality} className={classes.ward_building_quality}>

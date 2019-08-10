@@ -24,25 +24,27 @@ class PowerCenterDetail extends React.Component {
 						{label: 'Alignment', value: this.props.powerCenter.alignment},
 						{label: 'Wealth', value: format.formatGP(this.props.powerCenter.wealth)},
 						{label: 'Influence Points', value: this.props.powerCenter.influencePoints},
-						{label: 'Total NPCs', value: this.props.powerCenter.npcsTotal},
+						{label: 'Total NPCs', value: this.props.powerCenter.npcsTotal || 0},
 					]
 				}/>
-				<div className={classes.powerCenters}>
-					<div className={classes.powerCenterLine}>
-						<div key="npc" className={joinClassNames(classes.powerCenterLineCell, classes.powerCenterLineCellFirst, classes.blackColor)}>&darr; NPC \ Level &rarr;</div>
-						{Array(20).fill('•').map((_, i) => <div key={i} className={joinClassNames(classes.powerCenterLineCell, classes.blackColor)}>{i + 1}</div>)}
+				{this.props.powerCenter.npcs && this.props.powerCenter.npcs.length ? (
+					<div className={classes.powerCenters}>
+						<div className={classes.powerCenterLine}>
+							<div key="npc" className={joinClassNames(classes.powerCenterLineCell, classes.powerCenterLineCellFirst, classes.blackColor)}>&darr; NPC \ Level &rarr;</div>
+							{Array(20).fill('•').map((_, i) => <div key={i} className={joinClassNames(classes.powerCenterLineCell, classes.blackColor)}>{i + 1}</div>)}
+						</div>
+						{
+							this.props.powerCenter.npcs.map(npc => (
+								<div key={npc.class} className={classes.powerCenterLine}>
+									<div key="npc" className={joinClassNames(classes.powerCenterLineCell, classes.powerCenterLineCellFirst)}>{npc.class}</div>
+									{npc.levels.map(level => (
+										<div key={level.level} className={classes.powerCenterLineCell}>{level.count}</div>
+									))}
+								</div>
+							))
+						}
 					</div>
-					{
-						this.props.powerCenter.npcs.map(npc => (
-							<div key={npc.class} className={classes.powerCenterLine}>
-								<div key="npc" className={joinClassNames(classes.powerCenterLineCell, classes.powerCenterLineCellFirst)}>{npc.class}</div>
-								{npc.levels.map(level => (
-									<div key={level.level} className={classes.powerCenterLineCell}>{level.count}</div>
-								))}
-							</div>
-						))
-					}
-				</div>
+				) : undefined}
 			</React.Fragment>
 		);
 	}

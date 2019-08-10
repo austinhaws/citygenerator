@@ -5,7 +5,6 @@ namespace App\Http\Controllers\CityGen\Services\RandomCity;
 use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Models\City\City;
-use App\Http\Controllers\CityGen\Models\City\CityNPCLevelCount;
 use App\Http\Controllers\CityGen\Models\City\CityNPCs;
 use App\Http\Controllers\CityGen\Models\City\CityPowerCenter;
 use App\Http\Controllers\CityGen\Models\Post\PostData;
@@ -39,7 +38,7 @@ class RandomPowerCentersService extends BaseService
             for ($i = 0; $i < $powerLevel; ++$i) {
                 $type = $this->services->table->getTableResultRange(Table::POWER_CENTER_TYPE);
 
-                if ($i == $powerLevel) {
+                if ($i == $powerLevel - 1) {
                     // use the remainder of points
                     $influence = $influencePoints;
                 } else {
@@ -103,9 +102,6 @@ class RandomPowerCentersService extends BaseService
         // how many times it failed to add (usually because it picked something too expensive)
         $notUsedCount = 0;
 
-        // represents a row of npc levels all set to 0; each new npc class gets one of these rows
-        $levelsPreFilled = array_map(function ($i) { return new CityNPCLevelCount($i, 0); }, range(1, 20));
-
         while ($influenceLeft && $notUsedCount < 5) {
             // randomly pick a class
             $class = $this->services->table->getTableResultRange(Table::NPC_CLASS_RANDOM_CLASS);
@@ -125,25 +121,19 @@ class RandomPowerCentersService extends BaseService
                             --$num;
                         } else {
                             $influenceLeft -= $influenceCost * $level * $num;
-                            $found = false;
+                            $foundKey = false;
                             foreach ($powerCenter->npcs as $key => $npc) {
                                 if ($npc->class == $class) {
-                                    $found = $key;
+                                    $foundKey = $key;
                                     break;
                                 }
                             }
-                            if ($found === false) {
-                                $powerCenter->npcs[] = new CityNPCs($class, $levelsPreFilled);
-                                $found = count($powerCenter->npcs) - 1;
+                            if ($foundKey === false) {
+                                // represents a row of npc levels all set to 0; each new npc class gets one of these rows
+                                $powerCenter->npcs[] = new CityNPCs($class);
+                                $foundKey = count($powerCenter->npcs) - 1;
                             }
-                            $foundLevel = false;
-                            foreach ($powerCenter->npcs[$found]->levels as $keyLevelLoop => $levelLoop) {
-                                if ($levelLoop->level == $level) {
-                                    $foundLevel = $keyLevelLoop;
-                                    break;
-                                }
-                            }
-                            $powerCenter->npcs[$found]->levels[$foundLevel]->count += $num;
+                            $powerCenter->npcs[$foundKey]->levels[$level - 1]->count += $num;
                             $powerCenter->npcsTotal += $num;
                             $notUsed = false;
                             $notUsedFor = false;

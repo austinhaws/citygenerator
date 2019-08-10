@@ -203,4 +203,77 @@ final class RandomPowerCentersServiceTest extends BaseTestCase
             });
         }
     }
+
+    public function testPowerCenterNPCCounts() {
+        // create power centers for a city
+        $city = new City();
+        $city->populationType = PopulationType::HAMLET;
+        $city->wealth = 1000;
+        $postData = new PostData();
+
+        $this->services->random->setRolls([
+            new TestRoll('Power Level', 2, 0, 2),
+            new TestRoll('Influence points', 38, 31, 38),
+            new TestRoll('PowerCenterTypeTable: range', 554, 1, 1000),
+            new TestRoll('Influence', 19, 16, 19),
+            new TestRoll('PowerCenterAlignmentTable: range', 1, 1, 100),
+            new TestRoll('NPCClassRandomClassTable: range', 191, 1, 1000),
+            new TestRoll('NPC level bonus', 1, 0, 1),
+            new TestRoll('NPCClassRandomClassTable: range', 331, 1, 1000),
+            new TestRoll('NPC level bonus', 0, 0, 1),
+            new TestRoll('NPCClassRandomClassTable: range', 446, 1, 1000),
+
+            new TestRoll('NPC level bonus', 0, 0, 1),
+            new TestRoll('NPC level', 9, 1, 10),
+            new TestRoll('NPC Level Increase', 5, 1, 10),
+            new TestRoll('NPC Level Increase', 1, 1, 10),
+            new TestRoll('NPC Level Increase', 2, 1, 10),
+            new TestRoll('NPC Level Increase', 3, 1, 10),
+            new TestRoll('PowerCenterTypeTable: range', 883, 1, 1000),
+            new TestRoll('PowerCenterAlignmentTable: range', 95, 1, 100),
+            new TestRoll('NPCClassRandomClassTable: range', 755, 1, 1000),
+
+            new TestRoll('NPC level bonus', 1, 0, 1),
+            new TestRoll('NPC level', 7, 1, 7),
+            new TestRoll('NPC Level Increase', 8, 1, 10),
+            new TestRoll('NPC Level Increase', 7, 1, 10),
+            new TestRoll('NPC Level Increase', 6, 1, 10),
+            new TestRoll('NPCClassRandomClassTable: range', 883, 1, 1000),
+            new TestRoll('NPC level bonus', 1, 0, 1),
+            new TestRoll('NPCClassRandomClassTable: range', 901, 1, 1000),
+            new TestRoll('NPC level bonus', 1, 0, 1),
+            new TestRoll('NPC level', 2, 1, 3),
+
+            new TestRoll('NPC Level Increase', 4, 1, 10),
+            new TestRoll('NPCClassRandomClassTable: range', 824, 1, 1000),
+            new TestRoll('NPC level bonus', 0, 0, 1),
+            new TestRoll('NPCClassRandomClassTable: range', 390, 1, 1000),
+            new TestRoll('NPC level bonus', 0, 0, 1),
+            new TestRoll('NPC level', 7, 1, 10),
+            new TestRoll('NPC Level Increase', 9, 1, 10),
+            new TestRoll('NPC Level Increase', 3, 1, 10),
+            new TestRoll('NPC Level Increase', 2, 1, 10),
+        ]);
+
+        $this->services->randomPowerCenters->determinePowerCenters($city, $postData);
+
+        $this->services->random->verifyRolls();
+
+        // each power center should have different npc counts
+        $this->assertEquals(2, count($city->powerCenters));
+        $this->assertEquals(1, count($city->powerCenters[0]->npcs));
+        $this->assertEquals(3, count($city->powerCenters[1]->npcs));
+
+        // total npc count should be of all the power centers, not just one
+        $totalNPCs = array_reduce($city->powerCenters, function ($result, $powerCenter) {
+            return $result + array_reduce($powerCenter->npcs, function ($carry, $item) {
+                return $carry + array_reduce($item->levels, function ($levelCarry, $level) {
+                    return $levelCarry + $level->count;
+                }, 0);
+            }, 0);
+        }, 0);
+        $this->assertEquals(9 + 17, $totalNPCs);
+        $this->assertEquals(9, $city->powerCenters[0]->npcsTotal);
+        $this->assertEquals(17, $city->powerCenters[1]->npcsTotal);
+    }
 }

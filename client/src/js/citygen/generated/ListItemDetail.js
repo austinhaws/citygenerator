@@ -12,7 +12,7 @@ import joinClassNames from "dts-react-common/common/JoinClassNames";
 const propTypes = {
 	isExpanded: PropTypes.bool.isRequired,
 	onToggleExpanded: PropTypes.func.isRequired,
-	title: PropTypes.string.isRequired,
+	title: PropTypes.func.isRequired,
 	detail: PropTypes.func.isRequired,
 	classes: PropTypes.object.isRequired,
 	isSubSection: PropTypes.bool,
@@ -28,7 +28,7 @@ class ListItemDetail extends React.Component {
 		return (
 			<React.Fragment>
 				<ListItem button onClick={this.props.onToggleExpanded}>
-					<ListItemText primary={this.props.title} classes={{primary: joinClassNames(classes.labelValue_container_title, this.props.isSubSection && classes.subCollapsibleSectionTitle)}}/>
+					<ListItemText primary={this.props.title()} classes={{primary: joinClassNames(classes.labelValue_container_title, this.props.isSubSection && classes.subCollapsibleSectionTitle)}}/>
 					{this.props.isExpanded ? <ExpandLess /> : <ExpandMore />}
 				</ListItem>
 				<Collapse in={this.props.isExpanded} timeout="auto" unmountOnExit>

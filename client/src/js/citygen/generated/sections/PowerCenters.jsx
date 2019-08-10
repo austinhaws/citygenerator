@@ -35,18 +35,21 @@ class PowerCenters extends React.Component {
 		const {classes, city} = this.props;
 		return (
 			<React.Fragment>
-				{city.powerCenters.map((powerCenter, i) => (
-					<ListItemDetail
-						className={classes.subCollapsibleSectionTitle}
-						isSubSection={true}
-						key={i}
-						title={powerCenter.type}
-						isExpanded={this.isSectionOpen(i)}
-						onToggleExpanded={() => this.toggleSection(i)}
-						classes={classes}
-						detail={() => <PowerCenterDetail powerCenter={powerCenter}/>}
-					/>
-				))}
+				{
+					city.powerCenters && city.powerCenters.length ? (
+						city.powerCenters.map((powerCenter, i) => (
+							<ListItemDetail
+								className={classes.subCollapsibleSectionTitle}
+								isSubSection={true}
+								key={i}
+								title={() => powerCenter.type}
+								isExpanded={this.isSectionOpen(i)}
+								onToggleExpanded={() => this.toggleSection(i)}
+								classes={classes}
+								detail={() => <PowerCenterDetail powerCenter={powerCenter}/>}
+							/>
+						))) : <div>City has no notable centers of power</div>
+				}
 			</React.Fragment>
 		);
 	}

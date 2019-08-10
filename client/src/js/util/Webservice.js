@@ -47,7 +47,7 @@ export default {
 		}),
 		generate: form => webserviceCityGen.post(`generate`, form).then(city => {
 			city.populationDensity = format.formatFloat(city.populationSize / city.acres);
-			city.numberBuildings = city.wards.reduce((carry, ward) => carry + ward.buildings ? ward.buildings.length : 0, 0);
+			city.numberBuildings = city.wards.reduce((carry, ward) => carry + (ward.buildings ? ward.buildings.length : 0), 0);
 			dispatchField('citygen.generatedCity', city);
 			return city;
 		}),

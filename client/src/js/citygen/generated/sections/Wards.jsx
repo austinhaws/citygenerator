@@ -4,6 +4,7 @@ import * as PropTypes from "prop-types";
 import withRoot from "../../../app/WithRoot";
 import ListItemDetail from "../ListItemDetail";
 import WardDetail from "./WardDetail";
+import format from "../Format";
 
 const propTypes = {
 	city: PropTypes.object.isRequired,
@@ -40,7 +41,9 @@ class Wards extends React.Component {
 						className={classes.subCollapsibleSectionTitle}
 						isSubSection={true}
 						key={i}
-						title={ward.type}
+						title={() => <div><span>{ward.type}</span> <span className={classes.subSubCollapsibleSectionTitleInfo}>
+							({format.formatFloat(ward.acres)} Acres; {ward.buildings ? ward.buildings.length : 0} Structures; {ward.insideWalls ? 'Inside' : 'Outside'} Walls)
+						</span></div>}
 						isExpanded={this.isSectionOpen(i)}
 						onToggleExpanded={() => this.toggleSection(i)}
 						classes={classes}

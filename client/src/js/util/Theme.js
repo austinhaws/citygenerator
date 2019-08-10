@@ -201,6 +201,13 @@ export const styles = theme => ({
 	subCollapsibleSectionTitle: {
 		fontSize: '1.25rem',
 	},
+	subCollapsibleSectionTitleInfo: {
+		fontSize: '1rem',
+		paddingLeft: '8px',
+	},
+	subSubCollapsibleSectionTitleInfo: {
+		fontSize: '.9rem',
+	},
 
 	powerCenters: {
 		display: 'flex',
