@@ -16,6 +16,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import Slider from '@material-ui/lab/Slider';
 import withRoot from "../app/WithRoot";
 import Pages from "../app/Pages";
+import {joinClassNames} from "dts-react-common";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -56,6 +57,13 @@ class CityGenForm extends React.Component {
 		// reset menu & push new ward detail
 		dispatchField('citygen.inputs.customWard', '');
 		dispatchField(`citygen.form.wardsAdded.${this.props.citygen.form.wardsAdded.length}`, wardDetail);
+	};
+
+	updateWardAdded = (wardIdx, buildingIdx, e) => {
+		const value = e.target.value || '0';
+		if (value.match(/^\d*$/)) {
+			dispatchField(`citygen.form.wardsAdded.${wardIdx}.buildings.${buildingIdx}.weight`, value);
+		}
 	};
 
 	render() {
@@ -188,14 +196,13 @@ class CityGenForm extends React.Component {
 
 					{/* Custom Wards */}
 					{
-						this.props.citygen.form.buildings === 'custom' ?
+						this.props.citygen.form.buildings === 'custom' ? (
 							<FormControl className={classes.formControl}>
 								<Select
 									value={this.props.citygen.inputs.customWard}
 									onChange={dispatchFieldCurry('citygen.inputs.customWard')}
 									inputProps={{ id: 'customWard' }}
 									disabled={ajaxing}
-									placeholder="Choose Ward Type"
 								>
 									{this.props.citygen.lists.wards.map(ward => (
 										<MenuItem key={ward.id} value={ward.label}>{ward.label}</MenuItem>
@@ -209,29 +216,36 @@ class CityGenForm extends React.Component {
 								>
 									Add Ward
 								</Button>
-								<div className="custom_wards">
-									{this.props.citygen.form.wardsAdded.map((wardAdded, wardIdx) => (
-										<div className="custom_wards--ward" key={`${wardAdded}-${wardIdx}`}>
-											<div className="custom_wards--ward--name">{wardAdded.ward}</div>
-											<div className="custom_wards--ward--buildings">
-												{wardAdded.buildings.map((building, buildingIdx) => (
-													<FormControl className="custom_wards--ward--building" key={building.type}>
-														<TextField
-															label={building.type}
-															autoFocus={true}
-															onChange={dispatchFieldCurry(`citygen.form.wardsAdded.${wardIdx}.buildings.${buildingIdx}.weight`)}
-															value={building.weight}
-															disabled={ajaxing}
-															inputProps={{ shrink: 'shrink' }}
-														/>
-													</FormControl>
+								{
+									(this.props.citygen.form.wardsAdded && this.props.citygen.form.wardsAdded.length) ? (
+										<div className={joinClassNames(classes.customWardsContainer, classes.customWardsTop)}>
+											<div className={classes.customWardsBlurb}>Building values are weights, not quantities.</div>
+											<div className={classes.customWards}>
+												{this.props.citygen.form.wardsAdded.map((wardAdded, wardIdx) => (
+													<div className={classes.customWards_Ward} key={`${wardAdded}-${wardIdx}`}>
+														<div className={classes.customWards_WardName}>{wardAdded.ward}</div>
+														<div>
+															{wardAdded.buildings.map((building, buildingIdx) => (
+																<FormControl key={building.type}>
+																	<TextField
+																		label={building.type}
+																		autoFocus={true}
+																		onChange={value => this.updateWardAdded(wardIdx, buildingIdx, value)}
+																		value={building.weight}
+																		disabled={ajaxing}
+																		inputProps={{ shrink: 'shrink' }}
+																	/>
+																</FormControl>
+															))}
+														</div>
+													</div>
 												))}
 											</div>
 										</div>
-									))}
-								</div>
+								) : undefined
+								}
 							</FormControl>
-							: undefined
+						) : undefined
 					}
 
 					{/* Society Racial Type */}

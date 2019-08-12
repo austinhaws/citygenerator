@@ -235,4 +235,26 @@ export const styles = theme => ({
 	blackColor: {
 		color: 'black',
 	},
+
+	customWardsTop: {
+		backgroundColor: colorPrimary2,
+	},
+	customWardsContainer: {
+		width: '350px',
+		overflow: 'scroll',
+	},
+	customWardsBlurb: {
+		textAlign: 'center',
+	},
+	customWards: {
+		display: 'flex',
+		flexDirection: 'row',
+	},
+	customWards_Ward: {
+		width: '200px',
+		minWidth: '200px',
+	},
+	customWards_WardName: {
+		color: colorComplement1,
+	},
 });
