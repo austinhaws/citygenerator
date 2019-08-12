@@ -13,7 +13,7 @@ class Guilds extends React.Component {
 
 	render() {
 		const {classes, city} = this.props;
-		return (
+		return  (city.guilds && city.guilds.length) ? (
 			<div className={classes.professions}>
 				{city.guilds.map(guild=> <div
 					key={guild.guild}
@@ -26,7 +26,7 @@ class Guilds extends React.Component {
 					className={classes.professionDetail}
 				/>)}
 			</div>
-		);
+		) : <div>City has no notable Guilds</div>;
 	}
 }
 

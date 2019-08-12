@@ -183,7 +183,7 @@ export const styles = theme => ({
 	ward_quality_buildings_line: {
 	},
 	ward_building: {
-		fontSize: '.6rem',
+		fontSize: '.7rem',
 	},
 
 	professions: {
@@ -191,7 +191,7 @@ export const styles = theme => ({
 		flexDirection: 'row',
 		flexWrap: 'wrap',
 		justifyContent: 'space-between',
-		fontSize: '.6rem',
+		fontSize: '.7rem',
 	},
 
 	professionDetail: {
