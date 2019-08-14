@@ -2,12 +2,15 @@
 
 namespace Test\Controllers\CityGen\Tables;
 
+use App\Http\Common\Models\MinMax;
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
+use App\Http\Controllers\CityGen\Constants\Building;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Constants\Ward;
 use App\Http\Controllers\CityGen\Models\City\City;
 use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Models\Post\WardAdded;
+use App\Http\Controllers\CityGen\Models\Table\TableBuilding;
 use App\Http\Controllers\CityGen\Util\TestRoll;
 use Test\Controllers\CityGen\Util\BaseTestCase;
 
@@ -2314,4 +2317,66 @@ final class RandomWardsServiceTest extends BaseTestCase
         $this->assertEquals(6, count($city->wards[0]->buildings));
         $this->assertEquals(5, count($city->professions));
     }
+
+    public function testRandomCustomWardBuildings()
+    {
+        $city = new City();
+        $city->populationType = PopulationType::THORP;
+        $city->hasSea = BooleanRandom::FALSE;
+        $city->hasRiver = BooleanRandom::FALSE;
+        $city->hasMilitary = BooleanRandom::FALSE;
+        $city->numGates = 0;
+        $city->acres = .25;
+
+        // true
+        $postData = new PostData();
+        $postData->wardsAdded = [
+            new WardAdded([
+                new TableBuilding(Building::HOUSE, new MinMax(1, 2)),
+                new TableBuilding(Building::WAREHOUSE, new MinMax(1, 2)),
+            ], Ward::CRAFTSMEN),
+        ];
+        $postData->hasGates = BooleanRandom::FALSE;
+        $postData->generateBuildings = BooleanRandom::TRUE;
+
+        $this->services->random->setRolls([
+            new TestRoll('Ward acres used', 200, 100, 200),
+            new TestRoll('Building Weight', 1, 0, 1),
+            new TestRoll('Building Quality', 2, 1, 2),
+            new TestRoll('Building Weight', 0, 0, 1),
+            new TestRoll('Building Quality', 1, 1, 2),
+            new TestRoll('Building Weight', 1, 0, 1),
+            new TestRoll('Building Quality', 2, 1, 2),
+            new TestRoll('Building Weight', 0, 0, 1),
+            new TestRoll('Building Quality', 1, 1, 2),
+            new TestRoll('Ward acres used', 100, 100, 200),
+
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 1, 3),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 3, 1, 3),
+            new TestRoll('Building Weight', 50, 1, 100),
+            new TestRoll('Building Quality', 2, 1, 2),
+            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Building Weight', 100, 1, 100),
+            new TestRoll('Building Quality', 1, 1, 2),
+        ]);
+
+        $this->services->randomWards->determineWards($city, $postData);
+
+        $this->services->random->verifyRolls();
+
+        $this->assertSame(3, count($city->wards));
+
+        $this->assertSame(Ward::CRAFTSMEN, $city->wards[0]->type);
+        $this->assertSame(Ward::MARKET, $city->wards[1]->type);
+        $this->assertSame(Ward::MERCHANT, $city->wards[2]->type);
+
+        $this->assertSame(4, count($city->wards[0]->buildings));
+
+        $this->assertSame(0, count(array_filter($city->wards[0]->buildings, function ($building) {
+            return $building === Building::HOUSE || $building === Building::WAREHOUSE;
+        })), 'only expected buildings');
+    }
+
 }

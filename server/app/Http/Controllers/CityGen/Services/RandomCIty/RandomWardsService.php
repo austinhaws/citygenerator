@@ -109,7 +109,7 @@ class RandomWardsService extends BaseService
     private function addSpecificWards(City $city, PostData $postData, RandomWardMetaData $wardMetaData)
     {
         foreach ($postData->wardsAdded as $wardAdded) {
-            $wardMetaData->acresToFill -= $this->addWard($city, $wardAdded->ward, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings);
+            $wardMetaData->acresToFill -= $this->addWard($city, $wardAdded->ward, $postData->hasGates === BooleanRandom::TRUE, $wardMetaData->wardCount, $postData->generateBuildings, $wardAdded->buildings);
         }
 
         // put in wards
