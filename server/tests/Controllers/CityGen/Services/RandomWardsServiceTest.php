@@ -2297,11 +2297,6 @@ final class RandomWardsServiceTest extends BaseTestCase
             new TestRoll('Power Level', 0, 0, 1),
             new TestRoll('Racial Mix', 1, 1, 3),
             new TestRoll('RacesRandomTable: range', 1, 1, 100),
-            new TestRoll('Guild Modifier', 0, 0, 0),
-            new TestRoll('Number Exports', 0, 0, 0),
-            new TestRoll('Number Imports', 0, 0, 0),
-            new TestRoll('Number Famous', 0, 0, 0),
-            new TestRoll('Number Infamous', 0, 0, 0),
             new TestRoll('Use words', 1, 1, 100),
             new TestRoll('NameNumWordsTable: range', 1, 1, 100),
             // [130]

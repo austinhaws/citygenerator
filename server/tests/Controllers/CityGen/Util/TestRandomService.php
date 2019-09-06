@@ -9,7 +9,7 @@ include __DIR__ . '/../../../../vendor/phpunit/phpunit/src/Framework/Assert/Func
 class TestRandomService extends RandomService
 {
 
-    /** @var TestRoll[] */
+    /** @var TestRoll[]|TestRollGroup[] */
     private $rolls = null;
     private $rollIndex = 0;
 
@@ -36,26 +36,66 @@ class TestRandomService extends RandomService
         }
 
         $roll = array_shift($this->rolls);
-        assertSame($roll->name, $name, "$name ($min->$max); Roll Index: {$this->rollIndex} $min->$max");
+
+        if ($roll instanceof TestRollGroup) {
+            $result = $this->doRoll($roll->nextRoll(), $name, $min, $max);
+
+            if ($roll->isComplete()) {
+                $this->rollIndex++;
+            } else {
+                array_unshift($this->rolls, $roll);
+            }
+        } else {
+            $result = $this->doRoll($roll, $name, $min, $max);
+            $roll->recordUse();
+            if ($roll->isComplete()) {
+                $this->rollIndex++;
+            } else {
+                array_unshift($this->rolls, $roll);
+            }
+        }
+        return $result;
+    }
+
+    /**
+     * show index information in case this is a roll group at this position
+     *
+     * @return string
+     */
+    private function rollIndexToString() {
+        return "{$this->rollIndex}";
+    }
+
+    /**
+     * @param TestRoll $roll
+     * @param string $name
+     * @param int $min
+     * @param int $max
+     * @return int
+     */
+    private function doRoll($roll, $name, $min, $max)
+    {
+        if ($roll->name !== TestRoll::ANY) {
+            assertSame($roll->name, $name, "$name ($min->$max); Roll Index: {$this->rollIndexToString()} $min->$max");
+        }
         if ($roll->min !== TestRoll::ANY) {
-            assertSame($roll->min, $min, "MIN: $name; Roll Index: {$this->rollIndex} $min->$max");
+            assertSame($roll->min, $min, "MIN: $name; Roll Index: {$this->rollIndexToString()} $min->$max");
         }
         if ($roll->max !== TestRoll::ANY) {
-            assertSame($roll->max, $max, "MAX: $name; Roll Index: {$this->rollIndex} $min->$max");
+            assertSame($roll->max, $max, "MAX: $name; Roll Index: {$this->rollIndexToString()} $min->$max");
         }
 
         // allow random results
         if ($roll->result === TestRoll::RANDOM) {
-            if ($roll->min === null || $roll->min === TestRoll::ANY) {
-                $result = parent::mtRandRange($name, $min, $max);
-            } else {
+            if ($min === null) {
                 $result = parent::mtRand($name);
+            } else {
+                $result = parent::mtRandRange($name, $min, $max);
             }
         } else {
             $result = $roll->result;
         }
 
-        $this->rollIndex++;
         return $result;
     }
 
@@ -85,6 +125,9 @@ class TestRandomService extends RandomService
 
     public function verifyRolls()
     {
+        if (count($this->rolls) === 1 && $this->rolls[0]->repeatTimes === TestRoll::INFINITE) {
+            array_shift($this->rolls);
+        }
         assertSame(0, count($this->rolls), 'all rolls accounted for');
     }
 }

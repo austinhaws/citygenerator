@@ -7,6 +7,7 @@ use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Models\City\City;
 use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Util\TestRoll;
+use App\Http\Controllers\CityGen\Util\TestRollGroup;
 use Test\Controllers\CityGen\Util\BaseTestCase;
 
 final class RandomProfessionsServiceTest extends BaseTestCase
@@ -34,9 +35,11 @@ final class RandomProfessionsServiceTest extends BaseTestCase
      */
     public function testGeneration()
     {
-        $this->services->random->setRolls(
-            array_fill(0, 21, new TestRoll('ProfessionTable: range', $this->services->realRandom->randRangeInt('unit test setup - single profession', 1, 10000), 1, 10000))
-        );
+        $this->services->random->setRolls([
+            new TestRollGroup('single professions', [
+                new TestRoll('ProfessionTable: range', $this->services->realRandom->randRangeInt('unit test setup - single profession', 1, 10000), 1, 10000),
+            ], 21)
+        ]);
 
         $postData = new PostData();
         $postData->professions = BooleanRandom::TRUE;

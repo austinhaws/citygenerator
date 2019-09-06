@@ -65,7 +65,7 @@ class TableService extends BaseService
                 return $value;
             }
         }
-        $keys = implode(' ', array_keys($table));
+        $keys = implode(',', array_keys($table));
         throw new RuntimeException("index unknown for table and roll $rollName: $index\n($keys)\n");
     }
 

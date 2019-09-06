@@ -8,7 +8,7 @@ use Laravel\Lumen\Routing\Controller as BaseController;
 
 class CityGenController extends BaseController //extends ControllerBase
 {
-    private $services;
+    public $services;
 
     public function __construct(ServicesService $servicesService)
     {
