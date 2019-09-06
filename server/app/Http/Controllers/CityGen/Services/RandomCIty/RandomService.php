@@ -75,7 +75,7 @@ class RandomService extends BaseService
      */
     public function randRangeFloat($name, $min, $max)
     {
-        return $this->mtRandRange($name, $min, $max);
+        return $min === $max ? $min : $this->mtRandRange($name, $min, $max);
     }
 
     /**
