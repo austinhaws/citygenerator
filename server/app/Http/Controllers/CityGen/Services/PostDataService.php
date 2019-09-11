@@ -9,6 +9,7 @@ use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Models\Post\PostRaceRatio;
 use App\Http\Controllers\CityGen\Models\Post\WardAdded;
 use App\Http\Controllers\CityGen\Models\Table\TableBuilding;
+use App\Http\Controllers\CityGen\Services\RandomCity\RandomService;
 
 class PostDataService extends BaseService
 {
@@ -21,6 +22,7 @@ class PostDataService extends BaseService
         $postData = new PostData();
 
         if ($post) {
+            $postData->name = (isset($post['name']) && $post['name']) ? $post['name'] : RandomService::RANDOM;
             $postData->populationType = isset($post['populationType']) ? $post['populationType'] : null;
             $postData->hasSea = $this->services->random->randomBoolean($post, 'sea');
             $postData->hasMilitary = $this->services->random->randomBoolean($post, 'military');
@@ -53,6 +55,7 @@ class PostDataService extends BaseService
             }
             $postData->professions = $this->services->random->randomBoolean($post, 'professions');
         } else {
+            $postData->name = RandomService::RANDOM;
             $postData->populationType = null;
             $postData->hasSea = BooleanRandom::RANDOM;
             $postData->hasMilitary = BooleanRandom::RANDOM;

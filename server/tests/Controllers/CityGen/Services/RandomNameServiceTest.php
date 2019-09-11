@@ -4,6 +4,7 @@ namespace Test\Controllers\CityGen\Tables;
 
 use App\Http\Controllers\CityGen\Constants\Race;
 use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Util\TestRoll;
 use App\Http\Controllers\Dictionary\Constants\DictionaryTable;
 use App\Http\Controllers\Dictionary\Services\ConvertService;
@@ -34,7 +35,7 @@ final class RandomNameServiceTest extends BaseTestCase
                 new TestRoll('Name has suffix', 1, 1, 100),
             ]);
             $city->majorityRace = $test['race'];
-            $this->services->randomName->generateName($city);
+            $this->services->randomName->generateName($city, new PostData());
 
             $this->services->random->verifyRolls();
 
@@ -67,7 +68,7 @@ final class RandomNameServiceTest extends BaseTestCase
             new TestRoll('NameNumSyllablesTable: range', 1, 1, 55),
             new TestRoll('SyllablesTable: range', 550, 1, 650),
         ]);
-        $this->services->randomName->generateName($city);
+        $this->services->randomName->generateName($city, new PostData());
 
         $this->services->random->verifyRolls();
 
@@ -92,7 +93,7 @@ final class RandomNameServiceTest extends BaseTestCase
             new TestRoll('Name has prefix', 1, 1, 100),
             new TestRoll('Name has suffix', 1, 1, 100),
         ]);
-        $this->services->randomName->generateName($city);
+        $this->services->randomName->generateName($city, new PostData());
 
         $this->services->random->verifyRolls();
 
@@ -125,7 +126,7 @@ final class RandomNameServiceTest extends BaseTestCase
             new TestRoll('NameNumSyllablesTable: range', 1, 1, 55),
             new TestRoll('SyllablesTable: range', 550, 1, 650),
         ]);
-        $this->services->randomName->generateName($city);
+        $this->services->randomName->generateName($city, new PostData());
 
         $this->services->random->verifyRolls();
 
@@ -150,7 +151,7 @@ final class RandomNameServiceTest extends BaseTestCase
             new TestRoll('Name has prefix', 1, 1, 100),
             new TestRoll('Name has suffix', 1, 1, 100),
         ]);
-        $this->services->randomName->generateName($city);
+        $this->services->randomName->generateName($city, new PostData());
 
         $this->services->random->verifyRolls();
 
@@ -176,7 +177,7 @@ final class RandomNameServiceTest extends BaseTestCase
             new TestRoll('NameNumSyllablesTable: range', 50, 1, 55),
             new TestRoll('SyllablesTable: range', 50, 1, 650),
         ]);
-        $this->services->randomName->generateName($city);
+        $this->services->randomName->generateName($city, new PostData());
 
         $this->services->random->verifyRolls();
 
@@ -205,7 +206,7 @@ final class RandomNameServiceTest extends BaseTestCase
                 new TestRoll('NameNumSyllablesTable: range', 50, 1, 55),
                 new TestRoll('SyllablesTable: range', 50, 1, 650),
             ]);
-            $this->services->randomName->generateName($city);
+            $this->services->randomName->generateName($city, new PostData());
 
             $this->services->random->verifyRolls();
 
@@ -233,10 +234,26 @@ final class RandomNameServiceTest extends BaseTestCase
         ]);
         $city->majorityRace = Race::HUMAN;
 
-        $this->services->randomName->generateName($city);
+        $this->services->randomName->generateName($city, new PostData());
 
         $this->services->random->verifyRolls();
 
         $this->assertSame('Unbigcoastness', $city->name);
+    }
+
+    public function testPredefinedName()
+    {
+        $postData = new PostData();
+        $postData->name = 'This is not random';
+        $city = new City();
+        $city->majorityRace = Race::HUMAN;
+
+        $this->services->random->setRolls([]);
+
+        $this->services->randomName->generateName($city, $postData);
+
+        $this->services->random->verifyRolls();
+
+        $this->assertSame($postData->name, $city->name);
     }
 }

@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\CityGen\Models\Post;
 
+use App\Http\Controllers\CityGen\Services\RandomCity\RandomService;
+
 class PostData
 {
+    /** @var string */
+    public $name = RandomService::RANDOM;
     /** @var string */
     public $populationType;
     /** @var string BooleanRandom:: */

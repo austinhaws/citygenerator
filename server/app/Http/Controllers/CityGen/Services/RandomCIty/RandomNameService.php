@@ -6,6 +6,7 @@ use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\Race;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\Dictionary\Constants\DictionaryTable;
 use App\Http\Controllers\Dictionary\Services\ConvertService;
 
@@ -13,8 +14,22 @@ class RandomNameService extends BaseService
 {
     /**
      * @param City $city
+     * @param PostData $postData
      */
-    public function generateName(City $city)
+    public function generateName(City $city, PostData $postData)
+    {
+        if ($postData->name === RandomService::RANDOM) {
+            $city->name = $this->generateRandomName($city);
+        } else {
+            $city->name = $postData->name;
+        }
+    }
+
+    /**
+     * @param City $city
+     * @return string
+     */
+    private function generateRandomName(City $city)
     {
         $dictionary = $this->getDictionaryRaceName($city->majorityRace);
 
@@ -30,7 +45,7 @@ class RandomNameService extends BaseService
             }
         }
 
-        $city->name = ucwords(strtolower($name));
+        return ucwords(strtolower($name));
     }
 
     /**
