@@ -87,7 +87,7 @@ class ConvertService extends BaseService
         if ($splitBySpace) {
             $words = explode(' ', $phrase);
         } else {
-            $words = str_split($phrase);
+            $words = $this->services->utf8Service->explode($phrase);
         }
 
         return array_map(
@@ -205,7 +205,7 @@ class ConvertService extends BaseService
 
         switch ($shuffle) {
             case ConvertService::SHUFFLE_LETTER:
-                $letters = str_split($phrase);
+                $letters = $this->services->utf8Service->explode($phrase);
                 shuffle($letters);
                 // remove double spaces possibly caused by shuffling
                 $phrase = preg_replace('/ +/', ' ', implode('', $letters));

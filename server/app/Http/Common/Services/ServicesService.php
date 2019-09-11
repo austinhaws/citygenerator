@@ -18,6 +18,7 @@ use App\Http\Controllers\CityGen\Services\RandomCity\RandomRacesService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomSeaRiverMilitaryGatesService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomWardsService;
+use App\Http\Controllers\CityGen\Services\RandomCity\UTF8Service;
 use App\Http\Controllers\CityGen\Services\TableService;
 use App\Http\Controllers\CityGen\Util\TestRandomService;
 use App\Http\Controllers\Dictionary\Services\ConvertService;
@@ -60,6 +61,8 @@ class ServicesService
     public $randomWards;
     /** @var TableService */
     public $table;
+    /** @var UTF8Service */
+    public $utf8Service;
 
     public function __construct()
     {
@@ -81,5 +84,6 @@ class ServicesService
         $this->randomSeaRiverMilitaryGates = new RandomSeaRiverMilitaryGatesService($this);
         $this->randomWards = new RandomWardsService($this);
         $this->table = new TableService($this);
+        $this->utf8Service = new UTF8Service($this);
     }
 }

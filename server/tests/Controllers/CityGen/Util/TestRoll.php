@@ -29,4 +29,8 @@ class TestRoll extends TestRollBase
         $this->min = $min;
         $this->max = $max;
     }
+
+    public static function randomInstance($repeatTimes = TestRollBase::INFINITE) {
+        return new TestRoll(TestRollBase::ANY, TestRollBase::RANDOM, TestRollBase::ANY, TestRollBase::ANY, $repeatTimes);
+    }
 }
