@@ -50,7 +50,7 @@ class CityGenGenerated extends React.Component {
 
 	toggleSection = sectionName => this.setState({openSections: Object.assign({}, this.state.openSections, {[sectionName]: !this.state.openSections[sectionName]})});
 
-	generate = () => webservice.citygen.generate();
+	generate = () => webservice.citygen.generate(this.props.citygen.form);
 
 	closeSections = () => this.setState({openSections: _.mapValues(this.state.openSections, () => false)});
 	openSections = () => this.setState({openSections: _.mapValues(this.state.openSections, () => true)});
