@@ -11,5 +11,5 @@ class CityWard
     /** @var bool */
     public $insideWalls;
     /** @var CityBuilding[] */
-    public $buildings;
+    public $buildings = [];
 }

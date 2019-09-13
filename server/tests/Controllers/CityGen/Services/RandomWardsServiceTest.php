@@ -2255,4 +2255,41 @@ final class RandomWardsServiceTest extends BaseTestCase
         // unlimited, used "null" in max wards table
         $this->assertSame(100, count($city->wards));
     }
+
+    public function testWardsAlwaysGetBuildings()
+    {
+        $postData = new PostData();
+        $postData->populationType = PopulationType::THORP;
+        $postData->wardsAdded = [];
+        $postData->generateBuildings = BooleanRandom::TRUE;
+
+        $city = new City();
+        $city->populationType = PopulationType::THORP;
+
+        $this->services->random->setRolls([
+            new TestRoll('Random Population Size', 20, 20, 80),
+            new TestRoll('randomAcres', 1),
+            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRollGroup('buildings', [
+                new TestRoll('Building Weight', 1, 1, 100),
+                new TestRoll('Building Quality', 2, 2, 3),
+            ], 3),
+            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRollGroup('buildings', [
+                new TestRoll('Building Weight', 1, 1, 100),
+                new TestRoll('Building Quality', 2, 1, 3),
+            ], 1),
+        ]);
+
+        $this->services->randomCityPopulation->determinePopulation($city, $postData);
+        $this->services->randomAcresStructures->randomAcres($city);
+        $this->services->randomWards->determineWards($city, $postData);
+
+        $this->services->random->verifyRolls();
+
+        // unlimited, used "null" in max wards table
+        $this->assertSame(2, count($city->wards));
+        $this->assertNotSame(0, count($city->wards[0]->buildings));
+        $this->assertNotSame(0, count($city->wards[1]->buildings));
+    }
 }
