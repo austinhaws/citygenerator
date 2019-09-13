@@ -12,6 +12,7 @@ use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Models\Post\WardAdded;
 use App\Http\Controllers\CityGen\Models\Table\TableBuilding;
 use App\Http\Controllers\CityGen\Util\TestRoll;
+use App\Http\Controllers\CityGen\Util\TestRollGroup;
 use Test\Controllers\CityGen\Util\BaseTestCase;
 
 final class RandomWardsServiceTest extends BaseTestCase
@@ -1227,7 +1228,7 @@ final class RandomWardsServiceTest extends BaseTestCase
     public function testRandomWardPatriciateSmallerThanSmallCity()
     {
         $city = new City();
-        $city->populationType = PopulationType::THORP;
+        $city->populationType = PopulationType::VILLAGE;
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
@@ -1241,18 +1242,15 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 1, 1, 100),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
+            new TestRoll('Ward acres used', 200, 200, 500),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame(3, count($city->wards));
+        $this->assertSame(2, count($city->wards));
 
         $this->assertSame(0, count(array_filter($city->wards, function ($ward) {
             return $ward->type === Ward::PATRICIATE;
@@ -1343,7 +1341,7 @@ final class RandomWardsServiceTest extends BaseTestCase
     public function testRandomWardAdministrationSmallerThanSmallCity()
     {
         $city = new City();
-        $city->populationType = PopulationType::THORP;
+        $city->populationType = PopulationType::VILLAGE;
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
@@ -1357,18 +1355,15 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 11, 1, 100),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
+            new TestRoll('Ward acres used', 200, 200, 500),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame(3, count($city->wards));
+        $this->assertSame(2, count($city->wards));
 
         $this->assertSame(0, count(array_filter($city->wards, function ($ward) {
             return $ward->type === Ward::ADMINISTRATION;
@@ -1378,7 +1373,7 @@ final class RandomWardsServiceTest extends BaseTestCase
     public function testRandomSea()
     {
         $city = new City();
-        $city->populationType = PopulationType::THORP;
+        $city->populationType = PopulationType::VILLAGE;
         $city->hasSea = BooleanRandom::TRUE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
@@ -1394,27 +1389,20 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
+            new TestRoll('Ward acres used', 200, 200, 500),
+            new TestRoll('Ward acres used', 200, 200, 500),
             new TestRoll('Ward Type', 13, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 13, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 13, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 13, 1, 100),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame(7, count($city->wards));
+        $this->assertSame(4, count($city->wards));
 
-        $this->assertSame(4, count(array_filter($city->wards, function ($ward) {
+        $this->assertSame(2, count(array_filter($city->wards, function ($ward) {
             return $ward->type === Ward::SEA;
         })), 'Has tested ward');
     }
@@ -1422,7 +1410,7 @@ final class RandomWardsServiceTest extends BaseTestCase
     public function testRandomSeaNoSea()
     {
         $city = new City();
-        $city->populationType = PopulationType::THORP;
+        $city->populationType = PopulationType::VILLAGE;
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
@@ -1437,28 +1425,22 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
+            new TestRoll('Ward acres used', 200, 200, 500),
             new TestRoll('Ward Type', 13, 1, 100),
             new TestRoll('Ward Type', 13, 1, 100),
             new TestRoll('Ward Type', 13, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame(7, count($city->wards));
+        $this->assertSame(4, count($city->wards));
 
         $this->assertSame(0, count(array_filter($city->wards, function ($ward) {
             return $ward->type === Ward::SEA;
@@ -1468,7 +1450,7 @@ final class RandomWardsServiceTest extends BaseTestCase
     public function testRandomRiver()
     {
         $city = new City();
-        $city->populationType = PopulationType::THORP;
+        $city->populationType = PopulationType::VILLAGE;
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::TRUE;
         $city->hasMilitary = BooleanRandom::FALSE;
@@ -1484,30 +1466,21 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
+            new TestRoll('Ward acres used', 200, 200, 500),
+            new TestRoll('Ward acres used', 200, 200, 500),
             new TestRoll('Ward Type', 16, 1, 100),
             new TestRoll('River inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 16, 1, 100),
-            new TestRoll('River inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 16, 1, 100),
-            new TestRoll('River inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Odoriferous inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame(7, count($city->wards));
+        $this->assertSame(4, count($city->wards));
 
-        $this->assertSame(4, count(array_filter($city->wards, function ($ward) {
+        $this->assertSame(2, count(array_filter($city->wards, function ($ward) {
             return $ward->type === Ward::RIVER;
         })), 'Has tested ward');
     }
@@ -1515,7 +1488,7 @@ final class RandomWardsServiceTest extends BaseTestCase
     public function testRandomRiverNoRiver()
     {
         $city = new City();
-        $city->populationType = PopulationType::THORP;
+        $city->populationType = PopulationType::VILLAGE;
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
@@ -1530,28 +1503,22 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
+            new TestRoll('Ward acres used', 200, 200, 500),
             new TestRoll('Ward Type', 16, 1, 100),
             new TestRoll('Ward Type', 16, 1, 100),
             new TestRoll('Ward Type', 16, 1, 100),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
 
         $this->services->random->verifyRolls();
 
-        $this->assertSame(7, count($city->wards));
+        $this->assertSame(4, count($city->wards));
 
         $this->assertSame(0, count(array_filter($city->wards, function ($ward) {
             return $ward->type === Ward::RIVER;
@@ -1561,12 +1528,12 @@ final class RandomWardsServiceTest extends BaseTestCase
     public function testRandomOdoriferousInsideWalls()
     {
         $city = new City();
-        $city->populationType = PopulationType::THORP;
+        $city->populationType = PopulationType::VILLAGE;
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
         $city->numGates = 0;
-        $city->acres = 4;
+        $city->acres = 8;
 
         // true
         $postData = new PostData();
@@ -1575,14 +1542,14 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
+            new TestRoll('Ward acres used', 200, 200, 500),
             new TestRoll('Ward Type', 25, 1, 100),
             new TestRoll('Odoriferous inside walls?', 1, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
             new TestRoll('Ward Type', 25, 1, 100),
             new TestRoll('Odoriferous inside walls?', 100, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -1602,12 +1569,12 @@ final class RandomWardsServiceTest extends BaseTestCase
     public function testRandomOdoriferousNoGates()
     {
         $city = new City();
-        $city->populationType = PopulationType::THORP;
+        $city->populationType = PopulationType::VILLAGE;
         $city->hasSea = BooleanRandom::FALSE;
         $city->hasRiver = BooleanRandom::FALSE;
         $city->hasMilitary = BooleanRandom::FALSE;
         $city->numGates = 0;
-        $city->acres = 4;
+        $city->acres = 8;
 
         // true
         $postData = new PostData();
@@ -1616,12 +1583,12 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->generateBuildings = BooleanRandom::FALSE;
 
         $this->services->random->setRolls([
-            new TestRoll('Ward acres used', 100, 100, 200),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
+            new TestRoll('Ward acres used', 200, 200, 500),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
             new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 200, 200, 500),
         ]);
 
         $this->services->randomWards->determineWards($city, $postData);
@@ -2143,176 +2110,6 @@ final class RandomWardsServiceTest extends BaseTestCase
         })), 'Has tested ward');
     }
 
-    public function testAllRandom()
-    {
-        $postData = $this->services->postData->createPostData([
-            'buildings' => 'Yes',
-            'military' => 'Random',
-            'name' => '',
-            'numGates' => 'Random',
-            'populationType' => 'Random',
-            'professions' => 'Yes',
-            'race' => 'Random',
-            'raceRatios' => [],
-            'racialMix' => 'Random',
-            'river' => 'Random',
-            'sea' => 'Random',
-            'wardsAdded' => [],
-        ]);
-
-        $this->services->random->setRolls([
-            // [0]
-            new TestRoll('getTableResultRandom-PopulationTypeTable', 1, 1, 100),
-            new TestRoll('Random Population Size', 20, 20, 80),
-            new TestRoll('randomAcres', 1),
-            new TestRoll('randomNumStructures', 1),
-            new TestRoll('Has Sea', 100, 1, 100),
-            new TestRoll('Has River', 100, 1, 100),
-            new TestRoll('Has Military', 100, 1, 100),
-            new TestRoll('Has Walls', 100, 1, 100),
-            new TestRoll('Ward acres used', 200, 100, 200),
-            new TestRoll('Building Weight', 100, 1, 100),
-            // [10]
-            new TestRoll('Building Quality', 3, 1, 3),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 1, 3),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 1, 3),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 1, 3),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 1, 3),
-            new TestRoll('Building Weight', 100, 1, 100),
-            // [20]
-            new TestRoll('Building Quality', 3, 1, 3),
-            new TestRoll('Ward acres used', 200, 100, 200),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 2, 1, 2),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 2, 1, 2),
-            new TestRoll('Ward Type', 100, 1, 100),
-            new TestRoll('Ward Type', 50, 1, 100),
-            new TestRoll('Ward Type', 25, 1, 100),
-            new TestRoll('Ward acres used', 200, 100, 200),
-            // [30]
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Ward Type', 100, 1, 100),
-            new TestRoll('Ward Type', 25, 1, 100),
-            // [40]
-            new TestRoll('Ward acres used', 200, 100, 200),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Ward Type', 25, 1, 100),
-            // [50]
-            new TestRoll('Ward acres used', 200, 100, 200),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Ward Type', 25, 1, 100),
-            // [60]
-            new TestRoll('Ward acres used', 200, 100, 200),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Ward Type', 25, 1, 100),
-            // [70]
-            new TestRoll('Ward acres used', 200, 100, 200),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Ward Type', 25, 1, 100),
-            // [80]
-            new TestRoll('Ward acres used', 200, 100, 200),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Ward Type', 25, 1, 100),
-            // [90]
-            new TestRoll('Ward acres used', 200, 100, 200),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Ward Type', 25, 1, 100),
-            // [100]
-            new TestRoll('Ward acres used', 200, 100, 200),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('Building Weight', 100, 1, 100),
-            new TestRoll('Building Quality', 3, 3, 4),
-            new TestRoll('ProfessionTable: range', 50, 1, 10000),
-            // [110]
-            new TestRoll('ProfessionTable: range', 25, 1, 10000),
-            new TestRoll('ProfessionTable: range', 25, 1, 10000),
-            new TestRoll('ProfessionTable: range', 25, 1, 10000),
-            new TestRoll('ProfessionTable: range', 25, 1, 10000),
-            new TestRoll('ProfessionTable: range', 25, 1, 10000),
-            new TestRoll('ProfessionTable: range', 25, 1, 10000),
-            new TestRoll('ProfessionTable: range', 25, 1, 10000),
-            new TestRoll('ProfessionTable: range', 25, 1, 10000),
-            new TestRoll('ProfessionTable: range', 25, 1, 10000),
-            new TestRoll('ProfessionTable: range', 25, 1, 10000),
-            // [120]
-            new TestRoll('Power Level', 0, 0, 1),
-            new TestRoll('Racial Mix', 1, 1, 3),
-            new TestRoll('RacesRandomTable: range', 1, 1, 100),
-            new TestRoll('Use words', 1, 1, 100),
-            new TestRoll('NameNumWordsTable: range', 1, 1, 100),
-            // [130]
-            new TestRoll('NameNumSyllablesTable: range', 1, 1, 55),
-            new TestRoll('SyllablesTable: range', 1, 1, TestRoll::ANY),
-        ]);
-
-        $city = $this->services->randomCity->randomizeCity($postData);
-        $this->services->random->verifyRolls();
-
-        $this->assertTrue(strlen($city->name) > 0);
-        $this->assertEquals(10, count($city->wards));
-        $this->assertEquals(6, count($city->wards[0]->buildings));
-        $this->assertEquals(5, count($city->professions));
-    }
-
     public function testRandomCustomWardBuildings()
     {
         $city = new City();
@@ -2374,4 +2171,88 @@ final class RandomWardsServiceTest extends BaseTestCase
         })), 'only expected buildings');
     }
 
+    public function testMaxWardsThorp() {
+        $postData = new PostData();
+        $postData->populationType = PopulationType::THORP;
+        $postData->wardsAdded = [];
+        $postData->generateBuildings = BooleanRandom::FALSE;
+
+        $city = new City();
+        $city->populationType = PopulationType::THORP;
+
+        $this->services->random->setRolls([
+            new TestRoll('Random Population Size', 80, 20, 80),
+            new TestRoll('randomAcres', 1),
+            new TestRoll('Ward acres used', 100, 100, 200),
+            new TestRoll('Ward acres used', 100, 100, 200),
+        ]);
+
+        $this->services->randomCityPopulation->determinePopulation($city, $postData);
+        $this->services->randomAcresStructures->randomAcres($city);
+        $this->services->randomWards->determineWards($city, $postData);
+
+        $this->services->random->verifyRolls();
+
+        $this->assertSame(2, count($city->wards));
+    }
+
+    public function testMaxWardsVillage() {
+        $postData = new PostData();
+        $postData->populationType = PopulationType::VILLAGE;
+        $postData->wardsAdded = [];
+        $postData->generateBuildings = BooleanRandom::FALSE;
+
+        $city = new City();
+        $city->populationType = PopulationType::THORP;
+
+        $this->services->random->setRolls([
+            new TestRoll('Random Population Size', 900, 401, 900),
+            new TestRoll('randomAcres', 1),
+            new TestRoll('Ward acres used', 100, 200, 500),
+            new TestRoll('Ward acres used', 100, 200, 500),
+            new TestRollGroup('Ward Markets', [
+                new TestRoll('Ward Type', 75, 1, 100),
+                new TestRoll('Ward acres used', 100, 200, 500),
+            ], 6),
+        ]);
+
+        $this->services->randomCityPopulation->determinePopulation($city, $postData);
+        $this->services->randomAcresStructures->randomAcres($city);
+        $this->services->randomWards->determineWards($city, $postData);
+
+        $this->services->random->verifyRolls();
+
+        $this->assertSame(8, count($city->wards));
+    }
+
+    public function testMaxWardsMetropolis() {
+        $postData = new PostData();
+        $postData->populationType = PopulationType::METROPOLIS;
+        $postData->wardsAdded = [];
+        $postData->generateBuildings = BooleanRandom::FALSE;
+
+        $city = new City();
+        $city->populationType = PopulationType::THORP;
+
+        $this->services->random->setRolls([
+            new TestRoll('Random Population Size', 90000, 32001, 90000),
+            new TestRoll('randomAcres', 1),
+            new TestRollGroup('Preset wards', [
+                new TestRoll('Ward acres used', 600, 600, 1500),
+            ], 5),
+            new TestRollGroup('Ward Markets', [
+                new TestRoll('Ward Type', 75, 1, 100),
+                new TestRoll('Ward acres used', 600, 600, 1500),
+            ], 95),
+        ]);
+
+        $this->services->randomCityPopulation->determinePopulation($city, $postData);
+        $this->services->randomAcresStructures->randomAcres($city);
+        $this->services->randomWards->determineWards($city, $postData);
+
+        $this->services->random->verifyRolls();
+
+        // unlimited, used "null" in max wards table
+        $this->assertSame(100, count($city->wards));
+    }
 }

@@ -12,6 +12,7 @@ class PopulationAcresTable extends BaseTable
 
     function getTable()
     {
+        // population per acre density (pg 55)
         return array(
             PopulationType::THORP => new MinMax(1, 9),
             PopulationType::HAMLET => new MinMax(10, 19),

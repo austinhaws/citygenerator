@@ -7,7 +7,7 @@ abstract class TestRollBase
     /** @var int|string how many times to run until going to next roll */
     public $repeatTimes;
     /** @var int|string initial value for repeat times (roll groups reset to this) */
-    protected $initialRepeatTimes;
+    public $initialRepeatTimes;
 
     const ANY = 'any';
     const RANDOM = 'random';

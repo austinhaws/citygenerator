@@ -106,7 +106,8 @@ class RandomService extends BaseService
      */
     public function randRatioRange(string $name, int $min, int $max)
     {
-        return $this->randRatio($name) * ($max - $min) + $min;
+        $ratio = $this->randRatio($name);
+        return $ratio * ($max - $min) + $min;
     }
 
     /**

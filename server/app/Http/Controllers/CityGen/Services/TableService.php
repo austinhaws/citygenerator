@@ -29,7 +29,7 @@ class TableService extends BaseService
     function getTableResultIndex(string $tableName, $index) {
         $table = Table::getTable($tableName)->getTable();
 
-        if (!isset($table[$index])) {
+        if (!array_key_exists($index, $table)) {
             var_dump(debug_backtrace(), 'backtrace');
             var_dump(array('index' => $index, 'table' => $table), 'get_table_result_index : Index unknown');
             exit('failed');

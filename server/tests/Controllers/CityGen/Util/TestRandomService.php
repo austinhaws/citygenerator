@@ -128,6 +128,12 @@ class TestRandomService extends RandomService
         if (count($this->rolls) === 1 && $this->rolls[0]->repeatTimes === TestRoll::INFINITE) {
             array_shift($this->rolls);
         }
-        assertSame(0, count($this->rolls), 'all rolls accounted for');
+        if (count($this->rolls) && $this->rolls[0] instanceof TestRollGroup) {
+            $shouldBe = $this->rolls[0]->initialRepeatTimes - $this->rolls[0]->repeatTimes;
+            var_dump("\n\n!!! not enough repeats in roll group (set repeats to {$shouldBe}): {$this->rolls[0]->repeatTimes} of {$this->rolls[0]->initialRepeatTimes} !!!\n\n");
+            var_dump($this->rolls[0]);
+        }
+        $deadCount = count($this->rolls);
+        assertSame(0, count($this->rolls), "all rolls accounted for (remove {$deadCount} rolls)");
     }
 }

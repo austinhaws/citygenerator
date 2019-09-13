@@ -7,7 +7,7 @@ use App\Http\Controllers\CityGen\Constants\Ward;
 
 class RandomWardMetaData
 {
-    /** @var int[] */
+    /** @var int[] how many there are of each ward */
     public $wardCount;
     /** @var array which wards are required to exist */
     public $alreadyDone;

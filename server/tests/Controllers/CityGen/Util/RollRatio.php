@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CityGen\Util;
 
 class RollRatio
 {
+    // getrandmax()
     const RAND_MAX = 2147483647;
 
     /**

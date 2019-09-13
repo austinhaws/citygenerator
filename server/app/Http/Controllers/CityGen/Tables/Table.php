@@ -19,6 +19,7 @@ class Table extends BaseEnum
     const IS_CITY_SIZE_AT_LEAST = 'IsCitySizeAtLeastTable';
     const KING_INCOME = 'KingIncomeTable';
     const MAGIC_RESOURCES = 'MagicResourcesTable';
+    const MAX_WARDS_BY_POPULATION_TYPE = 'MaxWardsByPopulationType';
     const NAME_NUM_SYLLABLES = 'NameNumSyllablesTable';
     const NAME_NUM_WORDS = 'NameNumWordsTable';
     const NAME_PREFIXES = 'NamePrefixesTable';

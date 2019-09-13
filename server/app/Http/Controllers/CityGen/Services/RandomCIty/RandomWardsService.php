@@ -24,7 +24,8 @@ class RandomWardsService extends BaseService
         $this->addSpecificWards($city, $postData, $wardMetaData);
 
         // fill up acres with wards
-        while ($wardMetaData->acresToFill > 0) {
+        $maxCityWards = $this->services->table->getTableResultIndex(Table::MAX_WARDS_BY_POPULATION_TYPE, $city->populationType);
+        while ($wardMetaData->acresToFill > 0 && ($maxCityWards === null || count($city->wards) < $maxCityWards)) {
             $this->addRandomWard($city, $postData, $wardMetaData);
         }
     }
