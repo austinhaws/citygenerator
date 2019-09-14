@@ -2230,6 +2230,7 @@ final class RandomWardsServiceTest extends BaseTestCase
         $postData->populationType = PopulationType::METROPOLIS;
         $postData->wardsAdded = [];
         $postData->generateBuildings = BooleanRandom::FALSE;
+        $postData->professions = BooleanRandom::FALSE;
 
         $city = new City();
         $city->populationType = PopulationType::THORP;
@@ -2254,6 +2255,9 @@ final class RandomWardsServiceTest extends BaseTestCase
 
         // unlimited, used "null" in max wards table
         $this->assertSame(100, count($city->wards));
+        foreach ($city->wards as $ward) {
+            $this->assertSame(0, count($ward->buildings));
+        }
     }
 
     public function testWardsAlwaysGetBuildings()
