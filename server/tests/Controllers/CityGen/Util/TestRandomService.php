@@ -86,7 +86,9 @@ class TestRandomService extends RandomService
         }
 
         // allow random results
-        if ($roll->result === TestRoll::RANDOM) {
+        if (is_callable($roll->result)) {
+            $result = call_user_func_array($roll->result, [$roll, $name, $min, $max]);
+        } else if ($roll->result === TestRoll::RANDOM) {
             if ($min === null) {
                 $result = parent::mtRand($name);
             } else {

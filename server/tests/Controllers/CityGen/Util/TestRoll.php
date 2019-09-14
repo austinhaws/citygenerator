@@ -16,7 +16,7 @@ class TestRoll extends TestRollBase
     /**
      * TestRoll constructor.
      * @param string $name
-     * @param int|string $result
+     * @param int|string|callable $result
      * @param int|string $min
      * @param int|string $max
      * @param int|string $repeatTimes

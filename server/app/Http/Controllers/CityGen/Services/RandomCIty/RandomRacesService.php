@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CityGen\Services\RandomCity;
 
+use App\Http\Common\Models\MinMax;
 use App\Http\Common\Services\BaseService;
 use App\Http\Controllers\CityGen\Constants\Race;
 use App\Http\Controllers\CityGen\Constants\Table;
@@ -107,7 +108,9 @@ class RandomRacesService extends BaseService
 
         // give each race some population
         $city->races = array_map(function ($raceRatio) use ($city) {
-            return new CityRace($raceRatio->race, floor($raceRatio->ratio * $city->populationSize));
+            $minMax = new MinMax(0, floor($raceRatio->ratio * $city->populationSize));
+            $totalResidents = $minMax->min === $minMax->max ? $minMax->min : $this->services->random->randMinMaxInt('Resident Race ratio range', $minMax);
+            return new CityRace($raceRatio->race, $totalResidents);
         }, $postData->raceRatio);
 
         // give the majority race any left overs

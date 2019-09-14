@@ -12,14 +12,14 @@ class RacePercentsTable extends BaseTable
     {
         return array(
             Integration::ISOLATED => array(
-                0 => 0.96,
-                1 => 0.02,
-                2 => 0.01,
-                3 => 0.01,
-                4 => 0.01,
-                5 => 0.01,
-                6 => 0.01,
-                7 => 0.01,
+                0 => 0.996,
+                1 => 0.002,
+                2 => 0.001,
+                3 => 0.001,
+                4 => 0.001,
+                5 => 0.001,
+                6 => 0.001,
+                7 => 0.001,
             ),
             Integration::MIXED => array(
                 0 => 0.79,
