@@ -118,6 +118,24 @@ export const styles = theme => ({
 		width: '400px',
 		margin: '25px auto 0',
 	},
+	generated__top_buttons__loop_icon: {
+		marginRight: '10px',
+	},
+	generated__top_buttons__loop_icon__hover: {
+		animationName: 'spin',
+		animationDuration: '500ms',
+		animationTimingFunction: 'linear',
+		animationFillMode: 'forwards',
+		animationIterationCount: 'infinite',
+	},
+	'@keyframes spin': {
+		to: {
+			transform: 'rotate(0deg)',
+		},
+		from: {
+			transform: 'rotate(180deg)',
+		},
+	},
 
 	generated_list: {
 		width: '100%',

@@ -3,6 +3,8 @@ import React from 'react';
 import * as PropTypes from "prop-types";
 import withRoot from "../../app/WithRoot";
 import {Button} from "@material-ui/core";
+import LoopIcon from '@material-ui/icons/Loop';
+import {joinClassNames} from "dts-react-common";
 
 const propTypes = {
 	onBackClick: PropTypes.func.isRequired,
@@ -14,6 +16,19 @@ const propTypes = {
 const defaultProps = {};
 
 class GeneratedTopButtons extends React.Component {
+
+	constructor(props) {
+		super(props);
+		this.state = {
+			animateButton: false,
+		};
+	}
+
+	generateButtonClicked = () => {
+		this.setState({animateButton: true});
+		setTimeout(() => this.setState({animateButton: false}), 500);
+		this.props.onRegenerateClick();
+	};
 
 	render = () => {
 		const {classes} = this.props;
@@ -30,10 +45,10 @@ class GeneratedTopButtons extends React.Component {
 					</Button>
 					<Button
 						variant="contained"
-						onClick={this.props.onRegenerateClick}
+						onClick={this.generateButtonClicked}
 						color="primary"
 					>
-						Regenerate
+						<LoopIcon className={joinClassNames(classes.generated__top_buttons__loop_icon, this.state.animateButton && classes.generated__top_buttons__loop_icon__hover)}/> Regenerate
 					</Button>
 					<Button
 						variant="contained"
