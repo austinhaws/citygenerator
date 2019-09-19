@@ -11,6 +11,7 @@ use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCommoditiesService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomFamousService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomGuildsService;
+use App\Http\Controllers\CityGen\Services\RandomCity\RandomLayoutService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomNameService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomPowerCentersService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomProfessionsService;
@@ -47,6 +48,8 @@ class ServicesService
     public $randomFamous;
     /** @var RandomGuildsService */
     public $randomGuilds;
+    /** @var RandomLayoutService */
+    public $randomLayout;
     /** @var RandomNameService */
     public $randomName;
     /** @var RandomPowerCentersService */
@@ -77,6 +80,7 @@ class ServicesService
         $this->randomCommodities = new RandomCommoditiesService($this);
         $this->randomFamous = new RandomFamousService($this);
         $this->randomGuilds = new RandomGuildsService($this);
+        $this->randomLayout = new RandomLayoutService($this);
         $this->randomName = new RandomNameService($this);
         $this->randomPowerCenters = new RandomPowerCentersService($this);
         $this->randomProfessions = new RandomProfessionsService($this);

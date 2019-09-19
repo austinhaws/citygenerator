@@ -28,6 +28,7 @@ class RandomCityService extends BaseService
         $this->services->randomCommodities->determineCommodities($city);
         $this->services->randomFamous->determineFamous($city);
         $this->services->randomName->generateName($city, $postData);
+        $this->services->randomLayout->generateLayout($city, $postData);
 
         return $city;
     }

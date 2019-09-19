@@ -15,6 +15,7 @@ import Wards from "./sections/Wards";
 import Professions from "./sections/Professions";
 import PowerCenters from "./sections/PowerCenters";
 import Guilds from "./sections/Guilds";
+import CityLayout from "./sections/CityLayout";
 
 const propTypes = {
 	citygen: PropTypes.object.isRequired,
@@ -26,6 +27,7 @@ const mapStateToProps = state => ({ citygen: state.citygen });
 const SECTIONS = {
 	CITY_DETAIL: 'cityDetail',
 	GUILDS: 'guilds',
+	LAYOUT: 'layout',
 	POWER_CENTERS: 'powerCenters',
 	PROFESSIONS: 'professions',
 	WARDS: 'wards',
@@ -63,7 +65,7 @@ class CityGenGenerated extends React.Component {
 			{
 				section: SECTIONS.CITY_DETAIL,
 				title: () => 'City Detail',
-				render: () => <CityDetail key="cityDetail" city={city}/>
+				render: () => <CityDetail key="cityDetail" city={city}/>,
 			},
 			{
 				section: SECTIONS.WARDS,
@@ -83,7 +85,7 @@ class CityGenGenerated extends React.Component {
 						<span className={classes.subCollapsibleSectionTitleInfo}>(Total: {city ? city.professions.reduce((total, profession) => total + profession.total, 0) : 0})</span>
 					</div>
 				),
-				render: () => <Professions city={city}/>
+				render: () => <Professions city={city}/>,
 			},
 			{
 				section: SECTIONS.POWER_CENTERS,
@@ -93,7 +95,7 @@ class CityGenGenerated extends React.Component {
 						<span className={classes.subCollapsibleSectionTitleInfo}>(Total: {(city && city.powerCenters) ? city.powerCenters.length : 0})</span>
 					</div>
 				),
-				render: () => <PowerCenters city={city}/>
+				render: () => <PowerCenters city={city}/>,
 			},
 			{
 				section: SECTIONS.GUILDS,
@@ -103,7 +105,16 @@ class CityGenGenerated extends React.Component {
 						<span className={classes.subCollapsibleSectionTitleInfo}>(Total: {(city && city.guilds) ? city.guilds.reduce((total, guild) => total + guild.total, 0) : 0})</span>
 					</div>
 				),
-				render: () => <Guilds city={city}/>
+				render: () => <Guilds city={city}/>,
+			},
+			{
+				section: SECTIONS.LAYOUT,
+				title: () => (
+					<div>
+						<span>City Layout</span>
+					</div>
+				),
+				render: () => <CityLayout city={city}/>,
 			},
 		];
 
