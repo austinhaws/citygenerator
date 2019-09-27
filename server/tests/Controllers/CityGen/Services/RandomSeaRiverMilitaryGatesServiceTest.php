@@ -27,6 +27,8 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         $postData = new PostData();
         $postData->hasSea = BooleanRandom::TRUE;
 
+        $this->services->random->setRolls([TestRoll::randomInstance()]);
+
         $this->services->randomSeaRiverMilitaryGates->determineZones($city, $postData);
 
         $this->assertSame(BooleanRandom::TRUE, $city->hasSea);
@@ -41,6 +43,7 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         // random - yes
         $this->services->random->setRolls([
             new TestRoll('Has Sea', 25, 1, 100),
+            TestRoll::randomInstance(),
         ]);
         $postData->hasSea = BooleanRandom::RANDOM;
 
@@ -53,6 +56,7 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         // random - no
         $this->services->random->setRolls([
             new TestRoll('Has Sea', 73, 1, 100),
+            TestRoll::randomInstance(),
         ]);
         $postData->hasSea = BooleanRandom::RANDOM;
 
@@ -79,6 +83,8 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         $postData = new PostData();
         $postData->hasRiver = BooleanRandom::TRUE;
 
+        $this->services->random->setRolls([TestRoll::randomInstance()]);
+
         $this->services->randomSeaRiverMilitaryGates->determineZones($city, $postData);
 
         $this->assertSame(BooleanRandom::TRUE, $city->hasRiver);
@@ -92,7 +98,9 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
 
         // random - yes
         $this->services->random->setRolls([
+            new TestRoll('Has Sea', 25, 1, 100),
             new TestRoll('Has River', 25, 1, 100),
+            TestRoll::randomInstance(),
         ]);
         $postData->hasRiver = BooleanRandom::RANDOM;
 
@@ -104,7 +112,9 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
 
         // random - no
         $this->services->random->setRolls([
+            new TestRoll('Has Sea', 73, 1, 100),
             new TestRoll('Has River', 73, 1, 100),
+            TestRoll::randomInstance(),
         ]);
         $postData->hasRiver = BooleanRandom::RANDOM;
 
@@ -131,6 +141,8 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         $postData = new PostData();
         $postData->hasMilitary = BooleanRandom::TRUE;
 
+        $this->services->random->setRolls([TestRoll::randomInstance()]);
+
         $this->services->randomSeaRiverMilitaryGates->determineZones($city, $postData);
 
         $this->assertSame(BooleanRandom::TRUE, $city->hasMilitary);
@@ -144,7 +156,10 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
 
         // random - yes
         $this->services->random->setRolls([
+            new TestRoll('Has Sea', 7, 1, 100),
+            new TestRoll('Has River', 7, 1, 100),
             new TestRoll('Has Military', 7, 1, 100),
+            TestRoll::randomInstance(),
         ]);
         $postData->hasMilitary = BooleanRandom::RANDOM;
 
@@ -156,7 +171,10 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
 
         // random - no
         $this->services->random->setRolls([
+            new TestRoll('Has Sea', 73, 1, 100),
+            new TestRoll('Has River', 73, 1, 100),
             new TestRoll('Has Military', 73, 1, 100),
+            TestRoll::randomInstance(),
         ]);
         $postData->hasMilitary = BooleanRandom::RANDOM;
 
@@ -184,7 +202,11 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         $postData->hasGates = BooleanRandom::TRUE;
 
         $this->services->random->setRolls([
+            new TestRoll('Has Sea', 3, 1, 100),
+            new TestRoll('Has River', 3, 1, 100),
+            new TestRoll('Has Military', 3, 1, 100),
             new TestRoll('Num Gates', 3, 1, 4),
+            TestRoll::randomInstance(),
         ]);
         $this->services->randomSeaRiverMilitaryGates->determineZones($city, $postData);
         $this->services->random->verifyRolls();
@@ -194,12 +216,22 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
         // false
         $postData->hasGates = BooleanRandom::FALSE;
 
+        $this->services->random->setRolls([
+            new TestRoll('Has Sea', 3, 1, 100),
+            new TestRoll('Has River', 3, 1, 100),
+            new TestRoll('Has Military', 3, 1, 100),
+        ]);
+
         $this->services->randomSeaRiverMilitaryGates->determineZones($city, $postData);
+        $this->services->random->verifyRolls();
 
         $this->assertSame(0, $city->numGates);
 
         // random - yes
         $this->services->random->setRolls([
+            new TestRoll('Has Sea', 3, 1, 100),
+            new TestRoll('Has River', 3, 1, 100),
+            new TestRoll('Has Military', 3, 1, 100),
             new TestRoll('Has Walls', 7, 1, 100),
             new TestRoll('Num Gates', 4, 1, 4),
         ]);
@@ -213,6 +245,9 @@ final class RandomSeaRiverMilitaryGatesServiceTest extends BaseTestCase
 
         // random - no
         $this->services->random->setRolls([
+            new TestRoll('Has Sea', 3, 1, 100),
+            new TestRoll('Has River', 3, 1, 100),
+            new TestRoll('Has Military', 3, 1, 100),
             new TestRoll('Has Walls', 73, 1, 100),
         ]);
         $postData->hasGates = BooleanRandom::RANDOM;

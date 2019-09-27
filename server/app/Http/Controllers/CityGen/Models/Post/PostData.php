@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CityGen\Models\Post;
 
+use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomService;
 
 class PostData
@@ -9,26 +10,28 @@ class PostData
     /** @var string */
     public $name = RandomService::RANDOM;
     /** @var string */
-    public $populationType;
+    public $populationType = BooleanRandom::RANDOM;
     /** @var string BooleanRandom:: */
-    public $hasSea;
+    public $hasSea = BooleanRandom::RANDOM;
     /** @var string BooleanRandom:: */
-    public $hasMilitary;
+    public $hasMilitary = BooleanRandom::RANDOM;
     /** @var string BooleanRandom:: */
-    public $hasRiver;
+    public $hasRiver = BooleanRandom::RANDOM;
     /** @var string BooleanRandom:: */
-    public $hasGates;
+    public $hasGates = BooleanRandom::RANDOM;
     /** @var WardAdded[] */
-    public $wardsAdded;
+    public $wardsAdded = [];
     /** @var string BooleanRandom:: */
-    public $generateBuildings;
+    public $generateBuildings = BooleanRandom::RANDOM;
     /** @var string BooleanRandom:: */
-    public $professions;
+    public $professions = BooleanRandom::RANDOM;
 
     /** @var string Custom || Race::*/
     public $racialMix;
     /** @var PostRaceRatio[] */
     public $raceRatio;
     /** @var string Race:: major race */
-    public $race;
+    public $race = BooleanRandom::RANDOM;
+    /** @var string BooleanRandom... constants*/
+    public $generateLayout = BooleanRandom::TRUE;
 }

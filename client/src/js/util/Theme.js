@@ -275,4 +275,26 @@ export const styles = theme => ({
 	customWards_WardName: {
 		color: colorComplement1,
 	},
+	layoutContainer: {
+
+	},
+	layoutRow:{
+		display: 'flex',
+		justifyContent: 'space-around',
+	},
+	layoutCell_leftWall: {
+		borderLeft: '1px solid black',
+	},
+	layoutCell_rightWall: {
+		borderRight: '1px solid black',
+	},
+	layoutCell_topWall: {
+		borderTop: '1px solid black',
+	},
+	layoutCell_bottomWall: {
+		borderBottom: '1px solid black',
+	},
+	layoutCell: {
+		border: '1px solid transparent',
+	},
 });

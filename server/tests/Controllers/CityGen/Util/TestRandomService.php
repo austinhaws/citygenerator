@@ -11,7 +11,10 @@ class TestRandomService extends RandomService
 
     /** @var TestRoll[]|TestRollGroup[] */
     private $rolls = null;
+    /** @var int  */
     private $rollIndex = 0;
+    /** @var RollHistory[] */
+    private $rollHistory = [];
 
     /**
      * @param null $name
@@ -28,11 +31,11 @@ class TestRandomService extends RandomService
      * @param int $max
      * @return int
      */
-    private function nextRoll($name, $min = null, $max = null)
+    private function nextRoll(string $name, int $min = null, int $max = null)
     {
         if (!$this->rolls || count($this->rolls) === 0) {
 //var_dump(debug_backtrace());
-            throw new \RuntimeException("\nError: There are no more rolls for '$name' : $min -> $max; Roll Index: {$this->rollIndex}\n");
+            throw new \Exception("\nError: There are no more rolls for '$name' : $min -> $max; Roll Index: {$this->rollIndex}\n");
         }
 
         $roll = array_shift($this->rolls);
@@ -98,6 +101,8 @@ class TestRandomService extends RandomService
             $result = $roll->result;
         }
 
+        $this->rollHistory[] = new RollHistory($name, $result, $min, $max, $roll);
+
         return $result;
     }
 
@@ -120,6 +125,10 @@ class TestRandomService extends RandomService
      */
     public function setRolls($rolls)
     {
+        // if the last roll is infinite repeats then it was just a stop gap test, so remove it to clear the way for the next rolls
+        if ($this->rolls && count($this->rolls) === 1 && $this->rolls[0]->repeatTimes === TestRoll::INFINITE) {
+            $this->rolls = [];
+        }
         $this->rolls && assertSame(0, count($this->rolls), 'Previous existing rolls');
         $this->rolls = $rolls;
         $this->rollIndex = 0;
@@ -137,5 +146,14 @@ class TestRandomService extends RandomService
         }
         $deadCount = count($this->rolls);
         assertSame(0, count($this->rolls), "all rolls accounted for (remove {$deadCount} rolls)");
+    }
+
+    public function recreateRollHistory()
+    {
+        $rollStrings = array_map(function (RollHistory $roll) {
+            return $roll->recreate();
+        }, $this->rollHistory);
+
+        exit(join("\n", $rollStrings));
     }
 }

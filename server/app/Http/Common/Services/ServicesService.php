@@ -4,6 +4,7 @@ namespace App\Http\Common\Services;
 
 use App\Http\Controllers\CityGen\Services\ListsService;
 use App\Http\Controllers\CityGen\Services\PostDataService;
+use App\Http\Controllers\CityGen\Services\RandomCity\Layout\RandomLayoutService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomAcresStructuresService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomBuildingsService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityPopulationService;
@@ -11,7 +12,6 @@ use App\Http\Controllers\CityGen\Services\RandomCity\RandomCityService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomCommoditiesService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomFamousService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomGuildsService;
-use App\Http\Controllers\CityGen\Services\RandomCity\RandomLayoutService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomNameService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomPowerCentersService;
 use App\Http\Controllers\CityGen\Services\RandomCity\RandomProfessionsService;

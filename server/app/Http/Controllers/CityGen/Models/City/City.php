@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\CityGen\Models\City;
 
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
-use App\Http\Controllers\CityGen\Models\City\Layout\LayoutCell;
+use App\Http\Controllers\CityGen\Models\City\Layout\LayoutMeta;
 
 class City
 {
@@ -62,12 +62,6 @@ class City
     /** @var string[] */
     public $infamous = [];
 
-    /** @var LayoutCell[]  */
-    public $layoutCells = [];
-
-//	public $layout = new Layout_CityMapClass();
-
-//	public function generate_map() {
-//		$this->layout->generate($this);
-//	}
+    // /** @var CityLayout  */
+    public $layout;
 }
