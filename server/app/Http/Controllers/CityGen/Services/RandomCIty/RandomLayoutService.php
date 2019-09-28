@@ -142,17 +142,26 @@ class RandomLayoutService extends BaseService
     private function setStartingPositions(City $city, LayoutMap $layoutMap)
     {
         $filters = [
-            // do Sea wards first
+            // Sea
             [
                 self::FILTER => function ($ward) { return $ward->type === Ward::SEA; },
                 self::PARAMS => function () { return [false, true]; },
             ],
-            // do non-Sea non-Gate wards next
+            // River
             [
-                self::FILTER => function ($ward) { return $ward->type !== Ward::SEA && $ward->type !== Ward::GATE; },
+                self::FILTER => function ($ward) { return $ward->type === Ward::RIVER; },
+                self::PARAMS => function () { return [false, true]; },
+            ],
+            // non-Sea non-Gate
+            [
+                self::FILTER => function ($ward) {
+                    return $ward->type !== Ward::RIVER &&
+                        $ward->type !== Ward::SEA &&
+                        $ward->type !== Ward::GATE;
+                },
                 self::PARAMS => function ($ward) { return [$ward->insideWalls, false]; },
             ],
-            // do Gate wards last
+            // Gate
             [
                 self::FILTER => function ($ward) { return $ward->type === Ward::GATE; },
                 self::PARAMS => function () { return [false, false]; },
@@ -302,9 +311,27 @@ class RandomLayoutService extends BaseService
         });
     }
 
+    private function addUnclaimedNeighborsToEmptyWard(LayoutMap $layoutMap, LayoutPosition $layoutPosition, CityWard $cityWard)
+    {
+        // update map cell with empty ward
+        if ($layoutMap->getCell($layoutPosition) === null) {
+            $layoutMap->setCell($layoutPosition, new LayoutCell($cityWard->id, $cityWard->insideWalls));
+
+            // find empty neighbors
+            $neighbors = $layoutMap->neighborSquares($layoutPosition);
+            $unclaimedNeighbors = array_filter($neighbors, function (LayoutPosition $neighbor) use ($layoutMap) {
+                return $layoutMap->getCell($neighbor) === null;
+            });
+
+            // add empty neighbors to the ward
+            array_walk($unclaimedNeighbors, function ($unclaimedNeighbor) use ($layoutMap, $cityWard) {
+                $this->addUnclaimedNeighborsToEmptyWard($layoutMap, $unclaimedNeighbor, $cityWard);
+            });
+        }
+    }
+
     /**
      * load cells array with all the wards positions and empty positions as Layout_CellClass
-     * also create ward lookup by id array
      * @param City $city
      * @param LayoutMap $layoutMap
      */
@@ -313,13 +340,23 @@ class RandomLayoutService extends BaseService
         array_walk($city->wards, function ($ward) use ($layoutMap) {
             $layoutWard = $layoutMap->getLayoutWard($ward);
             array_walk($layoutWard->mapPositions, function ($position) use ($ward, $layoutMap) {
-                $layoutMap->setCell($position, new LayoutCell($ward->id, $position));
+                $layoutMap->setCell($position, new LayoutCell($ward->id, $ward->insideWalls));
             });
         });
 
-        array_walk($layoutMap->unusedPositions, function ($position) use ($layoutMap) {
-            $layoutMap->setCell($position, new LayoutCell(null, null));
-        });
+        for ($y = 0; $y < $layoutMap->height; $y++) {
+            for ($x = 0; $x < $layoutMap->width; $x++) {
+                $cell = $layoutMap->cells[$y][$x];
+                if ($cell === null) {
+                    $emptyCityWard = new CityWard();
+                    $emptyCityWard->insideWalls = $this->services->random->percentile('Empty cell inside walls') > 50;
+                    $emptyCityWard->type = Ward::LAYOUT_EMPTY;
+                    $city->wards[] = $emptyCityWard;
+                    $layoutMap->addLayoutWard($emptyCityWard);
+                    $this->addUnclaimedNeighborsToEmptyWard($layoutMap, new LayoutPosition($x, $y), $emptyCityWard);
+                }
+            }
+        }
     }
 
 
@@ -329,76 +366,46 @@ class RandomLayoutService extends BaseService
      */
     public function addWalls(LayoutMap $layoutMap)
     {
-        // phase 1 : determine inside/outside
-        // loop through and find any positions that aren't resolved
-        array_walk($layoutMap->cells, function ($cellRow, $y) use ($layoutMap) {
-            array_walk($cellRow, function ($cell, $x) use ($layoutMap, $y) {
-                if ($cell->insideWalls === null) {
-                    $this->addWallsToUnclaimedClump(new LayoutPosition($x, $y), $layoutMap);
+        // for each cell, if a side's neighbor's wall status is not the same then put a wall on that side
+        // if neighbor is a border, then if this ward has walls, then put a wall on that side
+        array_walk($layoutMap->cells, function ($rowCells, $y) use ($layoutMap) {
+            array_walk($rowCells, function (LayoutCell $cell, $x) use ($layoutMap, $y) {
+                // get neighbor positions that are on the map
+                $neighbors = $layoutMap->neighborSquares(new LayoutPosition($x, $y));
+                $neighborCells = array_map(function ($layoutPosition) use ($layoutMap) {
+                    return $layoutMap->getCell($layoutPosition);
+                }, $neighbors);
+                $layoutMapWard = $layoutMap->getLayoutWardById($cell->wardId);
+
+                // top
+                if (isset($neighborCells[LayoutMap::DIRECTION_UP])) {
+                    $cell->walls[LayoutMap::DIRECTION_UP] = $neighborCells[LayoutMap::DIRECTION_UP]->insideWalls !== $cell->insideWalls;
+                } else {
+                    $cell->walls[LayoutMap::DIRECTION_UP] = $layoutMapWard->ward->insideWalls;
+                }
+
+                // down
+                if (isset($neighborCells[LayoutMap::DIRECTION_DOWN])) {
+                    $cell->walls[LayoutMap::DIRECTION_DOWN] = $neighborCells[LayoutMap::DIRECTION_DOWN]->insideWalls !== $cell->insideWalls;
+                } else {
+                    $cell->walls[LayoutMap::DIRECTION_DOWN] = $layoutMapWard->ward->insideWalls;
+                }
+
+                // left
+                if (isset($neighborCells[LayoutMap::DIRECTION_LEFT])) {
+                    $cell->walls[LayoutMap::DIRECTION_LEFT] = $neighborCells[LayoutMap::DIRECTION_LEFT]->insideWalls !== $cell->insideWalls;
+                } else {
+                    $cell->walls[LayoutMap::DIRECTION_LEFT] = $layoutMapWard->ward->insideWalls;
+                }
+
+                // right
+                if (isset($neighborCells[LayoutMap::DIRECTION_RIGHT])) {
+                    $cell->walls[LayoutMap::DIRECTION_RIGHT] = $neighborCells[LayoutMap::DIRECTION_RIGHT]->insideWalls !== $cell->insideWalls;
+                } else {
+                    $cell->walls[LayoutMap::DIRECTION_RIGHT] = $layoutMapWard->ward->insideWalls;
                 }
             });
-        });
 
-        // phase 2 : find wall sides
-        // loop through each position
-        array_walk($layoutMap->cells, function ($cellRow, $y) use ($layoutMap) {
-            array_walk($cellRow, function ($cell, $x) use ($layoutMap, $y) {
-                // only add walls to cells that are inside walls
-                if ($cell->insideWalls) {
-                    // get neighbors to this cell
-                    $neighbors = $layoutMap->neighborSquares(new LayoutPosition($x, $y));
-
-                    // loop over possible sides so that cells on edge of layout still get walls
-                    foreach ($neighbors as $side => $neighbor) {
-                        if (!$layoutMap->cells[$neighbor->y][$neighbor->x]->insideWalls) {
-                            $cell->walls[$side] = true;
-                        }
-                    }
-                }
-            });
-        });
-    }
-
-
-    /**
-     * find all adjacent cells that are unclaimed; if an adjacent cell is claimed and outside walls, all the cells are outside walls
-     * @param LayoutPosition $startPosition
-     * @param LayoutMap $layoutMap
-     */
-    private function addWallsToUnclaimedClump(LayoutPosition $startPosition, LayoutMap $layoutMap)
-    {
-        $neighborsToTest = [$startPosition];
-        $insideWalls = true;
-        for ($i = 0; $i < count($neighborsToTest); $i++){
-            $position = $neighborsToTest[$i];
-
-            // if neighbor is unwalled, the whole thing is unwalled
-            $cell = $layoutMap->getCell($position);
-            if ($cell->insideWalls === false) {
-                $insideWalls = false;
-            }
-
-            // get new neighbors
-            $newNeighbors = $layoutMap->neighborSquares($position);
-
-            // put clumps touching the border always outside walls
-            if (count($newNeighbors) != 4) {
-                $insideWalls = false;
-            }
-            // remove already added neighbors
-            $newNeighbors = array_filter($newNeighbors, function ($newNeighbor) use ($neighborsToTest, $layoutMap) {
-                $cell = $layoutMap->getCell($newNeighbor);
-                return $cell->wardId === null && count(array_filter($neighborsToTest, function ($neighborToTest) use ($newNeighbor) {
-                        return $neighborToTest->equals($newNeighbor);
-                    })) === 0;
-            });
-            // add new neighbors to test list
-            $neighborsToTest = array_merge($neighborsToTest, array_values($newNeighbors));
-        }
-
-        // set the whole group's walled status
-        array_walk($neighborsToTest, function ($neighborPosition) use ($insideWalls, $layoutMap) {
-            $layoutMap->getCell($neighborPosition)->insideWalls = $insideWalls;
         });
     }
 }

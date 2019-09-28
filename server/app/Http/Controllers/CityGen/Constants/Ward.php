@@ -9,6 +9,8 @@ class Ward extends BaseEnum
 {
     const ADMINISTRATION = 'Administration';
     const CRAFTSMEN = 'Craftsmen';
+    // empty wards are during layout when no real ward claims a cell
+    const LAYOUT_EMPTY = 'Empty';
     const GATE = 'Gate';
     const MARKET = 'Market';
     const MERCHANT = 'Merchant';

@@ -5,6 +5,7 @@ namespace Test\Controllers\CityGen\Tables;
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\PopulationType;
 use App\Http\Controllers\CityGen\Models\City\City;
+use App\Http\Controllers\CityGen\Models\City\Layout\LayoutMap;
 use App\Http\Controllers\CityGen\Models\Post\PostData;
 use App\Http\Controllers\CityGen\Util\TestRoll;
 use Test\Controllers\CityGen\Util\BaseTestCase;
@@ -439,9 +440,89 @@ final class RandomLayoutServiceTest extends BaseTestCase
 
         $this->services->random->setRolls([TestRoll::randomInstance()]);
 
-        foreach(range(1, 50) as $_) {
+        foreach(range(1, 10) as $_) {
             $city = $this->services->randomCity->randomizeCity($postData);
             $this->assertNotNull($city->layout);
+
+            echo $this->showLayout($city);
         }
+    }
+
+    private function wardIdToSymbol($wardId)
+    {
+        if ($wardId === null) {
+            $output = '◊';
+        } else if ($wardId <= 26) {
+            $output = chr(ord('a') + $wardId - 1);
+        } else if ($wardId <= 52) {
+            $output = chr(ord('A') + ($wardId - 26) - 1);
+        } else if ($wardId == 62) {
+            $output = chr(ord('0') + ($wardId - 52) - 1);
+        } else {
+            throw new \Exception('Too many wards: ' . $wardId);
+        }
+        return $output;
+    }
+
+    const FILLER = 'filler';
+    const BLANK_WALL = 'blankWall';
+    const HORIZONTAL_WALL = 'horizontalWall';
+    const VERTICAL_WALL = 'verticalWall';
+    private function showLayout(City $city)
+    {
+        echo join("\n", array_map(function ($ward) {
+            $symbol = $this->wardIdToSymbol($ward->id);
+            return "$ward->id($symbol): " . ($ward->insideWalls ? 'Walled' : 'no walls') . " - $ward->type";
+        }, $city->wards));
+
+        echo "\n";
+
+        echo join("\n", array_map(function ($cellRow, $y) {
+            $keys = array_keys($cellRow);
+            $consts = [
+                self::FILLER => ' ',
+                self::BLANK_WALL => ' ',
+                self::HORIZONTAL_WALL => '-',
+                self::VERTICAL_WALL => '|',
+            ];
+
+            $layers = [];
+
+            if ($y === 0) {
+                $layers[] = array_map(function ($cell, $x) use ($consts) {
+                    $output = '';
+                    if ($x === 0) {
+                        $output .= $consts[self::FILLER];
+                    }
+                    $output .= $cell->walls[LayoutMap::DIRECTION_UP] ? $consts[self::HORIZONTAL_WALL] : $consts[self::BLANK_WALL];
+                    $output .= $consts[self::FILLER];
+                    return $output;
+                }, $cellRow, $keys);
+            }
+
+            $layers[] = array_map(function ($cell, $x) use ($consts) {
+                $output = '';
+                if ($x === 0) {
+                    $output .= $cell->walls[LayoutMap::DIRECTION_LEFT] ? $consts[self::VERTICAL_WALL] : $consts[self::BLANK_WALL];
+                }
+                $output .= $this->wardIdToSymbol($cell->wardId);
+                $output .= $cell->walls[LayoutMap::DIRECTION_RIGHT] ? $consts[self::VERTICAL_WALL] : $consts[self::BLANK_WALL];
+                return $output;
+            }, $cellRow, $keys);
+
+            $layers[] = array_map(function ($cell, $x) use ($consts) {
+                $output = '';
+                if ($x === 0) {
+                    $output .= $consts[self::FILLER];
+                }
+                $output .= $cell->walls[LayoutMap::DIRECTION_DOWN] ? $consts[self::HORIZONTAL_WALL] : $consts[self::BLANK_WALL];
+                $output .= $consts[self::FILLER];
+                return $output;
+            }, $cellRow, $keys);
+
+            return join("\n", array_map(function ($layer) {
+                return join('', $layer);
+            }, $layers));
+        }, $city->layout->cells, array_keys($city->layout->cells))) . "\n\n";
     }
 }

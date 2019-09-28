@@ -18,19 +18,24 @@ class LayoutMap
     public $unusedPositions = [];
     /** @var LayoutPosition[][] starting locations of city broken in to rings */
     public $rings = [];
-    /** @var array int id => LayoutWard  */
+    /** @var array int id => LayoutMapWard  */
     public $wardsById = [];
 
     /** @var LayoutPosition[] changes to get possible neighbors  */
     private $neighborDeltas;
 
+    public const DIRECTION_LEFT = 'left';
+    public const DIRECTION_RIGHT = 'right';
+    public const DIRECTION_UP = 'up';
+    public const DIRECTION_DOWN = 'down';
+
     public function __construct()
     {
         $this->neighborDeltas = [
-            'left' => new LayoutPosition(-1, 0),
-            'right' => new LayoutPosition(1, 0),
-            'up' => new LayoutPosition(0, -1),
-            'down' => new LayoutPosition(0, 1),
+            self::DIRECTION_LEFT => new LayoutPosition(-1, 0),
+            self::DIRECTION_RIGHT => new LayoutPosition(1, 0),
+            self::DIRECTION_UP => new LayoutPosition(0, -1),
+            self::DIRECTION_DOWN => new LayoutPosition(0, 1),
         ];
     }
 
@@ -100,6 +105,23 @@ class LayoutMap
             $this->wardsById[$ward->id] = new LayoutMapWard($ward);
         }
         return $this->wardsById[$ward->id];
+    }
+
+    public function addLayoutWard(CityWard $ward)
+    {
+        $this->wardsById[$ward->id] = new LayoutMapWard($ward);
+    }
+
+    /**
+     * @param int $wardId
+     * @return LayoutMapWard
+     */
+    public function getLayoutWardById(int $wardId)
+    {
+        if (!isset($this->wardsById[$wardId])) {
+            throw new \Exception('Missing ward for id: ' . $wardId);
+        }
+        return $this->wardsById[$wardId];
     }
 
 }
