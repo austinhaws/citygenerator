@@ -88,11 +88,11 @@ class LayoutMap
 
     /**
      * @param LayoutPosition $position
-     * @return LayoutCell
+     * @return LayoutCell | null
      */
     public function getCell(LayoutPosition $position)
     {
-        return $this->cells[$position->y][$position->x];
+        return isset($this->cells[$position->y][$position->x]) ? $this->cells[$position->y][$position->x] : null;
     }
 
     /**

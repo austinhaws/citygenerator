@@ -62,6 +62,6 @@ class City
     /** @var string[] */
     public $infamous = [];
 
-    // /** @var CityLayout  */
+    /** @var CityLayout  */
     public $layout;
 }

@@ -14,4 +14,14 @@ class CityLayout
     {
         $this->cells = $layoutMap->cells;
     }
+
+    /**
+     * @param int $x
+     * @param int $y
+     * @return LayoutCell|null
+     */
+    public function getCell(int $x, int $y)
+    {
+        return isset($this->cells[$y][$x]) ? $this->cells[$y][$x] : null;
+    }
 }
