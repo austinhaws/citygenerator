@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CityGen\Constants\Building;
+use App\Http\Controllers\CityGen\Constants\Ward;
 use App\Http\Controllers\CityGen\Util\TestRoll;
 use App\Http\Controllers\CityGen\Util\TestRollGroup;
 use Laravel\Lumen\Testing\TestCase;
@@ -139,6 +140,21 @@ class CityGenControllerTest extends TestCase
             new TestRoll('Has Walls', 100, 1, 100),
 
             new TestRoll('Ward acres used', 200, 100, 200),
+            new TestRollGroup('Buildings', [
+                new TestRoll('Building Quality', 1, 1, 4),
+                new TestRoll('Building SubType', 1, 1, 1000),
+            ], 4),
+            new TestRoll('Ward acres used', 200, 100, 200),
+            new TestRollGroup('Buildings', [
+                new TestRoll('Building Weight', 5, 1, 100),
+                new TestRoll('Building Quality', 2, 2, 3),
+            ], 6),
+            new TestRoll('Ward acres used', 200, 100, 200),
+            new TestRollGroup('Buildings', [
+                new TestRoll('Building Weight', 5, 1, 100),
+                new TestRoll('Building Quality', 3, 1, 3),
+            ], 2),
+            new TestRoll('Power Level', 0, 0, 1),
             new TestRoll(TestRoll::ANY, TestRoll::RANDOM, TestRoll::ANY, TestRoll::ANY, TestRoll::INFINITE),
         ]);
 
@@ -148,10 +164,11 @@ class CityGenControllerTest extends TestCase
         if (!$jsonResult) {
             throw new Exception($this->response->getContent());
         }
-
         $this->testServicesService->random->verifyRolls();
 
-        $this->assertSame(3, count($jsonResult->wards));
+        $this->assertSame(3, count(array_filter($jsonResult->wards, function ($ward) {
+            return $ward->type !== Ward::LAYOUT_EMPTY;
+        })));
 
         // check ward buildings should all be workshops
         $this->assertSame(4, count($jsonResult->wards[0]->buildings));
@@ -222,7 +239,9 @@ class CityGenControllerTest extends TestCase
 
         $this->testServicesService->random->verifyRolls();
 
-        $this->assertSame(3, count($jsonResult->wards));
+        $this->assertSame(3, count(array_filter($jsonResult->wards, function ($ward) {
+            return $ward->type !== Ward::LAYOUT_EMPTY;
+        })));
 
         // check ward buildings should all be workshops
         $this->assertSame(4, count($jsonResult->wards[0]->buildings));

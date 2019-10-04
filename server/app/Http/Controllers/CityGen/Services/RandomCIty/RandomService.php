@@ -137,4 +137,13 @@ class RandomService extends BaseService
     {
         return $this->randRangeInt($name, $minMax->min * 100 , $minMax->max * 100) / 100.0;
     }
+
+    /**
+     * @param string $name
+     * @return string (BooleanRandom...)
+     */
+    public function boolean(string $name)
+    {
+        return $this->percentile($name) > 50 ? BooleanRandom::TRUE : BooleanRandom::FALSE;
+    }
 }

@@ -71,11 +71,20 @@ class RandomWardsService extends BaseService
     {
         $metaData = new RandomWardMetaData();
 
+        if ($city->hasSea === BooleanRandom::RANDOM) {
+            $city->hasSea = $this->services->random->boolean('Random Has Sea');
+        }
+        if ($city->hasRiver === BooleanRandom::RANDOM) {
+            $city->hasRiver = $this->services->random->boolean('Random Has River');
+        }
+        if ($city->hasMilitary === BooleanRandom::RANDOM) {
+            $city->hasMilitary = $this->services->random->boolean('Random Has Military');
+        }
         $metaData->requiredWards = 2 +
             $city->numGates +
-            ($city->hasSea ? 1 : 0) +
-            ($city->hasRiver ? 1 : 0) +
-            ($city->hasMilitary ? 1 : 0) +
+            ($city->hasSea === BooleanRandom::TRUE ? 1 : 0) +
+            ($city->hasRiver === BooleanRandom::TRUE ? 1 : 0) +
+            ($city->hasMilitary === BooleanRandom::TRUE ? 1 : 0) +
             (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::SMALL_TOWN, $this->services) ? 1 : 0) +
             (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::SMALL_CITY, $this->services) ? 1 : 0) +
             (PopulationType::isCitySizeAtLeast($city->populationType, PopulationType::METROPOLIS, $this->services) ? 1 : 0);
