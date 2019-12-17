@@ -41,7 +41,7 @@ class Wards extends React.Component {
 						className={classes.subCollapsibleSectionTitle}
 						isSubSection={true}
 						key={i}
-						title={() => <div><span>{ward.type}</span> <span className={classes.subSubCollapsibleSectionTitleInfo}>
+						title={() => <div><span>{ward.type} ({ward.symbol})</span> <span className={classes.subSubCollapsibleSectionTitleInfo}>
 							({format.formatFloat(ward.acres)} Acres; {ward.buildings ? ward.buildings.length : 0} Structures; {ward.insideWalls ? 'Inside' : 'Outside'} Walls)
 						</span></div>}
 						isExpanded={this.isSectionOpen(i)}

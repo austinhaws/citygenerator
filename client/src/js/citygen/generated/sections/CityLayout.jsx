@@ -2,7 +2,6 @@ import '@babel/polyfill';
 import React from 'react';
 import * as PropTypes from "prop-types";
 import withRoot from "../../../app/WithRoot";
-import CityLayoutCell from "./CityLayoutCell";
 
 const propTypes = {
 	city: PropTypes.object.isRequired,
@@ -23,14 +22,18 @@ class CityLayout extends React.Component {
 
 	render() {
 		const {classes, city} = this.props;
-		const layout = Array.from({length: city.layoutMeta.height}, i => Array.from({length: city.layoutMeta.width}, j => j));
 		return  (
 			<div key="city-layout" className={classes.layoutContainer}>
-				{layout.map((row, i) => (
+				{city.layoutLines.map((row, i) => (
 					<div key={i} className={classes.layoutRow}>
-						{row.map((_, j) => <CityLayoutCell key={j} cell={city.layoutCells[i * city.layoutMeta.height + j] || this.blankCell}/>)}
+						{
+							row
+								.map(line => line.split('').map(char => char === ' ' ? '\u00A0' : char).join(''))
+								.map((line, j) => <div key={j} className={classes.layoutLine}>{line}</div>)
+						}
 					</div>
 				))}
+				<div className={classes.layoutBlurb}>Letters match Ward letters in Wards section</div>
 			</div>
 		);
 	}

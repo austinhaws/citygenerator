@@ -278,23 +278,19 @@ export const styles = theme => ({
 	layoutContainer: {
 
 	},
+	layoutBlurb: {
+		color: 'black',
+		textAlign: 'center',
+		fontStyle: 'italic',
+	},
 	layoutRow:{
 		display: 'flex',
 		justifyContent: 'space-around',
+		flexDirection: 'column',
 	},
-	layoutCell_leftWall: {
-		borderLeft: '1px solid black',
-	},
-	layoutCell_rightWall: {
-		borderRight: '1px solid black',
-	},
-	layoutCell_topWall: {
-		borderTop: '1px solid black',
-	},
-	layoutCell_bottomWall: {
-		borderBottom: '1px solid black',
-	},
-	layoutCell: {
-		border: '1px solid transparent',
+	layoutLine: {
+		display: 'flex',
+		justifyContent: 'space-around',
+		fontFamily: '"Lucida Console", Monaco, monospace',
 	},
 });

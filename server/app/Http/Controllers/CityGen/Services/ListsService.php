@@ -60,7 +60,9 @@ class ListsService extends BaseService
      */
     private function buildingsByWard()
     {
-        return array_reduce(Ward::getConstants(), function ($carry, $ward) {
+        return array_reduce(
+            array_filter(Ward::getConstants(), function ($ward) { return $ward !== Ward::LAYOUT_EMPTY; })
+            , function ($carry, $ward) {
             $carry[$ward] = Ward::buildingsForWard($ward);
             return $carry;
         }, []);

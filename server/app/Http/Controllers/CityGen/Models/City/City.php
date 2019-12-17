@@ -64,4 +64,6 @@ class City
 
     /** @var CityLayout  */
     public $layout;
+    /** @var string[][] */
+    public $layoutLines;
 }

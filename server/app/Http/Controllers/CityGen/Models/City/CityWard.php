@@ -16,6 +16,8 @@ class CityWard
     public $insideWalls;
     /** @var CityBuilding[] */
     public $buildings = [];
+    /** @var string layout map symbol */
+    public $symbol;
 
     public function __construct()
     {

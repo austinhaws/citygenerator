@@ -118,7 +118,6 @@ class CityGenGenerated extends React.Component {
 			},
 		];
 
-console.log('generated!', city);
 		return city ? (
 			<div>
 				<GeneratedTopButtons

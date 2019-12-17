@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CityGen\Services\RandomCity\Layout;
 
 use App\Http\Common\Models\MinMax;
 use App\Http\Common\Services\BaseService;
+use App\Http\Common\Services\ServicesService;
 use App\Http\Controllers\CityGen\Constants\BooleanRandom;
 use App\Http\Controllers\CityGen\Constants\Table;
 use App\Http\Controllers\CityGen\Constants\Ward;
@@ -14,6 +15,7 @@ use App\Http\Controllers\CityGen\Models\City\Layout\LayoutCell;
 use App\Http\Controllers\CityGen\Models\City\Layout\LayoutMap;
 use App\Http\Controllers\CityGen\Models\City\Layout\LayoutPosition;
 use App\Http\Controllers\CityGen\Models\Post\PostData;
+use App\Http\Controllers\CityGen\Services\ShowLayoutService;
 use App\Http\Controllers\CityGen\Util\ArrayUtil;
 
 class RandomLayoutService extends BaseService
@@ -22,6 +24,15 @@ class RandomLayoutService extends BaseService
     private const WARD_BLOAT_FACTOR = 8.0;
     const FILTER = 'filter';
     const PARAMS = 'params';
+
+    /** @var ShowLayoutService  */
+    private $showLayoutService;
+
+    public function __construct(ServicesService $services)
+    {
+        parent::__construct($services);
+        $this->showLayoutService = new ShowLayoutService($services);
+    }
 
     /**
      * @param City $city
@@ -50,6 +61,8 @@ class RandomLayoutService extends BaseService
 
             // load up city with relevant information (just what city needs to know to render)
             $city->layout = new CityLayout($layoutMap);
+
+            $city->layoutLines = $this->showLayoutService->showLayout($city);
         }
     }
 
@@ -349,6 +362,7 @@ class RandomLayoutService extends BaseService
                 $cell = $layoutMap->cells[$y][$x];
                 if ($cell === null) {
                     $emptyCityWard = new CityWard();
+                    // if any neighbor is inside walls, then this is too
                     $emptyCityWard->insideWalls = $this->services->random->percentile('Empty cell inside walls') > 50;
                     $emptyCityWard->type = Ward::LAYOUT_EMPTY;
                     $city->wards[] = $emptyCityWard;
