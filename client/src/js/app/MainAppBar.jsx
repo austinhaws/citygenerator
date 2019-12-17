@@ -14,6 +14,7 @@ import MenuList from "@material-ui/core/MenuList";
 import MenuItem from "@material-ui/core/MenuItem";
 import withRoot from "./WithRoot";
 import PropTypes from "prop-types";
+import logoImage from "../../static/img/rpggenerator-logo.png";
 
 const propTypes = {
 	classes: PropTypes.object.isRequired,
@@ -56,7 +57,7 @@ class MainAppBar extends React.Component {
 							buttonRef={node => this.anchorEl = node}
 							onClick={this.handleToggle}
 						>
-							<img src="img/rpggenerator-logo.png" className={this.props.classes.appBar__logo}/>
+							<img src={logoImage} alt="RPG Generator logo" className={this.props.classes.appBar__logo}/>
 						</IconButton>
 						<IconButton
 							color="inherit"

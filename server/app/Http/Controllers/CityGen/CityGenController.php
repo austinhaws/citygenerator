@@ -6,7 +6,7 @@ use App\Http\Common\Services\ServicesService;
 use Illuminate\Http\Request;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
-class CityGenController extends BaseController //extends ControllerBase
+class CityGenController extends BaseController
 {
     public $services;
 

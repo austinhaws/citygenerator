@@ -11,10 +11,15 @@
 |
 */
 
+// prod: prod strips because of .htaccess and other insanity so that it's just /
+$baseRoute = '/';
+// dev?
+// $baseRoute = 'citygenerator/';
+
 // citygen
-$router->group(['namespace' => 'CityGen'], function ($router) {
-    $router->get('citygenerator/lists', 'CityGenController@getLists');
-    $router->post('citygenerator/generate', 'CityGenController@generate');
+$router->group(['namespace' => 'CityGen'], function ($router) use($baseRoute) {
+    $router->get($baseRoute . 'lists', 'CityGenController@getLists');
+    $router->post($baseRoute . 'generate', 'CityGenController@generate');
 });
 
 $router->get('/', function () use ($router) {

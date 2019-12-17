@@ -33,6 +33,8 @@ const config = {
 	output: {
 		path: BUILD_DIR,
 		filename: '[name].[contenthash].bundle.js',
+		publicPath: 'citygenerator/',
+		// publicPath: '',
 	},
 	optimization: {
 		runtimeChunk: 'single',

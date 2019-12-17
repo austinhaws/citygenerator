@@ -11,7 +11,8 @@
 |
 */
 
-$app = require __DIR__.'/../bootstrap/app.php';
+$app = require '/home/rpggener/apps/citygenerator/bootstrap/app.php';
+// $app = require __DIR__.'/../bootstrap/app.php';
 
 /*
 |--------------------------------------------------------------------------
