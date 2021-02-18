@@ -3,3 +3,4 @@ node_modules
 dist
 /vendor**
 /server/storage/logs/
+.DS_Store
